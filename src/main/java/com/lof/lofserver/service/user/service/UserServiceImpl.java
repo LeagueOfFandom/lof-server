@@ -18,29 +18,33 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity = userRepository.findByEmail(userSavedInfoDto.email());
 
         //if user is existed, return userInfoDto
-        if(userEntity != null) {
-            return UserInfoDto.builder()
-                    .id(userEntity.getUserId())
-                    .isNewUser(false)
-                    .build();
-        }
+        if(userEntity != null)
+            return buildUserInfoDto(userEntity, false);
 
         //create user
-        userEntity = UserEntity.builder()
-                .fcmToken(userSavedInfoDto.fcmToken())
-                .email(userSavedInfoDto.email())
-                .nickname(userSavedInfoDto.nickname())
-                .profileImg(userSavedInfoDto.profileImg())
-                .leagueList(userSavedInfoDto.leagueIdList())
-                .build();
+        userEntity = buildUserEntity(userSavedInfoDto);
 
         //save user
         UserEntity savedUserEntity = userRepository.save(userEntity);
 
         //return user info
+        return buildUserInfoDto(savedUserEntity, true);
+    }
+
+    private UserInfoDto buildUserInfoDto(UserEntity userEntity, Boolean isNewUser) {
         return UserInfoDto.builder()
-                .id(savedUserEntity.getUserId())
-                .isNewUser(true)
+                .id(userEntity.getUserId())
+                .isNewUser(isNewUser)
+                .build();
+    }
+
+    private UserEntity buildUserEntity(UserSavedInfoDto userSavedInfoDto) {
+        return UserEntity.builder()
+                .fcmToken(userSavedInfoDto.fcmToken())
+                .email(userSavedInfoDto.email())
+                .nickname(userSavedInfoDto.nickname())
+                .profileImg(userSavedInfoDto.profileImg())
+                .leagueList(userSavedInfoDto.leagueIdList())
                 .build();
     }
 }
