@@ -6,7 +6,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 
@@ -14,8 +13,8 @@ class GoogleCertificationImplTest {
 
 
     @Test
-    @DisplayName("구글 인증 test - 실패")
-    public void isCertification() {
+    @DisplayName("사용자 외부 인증 - 실패")
+    public void certificationFail() {
         //given
         ApplicationContext ac = new AnnotationConfigApplicationContext(CertificationConfig.class);
         Certification certification = ac.getBean(Certification.class);
@@ -26,4 +25,20 @@ class GoogleCertificationImplTest {
         //then
         assertThat(certificationDto).isEqualTo(null);
     }
+
+    @Test
+    @DisplayName("사용자 외부 인증 성공(test)")
+    public void certificationSuccess() {
+        //given
+        ApplicationContext ac = new AnnotationConfigApplicationContext(CertificationConfig.class);
+        Certification certification = ac.getBean(Certification.class);
+
+        //when
+        CertificationDto certificationDto = certification.getCertification("test");
+
+        //then
+        CertificationDto testCertificationDto = CertificationDto.builder().name("test").email("test").picture("test").locale("test").build();
+        assertThat(certificationDto).usingRecursiveComparison().isEqualTo(testCertificationDto);
+    }
+
 }
