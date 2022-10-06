@@ -37,24 +37,23 @@ public class UserEntity {
     @Column(name = "profile_img")
     private String profileImg;
 
+    @NotNull
     @Type(type = "json")
     @Column(name = "team_list" ,columnDefinition = "json")
     private List<Long> teamList = new ArrayList<>();
 
+    @NotNull
     @Type(type = "json")
     @Column(name = "league_list" ,columnDefinition = "json")
     private List<Long> leagueList = new ArrayList<>();
 
+    @NotNull
     @Type(type = "json")
     @Column(name = "selected", columnDefinition = "json")
-    private Map<Long, Boolean> userSelected = new HashMap<>();
+    private Map<Long, Boolean> userSelectedMatchList = new HashMap<>();
 
     public void setFcmToken(String fcmToken) {
         this.fcmToken = fcmToken;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public void setNickname(String nickname) {
@@ -73,8 +72,8 @@ public class UserEntity {
         this.leagueList = leagueList;
     }
 
-    public void setUserSelected(Map<Long, Boolean> userSelected) {
-        this.userSelected = userSelected;
+    public void setUserSelectedMatchList(Map<Long, Boolean> userSelectedMatchList) {
+        this.userSelectedMatchList = userSelectedMatchList;
     }
 
     @Builder
