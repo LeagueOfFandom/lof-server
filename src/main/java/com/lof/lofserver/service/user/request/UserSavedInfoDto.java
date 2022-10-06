@@ -1,4 +1,4 @@
-package com.lof.lofserver.service.user.service.request;
+package com.lof.lofserver.service.user.request;
 
 import lombok.Builder;
 

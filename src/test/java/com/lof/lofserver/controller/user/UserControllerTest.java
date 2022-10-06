@@ -1,42 +1,45 @@
 package com.lof.lofserver.controller.user;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lof.lofserver.controller.user.request.UserInfoDto;
+import com.lof.lofserver.controller.user.request.UserInfoDtoByGoogle;
+import com.lof.lofserver.service.certification.CertificationDto;
+import com.lof.lofserver.service.certification.CertificationService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.ResponseEntity;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.mockito.BDDMockito.given;
 
-@WebMvcTest(controllers = UserController.class)
+@ExtendWith(MockitoExtension.class)
 class UserControllerTest {
 
-    @Autowired
-    private MockMvc mvc;
+    @Mock
+    private CertificationService certificationService;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    @InjectMocks
+    private UserController userController;
 
     @Test
     @DisplayName("유저 생성 테스트")
-    public void userCreate() throws Exception{
+    public void userCreate(){
         //given
         String googleAccessToken = "googleAccessToken";
         String fcmToken = "fcmToken";
-        UserInfoDto userInfoDto = new UserInfoDto(googleAccessToken, fcmToken);
+        UserInfoDtoByGoogle userInfoDtoByGoogle = new UserInfoDtoByGoogle(googleAccessToken, fcmToken);
+        given(certificationService.getCertification(userInfoDtoByGoogle.getGoogleAccessToken())).
+                willReturn(CertificationDto.builder()
+                        .name("test")
+                        .email("test")
+                        .profileImg("test").build());
 
         //when
-        ResultActions resultActions = mvc.perform(
-                post("/v1/user/create")
-                .contentType("application/json")
-                .content(objectMapper.writeValueAsString(userInfoDto)));
+        ResponseEntity<?> responseEntity = userController.createUser(userInfoDtoByGoogle);
 
         //then
-        resultActions.andExpect(status().isOk());
+        responseEntity.getStatusCodeValue();
     }
 
 }

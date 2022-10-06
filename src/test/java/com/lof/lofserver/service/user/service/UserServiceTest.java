@@ -1,14 +1,11 @@
 package com.lof.lofserver.service.user.service;
 
 import com.lof.lofserver.config.LofConfig;
-import com.lof.lofserver.domain.user.UserEntity;
-import com.lof.lofserver.domain.user.UserRepository;
-import com.lof.lofserver.service.user.service.request.UserSavedInfoDto;
-import com.lof.lofserver.service.user.service.response.UserInfoDto;
+import com.lof.lofserver.service.user.UserService;
+import com.lof.lofserver.service.user.request.UserSavedInfoDto;
+import com.lof.lofserver.service.user.response.UserInfoDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -33,7 +30,7 @@ class UserServiceTest {
                 .build();
 
         //when
-        UserInfoDto userInfoDto = userService.saveUser(userSavedInfoDto);
+        UserInfoDto userInfoDto = userService.createUserByUserSavedInfoDto(userSavedInfoDto);
 
         //then
         assertThat(userInfoDto).isNotNull();

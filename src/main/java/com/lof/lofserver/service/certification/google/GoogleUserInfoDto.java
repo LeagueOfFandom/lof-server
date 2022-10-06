@@ -1,4 +1,4 @@
-package com.lof.lofserver.service.user.certification.google;
+package com.lof.lofserver.service.certification.google;
 
 import lombok.Getter;
 

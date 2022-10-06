@@ -1,9 +1,9 @@
-package com.lof.lofserver.service.user.service;
+package com.lof.lofserver.service.user;
 
 import com.lof.lofserver.domain.user.UserEntity;
 import com.lof.lofserver.domain.user.UserRepository;
-import com.lof.lofserver.service.user.service.request.UserSavedInfoDto;
-import com.lof.lofserver.service.user.service.response.UserInfoDto;
+import com.lof.lofserver.service.user.request.UserSavedInfoDto;
+import com.lof.lofserver.service.user.response.UserInfoDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     @Override
-    public UserInfoDto saveUser(UserSavedInfoDto userSavedInfoDto) {
+    public UserInfoDto createUserByUserSavedInfoDto(UserSavedInfoDto userSavedInfoDto) {
         //find user
         UserEntity userEntity = userRepository.findByEmail(userSavedInfoDto.email());
 

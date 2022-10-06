@@ -5,11 +5,11 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class UserInfoDto {
+public class UserInfoDtoByGoogle {
     private String googleAccessToken;
     private String fcmToken;
 
-    public UserInfoDto(String googleAccessToken, String fcmToken) {
+    public UserInfoDtoByGoogle(String googleAccessToken, String fcmToken) {
         this.googleAccessToken = googleAccessToken;
         this.fcmToken = fcmToken;
     }
