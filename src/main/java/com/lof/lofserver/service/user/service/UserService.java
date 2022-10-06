@@ -1,5 +1,8 @@
 package com.lof.lofserver.service.user.service;
 
+import com.lof.lofserver.service.user.service.request.UserSavedInfoDto;
+import com.lof.lofserver.service.user.service.response.UserInfoDto;
+
 public interface UserService {
-    UserInfoDto saveUser(String name, String email, String picture, String locale);
+    UserInfoDto saveUser(UserSavedInfoDto userSavedInfoDto);
 }

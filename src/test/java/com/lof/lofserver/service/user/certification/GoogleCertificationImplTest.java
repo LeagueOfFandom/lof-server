@@ -9,7 +9,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import static org.assertj.core.api.Assertions.assertThat;
 class GoogleCertificationImplTest {
 
-
     @Test
     @DisplayName("사용자 외부 인증 - 실패")
     public void certificationFail() {

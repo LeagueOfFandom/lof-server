@@ -72,7 +72,6 @@ class UserEntityTest {
 
         //then
         assertThat(userEntity.getFcmToken()).isEqualTo(newFcmToken);
-        assertThat(userEntity.getEmail()).isEqualTo(newEmail);
         assertThat(userEntity.getNickname()).isEqualTo(newNickname);
         assertThat(userEntity.getProfileImg()).isEqualTo(newProfileImage);
         assertThat(userEntity.getLeagueList()).isEqualTo(newLeagueIdList);
@@ -135,7 +134,7 @@ class UserEntityTest {
         Validator validator = factory.getValidator();
         var constraintViolations = validator.validate(userEntity);
 
-        assertThat(constraintViolations.size()).isEqualTo(7);
+        assertThat(constraintViolations.size()).isEqualTo(6);
     }
 
 }

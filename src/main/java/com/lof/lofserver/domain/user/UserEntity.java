@@ -20,6 +20,7 @@ import java.util.Map;
 @Table(name = "lof_user")
 @TypeDef(name = "json", typeClass = JsonStringType.class)
 public class UserEntity {
+    @SuppressWarnings("unused")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
