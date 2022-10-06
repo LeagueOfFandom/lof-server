@@ -8,8 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = UserController.class)
 class UserControllerTest {
@@ -30,12 +31,12 @@ class UserControllerTest {
 
         //when
         ResultActions resultActions = mvc.perform(
-                MockMvcRequestBuilders.post("/v1/user/create")
-                        .contentType("application/json")
-                        .content(objectMapper.writeValueAsString(userInfoDto)));
+                post("/v1/user/create")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(userInfoDto)));
 
         //then
-        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
+        resultActions.andExpect(status().isOk());
     }
 
 }
