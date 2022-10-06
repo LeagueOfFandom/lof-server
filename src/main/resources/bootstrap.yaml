@@ -1,0 +1,33 @@
+spring:
+  profiles:
+    group:
+      local: "localDB,local"
+      devServer: "devServerDB, server"
+    active: local
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+
+aws:
+  secretsmanager:
+    enabled: false
+
+---
+spring:
+  config:
+    activate:
+      on-profile: server
+
+cloud:
+  aws:
+    region:
+      static: ap-northeast-2
+      auto: false
+
+aws:
+  secretsmanager:
+    name: lof
+    enabled: true
