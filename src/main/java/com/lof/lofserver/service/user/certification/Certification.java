@@ -1,5 +1,5 @@
 package com.lof.lofserver.service.user.certification;
 
 public interface Certification {
-    Boolean isCertification(String googleAccessToken);
+    CertificationDto getCertification(String googleAccessToken);
 }
