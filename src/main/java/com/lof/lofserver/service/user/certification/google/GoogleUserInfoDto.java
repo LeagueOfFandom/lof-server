@@ -4,6 +4,7 @@ import lombok.Getter;
 
 @Getter
 public class GoogleUserInfoDto {
+
     private String iss;
     private String sub;
     private String azp;
@@ -17,4 +18,5 @@ public class GoogleUserInfoDto {
     private String given_name;
     private String family_name;
     private String locale;
+
 }

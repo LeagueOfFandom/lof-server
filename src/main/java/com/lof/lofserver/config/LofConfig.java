@@ -1,9 +1,9 @@
-package com.lof.lofserver.service.user.certification;
+package com.lof.lofserver.config;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan
-public class CertificationConfig {
+@ComponentScan(basePackages = "com.lof.lofserver")
+public class LofConfig {
 }
