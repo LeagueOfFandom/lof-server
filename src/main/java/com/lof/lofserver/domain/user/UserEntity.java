@@ -8,6 +8,7 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,13 +24,16 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long userId;
+    @NotNull
     @Column(name = "token")
     private String fcmToken;
+    @NotNull
     @Column(name = "email")
     private String email;
-
+    @NotNull
     @Column(name = "nickname")
     private String nickname;
+    @NotNull
     @Column(name = "profile_img")
     private String profileImg;
 
