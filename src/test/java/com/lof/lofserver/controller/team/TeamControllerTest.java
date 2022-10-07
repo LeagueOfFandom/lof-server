@@ -16,16 +16,16 @@ class TeamControllerTest {
     MockMvc mockMvc;
 
     @Test
-    @DisplayName("팀 전부 가져오기 - 성공")
+    @DisplayName("팀 전부 가져오기(test token) - 성공")
     void getAllTeamListByUserId() throws Exception {
         //given
-       String token = "token";
+       String token = "test";
 
         //when
         ResultActions resultActions = mockMvc.perform(
                 MockMvcRequestBuilders.get("/v1/team/allByUser")
                         .contentType("application/json")
-                        .content(token));
+                        .header("Authorization", token));
 
         //then
         resultActions.andExpect(status().isOk());
