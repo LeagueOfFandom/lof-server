@@ -1,7 +1,8 @@
 package com.lof.lofserver.controller.user;
 
 import com.lof.lofserver.controller.user.parser.UserControllerParser;
-import com.lof.lofserver.controller.user.request.UserInfo;
+import com.lof.lofserver.controller.user.request.UserInfoDto;
+import com.lof.lofserver.filter.JsonWebToken;
 import com.lof.lofserver.service.user.UserService;
 import com.lof.lofserver.service.user.request.UserSavedInfoDto;
 import com.lof.lofserver.service.user.response.UserResponseInfoDto;
@@ -12,20 +13,26 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/v1/user")
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
-
+    private final JsonWebToken jsonWebToken;
     private final UserControllerParser userControllerParser;
-    @PostMapping("/google/userCreate")
-    public ResponseEntity<?> createUser(@RequestBody UserInfo userInfo) {
+
+    @PostMapping("/create")
+    public ResponseEntity<?> createUser(@Valid @RequestBody UserInfoDto userInfoDto) {
         //userInfo -> UserSavedInfoDto
-        UserSavedInfoDto userSavedInfoDto = userControllerParser.parseUserInfoDtoToUserSavedInfoDto(userInfo);
+        UserSavedInfoDto userSavedInfoDto = userControllerParser.parseUserInfoDtoToUserSavedInfoDto(userInfoDto);
         //user create
         UserResponseInfoDto userResponseInfoDto = userService.createUserByUserSavedInfoDto(userSavedInfoDto);
-        return ResponseEntity.ok(userService.createUserByUserSavedInfoDto(userSavedInfoDto));
+        //jwt token 생성
+        String token = jsonWebToken.createJsonWebTokenById(userResponseInfoDto.id());
+
+        return ResponseEntity.ok(token);
     }
 }

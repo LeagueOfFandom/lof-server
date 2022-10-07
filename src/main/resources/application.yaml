@@ -24,6 +24,7 @@ spring:
   config:
     activate:
       on-profile: localDB
+    import: localKey.yaml
   jpa:
     hibernate:
       ddl-auto: create

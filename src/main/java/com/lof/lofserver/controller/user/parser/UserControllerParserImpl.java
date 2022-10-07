@@ -1,6 +1,6 @@
 package com.lof.lofserver.controller.user.parser;
 
-import com.lof.lofserver.controller.user.request.UserInfo;
+import com.lof.lofserver.controller.user.request.UserInfoDto;
 import com.lof.lofserver.service.user.request.UserSavedInfoDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,12 +10,12 @@ import org.springframework.stereotype.Service;
 public class UserControllerParserImpl implements UserControllerParser {
 
     @Override
-    public UserSavedInfoDto parseUserInfoDtoToUserSavedInfoDto(UserInfo userInfo) {
+    public UserSavedInfoDto parseUserInfoDtoToUserSavedInfoDto(UserInfoDto userInfoDto) {
         return UserSavedInfoDto.builder()
-                .fcmToken(userInfo.fcmToken())
-                .profileImg(userInfo.picture())
-                .email(userInfo.email())
-                .nickname(userInfo.name())
+                .fcmToken(userInfoDto.fcmToken())
+                .profileImg(userInfoDto.picture())
+                .email(userInfoDto.email())
+                .nickname(userInfoDto.name())
                 .build();
     }
 }
