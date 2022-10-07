@@ -29,7 +29,6 @@ class UserEntityTest {
                 .email(email)
                 .nickname(nickname)
                 .profileImg(profileImage)
-                .leagueList(leagueIdList)
                 .build();
 
         //then
@@ -37,7 +36,6 @@ class UserEntityTest {
         assertThat(userEntity.getEmail()).isEqualTo(email);
         assertThat(userEntity.getNickname()).isEqualTo(nickname);
         assertThat(userEntity.getProfileImg()).isEqualTo(profileImage);
-        assertThat(userEntity.getLeagueList()).isEqualTo(leagueIdList);
     }
 
     @Test
@@ -55,7 +53,6 @@ class UserEntityTest {
                 .email(email)
                 .nickname(nickname)
                 .profileImg(profileImage)
-                .leagueList(leagueIdList)
                 .build();
 
         //when
@@ -68,13 +65,11 @@ class UserEntityTest {
         userEntity.setFcmToken(newFcmToken);
         userEntity.setNickname(newNickname);
         userEntity.setProfileImg(newProfileImage);
-        userEntity.setLeagueList(newLeagueIdList);
 
         //then
         assertThat(userEntity.getFcmToken()).isEqualTo(newFcmToken);
         assertThat(userEntity.getNickname()).isEqualTo(newNickname);
         assertThat(userEntity.getProfileImg()).isEqualTo(newProfileImage);
-        assertThat(userEntity.getLeagueList()).isEqualTo(newLeagueIdList);
     }
 
     @Test
@@ -91,7 +86,6 @@ class UserEntityTest {
                 .email(email)
                 .nickname(nickname)
                 .profileImg(profileImage)
-                .leagueList(leagueIdList)
                 .build();
 
         //when
@@ -111,21 +105,18 @@ class UserEntityTest {
         String email = "email";
         String nickname = "nickname";
         String profileImage = "profileImage";
-        List<Long> leagueIdList = List.of(1L, 2L, 3L);
 
         UserEntity userEntity = UserEntity.builder()
                 .fcmToken(fcmToken)
                 .email(email)
                 .nickname(nickname)
                 .profileImg(profileImage)
-                .leagueList(leagueIdList)
                 .build();
 
         //when
         userEntity.setFcmToken(null);
         userEntity.setNickname(null);
         userEntity.setProfileImg(null);
-        userEntity.setLeagueList(null);
         userEntity.setTeamList(null);
         userEntity.setUserSelectedMatchList(null);
 
@@ -134,7 +125,7 @@ class UserEntityTest {
         Validator validator = factory.getValidator();
         var constraintViolations = validator.validate(userEntity);
 
-        assertThat(constraintViolations.size()).isEqualTo(6);
+        assertThat(constraintViolations.size()).isEqualTo(5);
     }
 
 }

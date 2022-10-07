@@ -45,11 +45,6 @@ public class UserEntity {
 
     @NotNull
     @Type(type = "json")
-    @Column(name = "league_list" ,columnDefinition = "json")
-    private List<Long> leagueList = new ArrayList<>();
-
-    @NotNull
-    @Type(type = "json")
     @Column(name = "selected", columnDefinition = "json")
     private Map<Long, Boolean> userSelectedMatchList = new HashMap<>();
 
@@ -69,21 +64,16 @@ public class UserEntity {
         this.teamList = teamList;
     }
 
-    public void setLeagueList(List<Long> leagueList) {
-        this.leagueList = leagueList;
-    }
-
     public void setUserSelectedMatchList(Map<Long, Boolean> userSelectedMatchList) {
         this.userSelectedMatchList = userSelectedMatchList;
     }
 
     @Builder
-    public UserEntity(String fcmToken, String email, String nickname, String profileImg, List<Long> leagueList) {
+    public UserEntity(String fcmToken, String email, String nickname, String profileImg) {
         this.fcmToken = fcmToken;
         this.email = email;
         this.nickname = nickname;
         this.profileImg = profileImg;
-        this.leagueList = leagueList;
     }
 }
 

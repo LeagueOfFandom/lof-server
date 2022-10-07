@@ -8,8 +8,7 @@ public record UserSavedInfoDto (
         String fcmToken,
         String email,
         String nickname,
-        String profileImg,
-        List<Long> leagueIdList
+        String profileImg
 ){
     @Builder
     public UserSavedInfoDto{

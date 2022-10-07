@@ -1,45 +1,33 @@
 package com.lof.lofserver.controller.user;
 
-import com.lof.lofserver.controller.user.request.UserInfoDtoByGoogle;
-import com.lof.lofserver.service.certification.CertificationDto;
-import com.lof.lofserver.service.certification.CertificationService;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
+import com.lof.lofserver.controller.user.parser.UserControllerParser;
+import com.lof.lofserver.service.user.UserService;
+import com.lof.lofserver.service.user.request.UserSavedInfoDto;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.test.web.servlet.MockMvc;
 
-import static org.mockito.BDDMockito.given;
-
-@ExtendWith(MockitoExtension.class)
+@WebMvcTest(UserController.class)
 class UserControllerTest {
 
+    @Autowired
+    MockMvc mockMvc;
+
     @Mock
-    private CertificationService certificationService;
+    UserControllerParser userControllerParser;
 
-    @InjectMocks
-    private UserController userController;
+    @Mock
+    UserService userService;
 
-    @Test
-    @DisplayName("유저 생성 테스트")
-    public void userCreate(){
-        //given
-        String googleAccessToken = "googleAccessToken";
-        String fcmToken = "fcmToken";
-        UserInfoDtoByGoogle userInfoDtoByGoogle = new UserInfoDtoByGoogle(googleAccessToken, fcmToken);
-        given(certificationService.getCertification(userInfoDtoByGoogle.getGoogleAccessToken())).
-                willReturn(CertificationDto.builder()
-                        .name("test")
-                        .email("test")
-                        .profileImg("test").build());
 
-        //when
-        ResponseEntity<?> responseEntity = userController.createUser(userInfoDtoByGoogle);
-
-        //then
-        responseEntity.getStatusCodeValue();
+    private UserSavedInfoDto getUserSavedInfoDtoTest() {
+        return UserSavedInfoDto.builder()
+                .nickname("test")
+                .fcmToken("test")
+                .email("test")
+                .profileImg("test")
+                .build();
     }
 
 }

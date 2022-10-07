@@ -3,7 +3,7 @@ package com.lof.lofserver.service.user;
 import com.lof.lofserver.domain.user.UserEntity;
 import com.lof.lofserver.domain.user.UserRepository;
 import com.lof.lofserver.service.user.request.UserSavedInfoDto;
-import com.lof.lofserver.service.user.response.UserInfoDto;
+import com.lof.lofserver.service.user.response.UserResponseInfoDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,7 +34,6 @@ class UserServiceImplTest {
                 .email("email")
                 .nickname("nickname")
                 .profileImg("profileImage")
-                .leagueIdList(List.of(1L, 2L, 3L))
                 .build();
 
         given(userRepository.findByEmail(userSavedInfoDto.email())).willReturn(null);
@@ -43,15 +42,14 @@ class UserServiceImplTest {
                 .email(userSavedInfoDto.email())
                 .nickname(userSavedInfoDto.nickname())
                 .profileImg(userSavedInfoDto.profileImg())
-                .leagueList(userSavedInfoDto.leagueIdList())
                 .build());
 
         //when
-        UserInfoDto userInfoDto = userService.createUserByUserSavedInfoDto(userSavedInfoDto);
+        UserResponseInfoDto userResponseInfoDto = userService.createUserByUserSavedInfoDto(userSavedInfoDto);
 
         //then
-        assertThat(userInfoDto).isNotNull();
-        assertThat(userInfoDto.isNewUser()).isTrue();
+        assertThat(userResponseInfoDto).isNotNull();
+        assertThat(userResponseInfoDto.isNewUser()).isTrue();
     }
 
     @Test
@@ -63,17 +61,16 @@ class UserServiceImplTest {
                 .email("email")
                 .nickname("nickname")
                 .profileImg("profileImage")
-                .leagueIdList(List.of(1L, 2L, 3L))
                 .build();
 
         given(userRepository.findByEmail(userSavedInfoDto.email())).willReturn(UserEntity.builder().build());
 
         //when
-        UserInfoDto userInfoDto = userService.createUserByUserSavedInfoDto(userSavedInfoDto);
+        UserResponseInfoDto userResponseInfoDto = userService.createUserByUserSavedInfoDto(userSavedInfoDto);
 
         //then
-        assertThat(userInfoDto).isNotNull();
-        assertThat(userInfoDto.isNewUser()).isFalse();
+        assertThat(userResponseInfoDto).isNotNull();
+        assertThat(userResponseInfoDto.isNewUser()).isFalse();
     }
 
 }

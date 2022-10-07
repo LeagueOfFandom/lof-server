@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import javax.validation.ConstraintViolationException;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -39,7 +38,6 @@ class UserRepositoryTest {
                 .email("email")
                 .nickname("nickname")
                 .profileImg("profileImage")
-                .leagueList(List.of(1L, 2L, 3L))
                 .build();
 
         //when
@@ -50,7 +48,6 @@ class UserRepositoryTest {
         assertThat(savedUserEntity.getEmail()).isEqualTo("email");
         assertThat(savedUserEntity.getNickname()).isEqualTo("nickname");
         assertThat(savedUserEntity.getProfileImg()).isEqualTo("profileImage");
-        assertThat(savedUserEntity.getLeagueList()).isEqualTo(List.of(1L, 2L, 3L));
     }
 
     @Test
@@ -62,7 +59,6 @@ class UserRepositoryTest {
                 .email("email")
                 .nickname("nickname")
                 .profileImg("profileImage")
-                .leagueList(List.of(1L, 2L, 3L))
                 .build();
 
         //when
@@ -76,7 +72,6 @@ class UserRepositoryTest {
         assertThat(findUserEntity.getEmail()).isEqualTo("email");
         assertThat(findUserEntity.getNickname()).isEqualTo("nickname");
         assertThat(findUserEntity.getProfileImg()).isEqualTo("profileImage");
-        assertThat(findUserEntity.getLeagueList()).isEqualTo(List.of(1L, 2L, 3L));
     }
 
     @Test
@@ -88,7 +83,6 @@ class UserRepositoryTest {
                 .email("email")
                 .nickname("nickname")
                 .profileImg("profileImage")
-                .leagueList(List.of(1L, 2L, 3L))
                 .build();
 
         //when
@@ -108,7 +102,6 @@ class UserRepositoryTest {
                 .email("email")
                 .nickname("nickname")
                 .profileImg("profileImage")
-                .leagueList(List.of(1L, 2L, 3L))
                 .build();
 
         //when
@@ -129,7 +122,6 @@ class UserRepositoryTest {
                 .email("email")
                 .nickname("nickname")
                 .profileImg("profileImage")
-                .leagueList(List.of(1L, 2L, 3L))
                 .build();
 
         //when
@@ -137,7 +129,6 @@ class UserRepositoryTest {
         savedUserEntity.setFcmToken("updateToken");
         savedUserEntity.setNickname("updateNickname");
         savedUserEntity.setProfileImg("updateProfileImage");
-        savedUserEntity.setLeagueList(List.of(4L, 5L, 6L));
         UserEntity updatedUserEntity = userRepository.save(savedUserEntity);
         UserEntity findUserEntity = userRepository.findById(updatedUserEntity.getUserId()).orElse(null);
 
@@ -146,7 +137,6 @@ class UserRepositoryTest {
         assertThat(findUserEntity.getFcmToken()).isEqualTo("updateToken");
         assertThat(findUserEntity.getNickname()).isEqualTo("updateNickname");
         assertThat(findUserEntity.getProfileImg()).isEqualTo("updateProfileImage");
-        assertThat(findUserEntity.getLeagueList()).isEqualTo(List.of(4L, 5L, 6L));
 
     }
 }
