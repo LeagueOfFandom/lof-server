@@ -2,6 +2,7 @@ package com.lof.lofserver.config;
 
 
 import com.lof.lofserver.filter.JsonWebToken;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebFilter(urlPatterns = "/api/v1/*")
+@Component
 public class JwtFilter extends OncePerRequestFilter {
 
     private final JsonWebToken jsonWebToken;
@@ -22,9 +24,13 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        String url = request.getServletPath();
+
         //user 생성시에는 filter 를 적용하지 않는다.
-        if(request.getServletPath().equals("/create"))
+        if(url.equals("/v1/user/create")) {
+            filterChain.doFilter(request, response);
             return;
+        }
 
         String token = request.getHeader("Authorization");
         //token 이 없을 경우

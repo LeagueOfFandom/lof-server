@@ -8,6 +8,7 @@ import com.lof.lofserver.service.user.response.UserResponseInfoDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
@@ -19,6 +20,7 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(UserController.class)
+@AutoConfigureMockMvc(addFilters = false)
 class UserControllerTest {
 
     @MockBean
@@ -29,8 +31,11 @@ class UserControllerTest {
 
     @MockBean
     private JsonWebToken jsonWebToken;
+
     @Autowired
     MockMvc mockMvc;
+
+
 
     @Test
     @DisplayName("회원가입 - 성공")
