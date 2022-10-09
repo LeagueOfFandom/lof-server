@@ -13,6 +13,10 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
+    /** 유저 생성
+     * @param userSavedInfoDto - 유저 정보
+     * @return UserResponseInfoDto
+     */
     @Override
     public UserResponseInfoDto createUserByUserSavedInfoDto(UserSavedInfoDto userSavedInfoDto) {
         //find user
@@ -32,6 +36,12 @@ public class UserServiceImpl implements UserService {
         return parseUserResponseInfoDto(savedUserEntity, true);
     }
 
+    /**
+     * create UserResponseInfoDto by UserEntity
+     * @param userEntity - user entity
+     * @param isNewUser - boolean value
+     * @return UserResponseInfoDto
+     */
     private UserResponseInfoDto parseUserResponseInfoDto(UserEntity userEntity, Boolean isNewUser) {
         return UserResponseInfoDto.builder()
                 .id(userEntity.getUserId())
@@ -39,6 +49,11 @@ public class UserServiceImpl implements UserService {
                 .build();
     }
 
+    /**
+     * create UserEntity by UserSavedInfoDto
+     * @param userSavedInfoDto - user entity 에 저장할 정보
+     * @return UserEntity
+     */
     private UserEntity createUserEntity(UserSavedInfoDto userSavedInfoDto) {
         return UserEntity.builder()
                 .fcmToken(userSavedInfoDto.fcmToken())

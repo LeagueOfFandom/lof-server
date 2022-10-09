@@ -1,4 +1,4 @@
-package com.lof.lofserver.controller.team;
+package com.lof.lofserver.controller.league;
 
 import com.lof.lofserver.filter.JsonWebToken;
 import org.junit.jupiter.api.DisplayName;
@@ -10,14 +10,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import javax.servlet.http.HttpServletRequest;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(TeamController.class)
-class TeamControllerTest {
+@WebMvcTest(LeagueController.class)
+class LeagueControllerTest {
     @Autowired
     MockMvc mockMvc;
 
@@ -33,7 +31,7 @@ class TeamControllerTest {
 
         //when
         ResultActions resultActions = mockMvc.perform(
-                MockMvcRequestBuilders.get("/v1/team/allByUser")
+                MockMvcRequestBuilders.get("/v1/league/getAllByUser")
                         .contentType("application/json")
                         .header("Authorization", token));
 
@@ -50,7 +48,7 @@ class TeamControllerTest {
 
         //when
         ResultActions resultActions = mockMvc.perform(
-                MockMvcRequestBuilders.get("/v1/team/allByUser")
+                MockMvcRequestBuilders.get("/v1/league/getAllByUser")
                         .contentType("application/json")
                         .header("Authorization", token));
 

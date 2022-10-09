@@ -30,10 +30,7 @@ class LeagueServiceImplTest {
         given(leagueRepository.findAllIdByName(any())).willReturn(List.of(1L, 2L, 3L));
 
         //when
-        List<Long> leagueIdList = leagueService.getBaseLeagueIdList();
 
         //then
-        assertThat(leagueIdList).isNotNull();
-        assertThat(leagueIdList.size()).isEqualTo(3);
     }
 }

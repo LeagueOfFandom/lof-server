@@ -1,17 +1,16 @@
-package com.lof.lofserver.controller.team;
+package com.lof.lofserver.controller.league;
 
-import lombok.Getter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping("/v1/team")
-public class TeamController {
+@RequestMapping("/v1/league")
+public class LeagueController {
 
-    @GetMapping("/allByUser")
-    public ResponseEntity<?> getAllTeamListByUserId(HttpServletRequest request) {
+    @GetMapping("/getAllByUser")
+    public ResponseEntity<?> getAllLeagueAndTeamListByUserId(HttpServletRequest request) {
         Long userId = Long.parseLong(request.getAttribute("id").toString());
         return ResponseEntity.ok("ok");
     }

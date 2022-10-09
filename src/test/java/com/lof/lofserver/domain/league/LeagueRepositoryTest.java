@@ -15,8 +15,8 @@ class LeagueRepositoryTest {
     private LeagueRepository leagueRepository;
 
     @Test
-    @DisplayName("이름으로 리그 검색 - 실패")
-    void findLeagueByNameFail() {
+    @DisplayName("이름으로 리그 검색")
+    void findLeagueByName() {
         //given
         List<String> name = List.of("리그1", "리그2", "리그3");
 
@@ -24,7 +24,7 @@ class LeagueRepositoryTest {
         List<Long> allIdByName = leagueRepository.findAllIdByName(name);
 
         //then
-        assertThat(allIdByName).isEmpty();
+        assertThat(allIdByName).isInstanceOf(List.class);
     }
 
 }
