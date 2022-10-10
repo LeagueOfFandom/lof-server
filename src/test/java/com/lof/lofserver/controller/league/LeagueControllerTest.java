@@ -1,5 +1,6 @@
 package com.lof.lofserver.controller.league;
 
+import com.lof.lofserver.domain.user.UserRepository;
 import com.lof.lofserver.filter.JsonWebToken;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,14 +22,14 @@ class LeagueControllerTest {
 
     @MockBean
     JsonWebToken jsonWebToken;
+
+    @MockBean
+    UserRepository userRepository;
     @Test
     @DisplayName("팀 전부 가져오기(test token) - 성공")
     void getAllTeamListByUserId() throws Exception {
         //given
         String token = "test";
-        //given(jsonWebToken.checkJwtToken(any(String.class))).willReturn("valid");
-
-
         //when
         ResultActions resultActions = mockMvc.perform(
                 MockMvcRequestBuilders.get("/v1/league/getAllByUser")

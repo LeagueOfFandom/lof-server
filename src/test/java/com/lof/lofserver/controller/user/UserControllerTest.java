@@ -1,6 +1,7 @@
 package com.lof.lofserver.controller.user;
 
 import com.lof.lofserver.controller.user.parser.UserControllerParser;
+import com.lof.lofserver.domain.user.UserRepository;
 import com.lof.lofserver.filter.JsonWebToken;
 import com.lof.lofserver.service.user.UserService;
 import com.lof.lofserver.service.user.request.UserSavedInfoDto;
@@ -24,13 +25,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class UserControllerTest {
 
     @MockBean
-    private UserControllerParser userControllerParser;
+    UserControllerParser userControllerParser;
 
     @MockBean
-    private UserService userService;
+    UserService userService;
 
     @MockBean
-    private JsonWebToken jsonWebToken;
+    JsonWebToken jsonWebToken;
+
+    @MockBean
+    UserRepository userRepository;
 
     @Autowired
     MockMvc mockMvc;

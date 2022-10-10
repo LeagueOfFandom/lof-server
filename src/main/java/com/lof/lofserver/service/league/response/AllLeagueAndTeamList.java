@@ -5,7 +5,7 @@ import lombok.Builder;
 
 import java.util.List;
 
-public record AllLeagueAndTeamList(List<LeagueInfo> leagueInfo, List<String> leagueList) {
+public record AllLeagueAndTeamList(List<LeagueInfo> leagueInfoList, List<String> leagueNameList) {
     @Builder
     public AllLeagueAndTeamList {
     }

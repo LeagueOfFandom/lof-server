@@ -1,6 +1,9 @@
 package com.lof.lofserver.service.league;
 
 import com.lof.lofserver.domain.league.LeagueRepository;
+import com.lof.lofserver.domain.user.UserEntity;
+import com.lof.lofserver.domain.user.UserRepository;
+import com.lof.lofserver.service.league.response.AllLeagueAndTeamList;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -8,7 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -18,19 +21,26 @@ import static org.mockito.BDDMockito.given;
 class LeagueServiceImplTest {
 
     @InjectMocks
-    private LeagueServiceImpl leagueService;
+    LeagueServiceImpl leagueService;
 
     @Mock
-    private LeagueRepository leagueRepository;
+    UserRepository userRepository;
+
+    @Mock
+    LeagueRepository leagueRepository;
 
     @Test
-    @DisplayName("기본 리그 생성 테스트")
-    void createBaseLeague(){
+    @DisplayName("전체 리그 생성 테스트")
+    void createAllLeague(){
         //given
-        given(leagueRepository.findAllIdByName(any())).willReturn(List.of(1L, 2L, 3L));
+        Long userId = 1L;
+        given(leagueRepository.findAllIdByName(any())).willReturn(null);
+        given(userRepository.findById(userId)).willReturn(Optional.of(UserEntity.builder().build()));
 
         //when
+        AllLeagueAndTeamList allLeagueAndTeamList = leagueService.getAllLeagueAndTeamList(1L);
 
         //then
+        assertThat(allLeagueAndTeamList).isInstanceOf(AllLeagueAndTeamList.class);
     }
 }
