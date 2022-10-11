@@ -13,6 +13,9 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @WebFilter(urlPatterns = "/api/v1/*")
 @Component
@@ -22,15 +25,23 @@ public class JwtFilter extends OncePerRequestFilter {
     private final JsonWebToken jsonWebToken;
     private final UserRepository userRepository;
 
+
+    private final List<String> excludeUrlPatterns = new ArrayList<>(Arrays.asList("/swagger-ui.html",
+            "/swagger-uui.html", "/webjars/springfox-swagger-ui/springfox.css",
+            "/webjars/springfox-swagger-ui/swagger-ui-bundle.js", "/webjars/springfox-swagger-ui/swagger-ui.css",
+            "/webjars/springfox-swagger-ui/swagger-ui-standalone-preset.js",
+            "/webjars/springfox-swagger-ui/springfox.js", "/swagger-resources/configuration/ui",
+            "/webjars/springfox-swagger-ui/favicon-32x32.png", "/swagger-resources/configuration/security",
+            "/swagger-resources", "/v2/api-docs",
+            "/webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-700.woff2",
+            "/webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-regular.woff2",
+            "/webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-700.woff2",
+            "/webjars/springfox-swagger-ui/favicon-16x16.png",
+            "/v1/user/create" //user create
+             ));
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String url = request.getServletPath();
-
-        //user 생성시에는 filter 를 적용하지 않는다.
-        if(url.equals("/v1/user/create")) {
-            filterChain.doFilter(request, response);
-            return;
-        }
 
         String token = request.getHeader("Authorization");
         //token 이 없을 경우
@@ -61,5 +72,11 @@ public class JwtFilter extends OncePerRequestFilter {
         else {
             response.sendError(401, "Unauthorized");
         }
+    }
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getRequestURI();
+        return excludeUrlPatterns.contains(path);
     }
 }

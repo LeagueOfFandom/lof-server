@@ -49,6 +49,10 @@ dependencies {
     //json web token
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
 
+    //swagger
+    implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+    implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+
 }
 
 tasks.named('test') {
