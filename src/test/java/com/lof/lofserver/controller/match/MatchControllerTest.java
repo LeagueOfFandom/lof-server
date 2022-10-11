@@ -4,6 +4,7 @@ import com.lof.lofserver.domain.user.UserRepository;
 import com.lof.lofserver.filter.JsonWebToken;
 import com.lof.lofserver.service.community.CommunityService;
 import com.lof.lofserver.service.community.response.BannerView;
+import com.lof.lofserver.service.match.MatchService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -33,12 +35,16 @@ class MatchControllerTest {
     @MockBean
     CommunityService communityService;
 
+    @MockBean
+    MatchService matchService;
+
     @Test
     @DisplayName("메인 페이지 가져오기")
     void getMainPage() throws Exception {
         //given
         String token = "test";
         given(communityService.getBannerList()).willReturn(getBannerViewTest());
+        given(matchService.getLiveMatchList(any(Long.class))).willReturn(List.of());
 
         //when
         ResultActions resultActions = mockMvc.perform(

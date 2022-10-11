@@ -2,6 +2,7 @@ package com.lof.lofserver.controller.match;
 
 import com.lof.lofserver.controller.match.response.CommonItemDto;
 import com.lof.lofserver.service.community.CommunityService;
+import com.lof.lofserver.service.match.MatchService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,14 +21,17 @@ import java.util.List;
 public class MatchController {
 
     private final CommunityService communityService;
+    private final MatchService matchService;
 
     @GetMapping("/mainPage")
     @ApiOperation(value = "메인페이지에 필요한 정보를 가져온다.", response = CommonItemDto[].class)
     public ResponseEntity<?> getMainPage(HttpServletRequest request, @RequestHeader("Authorization") String ignoredToken) {
+        Long userId = (Long) request.getAttribute("id");
         List<Object> commonItemList = new ArrayList<>();
         //get bannerList
         commonItemList.add(communityService.getBannerList());
         //get liveMatch
+        commonItemList.addAll(matchService.getLiveMatchList(userId));
         return ResponseEntity.ok("ok");
     }
 

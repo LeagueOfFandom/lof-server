@@ -38,8 +38,8 @@ public class UserController {
 
     @GetMapping("/getNickname")
     @ApiOperation(value = "유저의 닉네임을 가져온다.", response = String.class)
-    public ResponseEntity<?> getNickname(HttpServletRequest request) {
-        Long userId = Long.parseLong(request.getAttribute("id").toString());
+    public ResponseEntity<?> getNickname(HttpServletRequest request, @RequestHeader("Authorization") String ignoredToken) {
+        Long userId = (Long) request.getAttribute("id");
         return ResponseEntity.ok(userService.getNicknameByUserId(userId));
     }
 
@@ -47,7 +47,7 @@ public class UserController {
     @ApiOperation(value = "닉네임을 설정한다.", response = String.class)
     public ResponseEntity<?> setUserNickName(HttpServletRequest request, @RequestHeader("Authorization") String ignoredToken, @RequestBody String nickname) {
         //get userId
-        Long userId = Long.parseLong(request.getAttribute("id").toString());
+        Long userId = (Long) request.getAttribute("id");
         //set user nickname
         return ResponseEntity.ok(userService.setUserNickName(userId, nickname));
     }
