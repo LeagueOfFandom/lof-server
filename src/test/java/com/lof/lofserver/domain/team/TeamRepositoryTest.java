@@ -22,7 +22,7 @@ class TeamRepositoryTest {
         Long seriesId = 1L;
 
         //when
-        List<TeamEntity> allBySeriesId = teamRepository.findAllBySeriesId(seriesId);
+        Object allBySeriesId = teamRepository.findAllBySeriesId(seriesId);
 
         //then
         assertThat(allBySeriesId).isInstanceOf(List.class);

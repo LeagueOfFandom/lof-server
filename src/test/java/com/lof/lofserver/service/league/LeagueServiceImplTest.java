@@ -3,7 +3,7 @@ package com.lof.lofserver.service.league;
 import com.lof.lofserver.domain.league.LeagueRepository;
 import com.lof.lofserver.domain.user.UserEntity;
 import com.lof.lofserver.domain.user.UserRepository;
-import com.lof.lofserver.service.league.response.AllLeagueAndTeamList;
+import com.lof.lofserver.service.league.response.BaseLeagueAndTeamList;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -38,9 +38,9 @@ class LeagueServiceImplTest {
         given(userRepository.findById(userId)).willReturn(Optional.of(UserEntity.builder().build()));
 
         //when
-        AllLeagueAndTeamList allLeagueAndTeamList = leagueService.getAllLeagueAndTeamList(1L);
+        Object baseLeagueAndTeamList = leagueService.getAllLeagueAndTeamListByUserId(1L);
 
         //then
-        assertThat(allLeagueAndTeamList).isInstanceOf(AllLeagueAndTeamList.class);
+        assertThat(baseLeagueAndTeamList).isInstanceOf(BaseLeagueAndTeamList.class);
     }
 }

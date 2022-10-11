@@ -1,7 +1,9 @@
 package com.lof.lofserver.controller.league;
 
+import com.lof.lofserver.controller.league.parser.LeagueControllerParser;
 import com.lof.lofserver.domain.user.UserRepository;
 import com.lof.lofserver.filter.JsonWebToken;
+import com.lof.lofserver.service.league.LeagueService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,12 @@ class LeagueControllerTest {
 
     @MockBean
     UserRepository userRepository;
+
+    @MockBean
+    LeagueControllerParser leagueControllerParser;
+
+    @MockBean
+    LeagueService leagueService;
     @Test
     @DisplayName("팀 전부 가져오기(test token) - 성공")
     void getAllTeamListByUserId() throws Exception {

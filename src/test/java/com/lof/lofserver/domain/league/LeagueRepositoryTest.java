@@ -21,7 +21,7 @@ class LeagueRepositoryTest {
         List<String> name = List.of("리그1", "리그2", "리그3");
 
         //when
-        List<Long> allIdByName = leagueRepository.findAllIdByName(name);
+        Object allIdByName = leagueRepository.findAllIdByName(name);
 
         //then
         assertThat(allIdByName).isInstanceOf(List.class);

@@ -6,7 +6,7 @@ import com.lof.lofserver.domain.team.TeamEntity;
 import com.lof.lofserver.domain.team.TeamRepository;
 import com.lof.lofserver.domain.user.UserEntity;
 import com.lof.lofserver.domain.user.UserRepository;
-import com.lof.lofserver.service.league.response.AllLeagueAndTeamList;
+import com.lof.lofserver.service.league.response.BaseLeagueAndTeamList;
 import com.lof.lofserver.service.league.response.sub.LeagueInfo;
 import com.lof.lofserver.service.league.response.sub.TeamInfo;
 import lombok.RequiredArgsConstructor;
@@ -66,7 +66,7 @@ public class LeagueServiceImpl implements LeagueService{
      * @return AllLeagueAndTeamList - 기본 리그 리스트
      */
     @Override
-    public AllLeagueAndTeamList getAllLeagueAndTeamList(Long userId) {
+    public BaseLeagueAndTeamList getAllLeagueAndTeamListByUserId(Long userId) {
         UserEntity userEntity = userRepository.findById(userId).orElseThrow();
 
         //기본 리그 리스트 가져오기
@@ -86,7 +86,7 @@ public class LeagueServiceImpl implements LeagueService{
             leagueInfoList.add(createLeagueInfoByLeagueSlugAndTeamEntityListAndUserTeamList(leagueEntity.getSlug(), teamEntityList, userEntity.getTeamList()));
         }
 
-        return AllLeagueAndTeamList.builder()
+        return BaseLeagueAndTeamList.builder()
                 .leagueNameList(leagueNameList)
                 .leagueInfoList(leagueInfoList)
                 .build();
