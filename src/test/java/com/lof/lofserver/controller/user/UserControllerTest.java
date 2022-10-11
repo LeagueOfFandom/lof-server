@@ -21,7 +21,6 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(UserController.class)
-@AutoConfigureMockMvc(addFilters = false)
 class UserControllerTest {
 
     @MockBean
@@ -40,6 +39,25 @@ class UserControllerTest {
     MockMvc mockMvc;
 
 
+    @Test
+    @DisplayName("유저 닉네임 설정 - 성공")
+    void setUserNiceName() throws Exception {
+        //given
+        String token = "test";
+        //given(jsonWebToken.checkJwtToken(any(String.class))).willReturn("valid");
+        //given(userControllerParser.parseUserSavedInfoDto(any(String.class))).willReturn(new UserSavedInfoDto("test", "test"));
+        //given(userService.setUserNiceName(any(UserSavedInfoDto.class))).willReturn(new UserResponseInfoDto("test", "test"));
+
+        //when
+        ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders.post("/v1/user/setNickname")
+                        .contentType("application/json")
+                        .header("Authorization", token)
+                        );
+
+        //then
+        resultActions.andExpect(status().isOk());
+    }
 
     @Test
     @DisplayName("회원가입 - 성공")

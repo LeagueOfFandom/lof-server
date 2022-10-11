@@ -8,10 +8,7 @@ import com.lof.lofserver.service.user.request.UserSavedInfoDto;
 import com.lof.lofserver.service.user.response.UserResponseInfoDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -35,5 +32,14 @@ public class UserController {
         String token = jsonWebToken.createJsonWebTokenById(userResponseInfoDto.id());
 
         return ResponseEntity.ok(token);
+    }
+
+    @PostMapping("/setNickname")
+    public ResponseEntity<?> setUserNickName(HttpServletRequest request, @RequestHeader("Authorization") String ignoredToken) {
+        //get userId
+        Long userId = Long.parseLong(request.getAttribute("id").toString());
+        //set user nickname
+        //userService.setUserNickName(userId, nickName);
+        return ResponseEntity.ok("ok");
     }
 }
