@@ -9,7 +9,6 @@ import com.lof.lofserver.service.user.response.UserResponseInfoDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
@@ -69,7 +68,8 @@ class UserControllerTest {
                 MockMvcRequestBuilders.post("/v1/user/setNickname")
                         .contentType("application/json")
                         .header("Authorization", token)
-                        );
+                        .content("testNickname"));
+
 
         //then
         resultActions.andExpect(status().isOk());
