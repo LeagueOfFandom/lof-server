@@ -5,9 +5,12 @@ import com.lof.lofserver.controller.league.response.sub.LeagueInfoDto;
 import com.lof.lofserver.controller.league.response.sub.TeamInfoDto;
 import com.lof.lofserver.service.league.response.BaseLeagueAndTeamList;
 import com.lof.lofserver.service.league.response.sub.LeagueInfo;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class LeagueControllerParserImpl implements LeagueControllerParser {
     @Override
     public BaseLeagueAndTeamListDto parseLeagueInfoToBaseLeagueAndTeamList(BaseLeagueAndTeamList baseLeagueAndTeamList) {
@@ -26,6 +29,7 @@ public class LeagueControllerParserImpl implements LeagueControllerParser {
         //teamInfoList 복사
         List<TeamInfoDto> teamInfoDtoList = leagueInfo.teamInfo().stream().map(teamInfo ->
                 TeamInfoDto.builder()
+                        .league(teamInfo.league())
                         .teamId(teamInfo.teamId())
                         .teamCheck(teamInfo.teamCheck())
                         .teamImg(teamInfo.teamImg())

@@ -27,7 +27,7 @@ spring:
     import: localKey.yaml
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
   datasource:
     url: jdbc:mariadb://localhost:3306/lofDev?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
     username: root
@@ -43,7 +43,7 @@ spring:
       on-profile: devServerDB
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
   datasource:
     url: ${lof.mariadb.url.dev}?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
     username: root

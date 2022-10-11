@@ -37,17 +37,18 @@ public class LeagueServiceImpl implements LeagueService{
     }
 
     /** 리그 정보 생성
-     * @param leagueSlug - 리그 설명
+     * @param leagueEntity - 리그 엔티티
      * @param teamEntityList - 리그에 속한 팀 엔티티 리스트
      * @param userSelectedTeamIdList - 유저가 선택한 팀 아이디 리스트
      * @return LeagueInfo - 리그 정보
      */
-    private LeagueInfo createLeagueInfoByLeagueSlugAndTeamEntityListAndUserTeamList(String leagueSlug,List<TeamEntity> teamEntityList, List<Long> userSelectedTeamIdList){
+    private LeagueInfo createLeagueInfoByLeagueEntityAndTeamEntityListAndUserTeamList(LeagueEntity leagueEntity, List<TeamEntity> teamEntityList, List<Long> userSelectedTeamIdList){
         //리그의 팀 정보 리스트 생성
         List<TeamInfo> teamInfoList = teamEntityList.stream()
                 .map(teamEntity -> TeamInfo.builder()
+                        .league(leagueEntity.getName())
                         .teamId(teamEntity.getId())
-                        .teamName(teamEntity.getName())
+                        .teamName(teamEntity.getAcronym())
                         .teamImg(teamEntity.getImageUrl())
                         .teamCheck(userSelectedTeamIdList.contains(teamEntity.getId()))
                         .build())
@@ -55,7 +56,7 @@ public class LeagueServiceImpl implements LeagueService{
 
         //리그 정보 생성
         return LeagueInfo.builder()
-                .note(leagueSlug)
+                .note(leagueEntity.getSlug())
                 .teamInfo(teamInfoList)
                 .build();
     }
@@ -83,7 +84,7 @@ public class LeagueServiceImpl implements LeagueService{
             List<TeamEntity> teamEntityList = teamRepository.findAllBySeriesId(leagueEntity.getLatestSeriesId());
             //유저 정보를 포함한 전체 팀 정보 생성
             leagueNameList.add(leagueEntity.getName());
-            leagueInfoList.add(createLeagueInfoByLeagueSlugAndTeamEntityListAndUserTeamList(leagueEntity.getSlug(), teamEntityList, userEntity.getTeamList()));
+            leagueInfoList.add(createLeagueInfoByLeagueEntityAndTeamEntityListAndUserTeamList(leagueEntity, teamEntityList, userEntity.getTeamList()));
         }
 
         return BaseLeagueAndTeamList.builder()

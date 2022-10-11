@@ -1,8 +1,8 @@
 spring:
   profiles:
     group:
-      local: "localDB,local"
-      devServer: "devServerDB, server"
+      local: "common, localDB,local"
+      devServer: "common, devServerDB, server"
     active: local
 
 ---
