@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 public class MatchServiceImpl implements MatchService {
     @Override
     public MatchView getLiveMatchList(Long userId) {
+
         return null;
     }
 }
