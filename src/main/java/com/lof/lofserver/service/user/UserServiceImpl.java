@@ -13,6 +13,12 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
+    @Override
+    public String getNicknameByUserId(Long userId) {
+        UserEntity userEntity = userRepository.findById(userId).orElseThrow();
+        return userEntity.getNickname();
+    }
+
     /** 유저 생성
      * @param userSavedInfoDto - 유저 정보
      * @return UserResponseInfoDto

@@ -34,6 +34,12 @@ public class UserController {
         return ResponseEntity.ok(token);
     }
 
+    @GetMapping("/getNickname")
+    public ResponseEntity<?> getNickname(HttpServletRequest request) {
+        Long userId = Long.parseLong(request.getAttribute("id").toString());
+        return ResponseEntity.ok(userService.getNicknameByUserId(userId));
+    }
+
     @PostMapping("/setNickname")
     public ResponseEntity<?> setUserNickName(HttpServletRequest request, @RequestHeader("Authorization") String ignoredToken) {
         //get userId

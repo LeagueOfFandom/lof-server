@@ -27,6 +27,21 @@ class UserServiceImplTest {
     private UserRepository userRepository;
 
     @Test
+    @DisplayName("유저 닉네임 가져오기 - 성공")
+    void getNicknameByUserId() {
+        //given
+        Long userId = 1L;
+        String nickname = "test";
+        given(userRepository.findById(any(Long.class))).willReturn(java.util.Optional.of(UserEntity.builder().nickname(nickname).build()));
+
+        //when
+        String result = userService.getNicknameByUserId(userId);
+
+        //then
+        assertThat(result).isEqualTo(nickname);
+    }
+
+    @Test
     @DisplayName("유저 신규 생성 테스트")
     void userCreate(){
         UserSavedInfoDto userSavedInfoDto = UserSavedInfoDto.builder()
