@@ -38,10 +38,26 @@ class UserControllerTest {
     @Autowired
     MockMvc mockMvc;
 
+    @Test
+    @DisplayName("유저 닉네임 가져오기 - 성공")
+    void getUserNickname() throws Exception {
+        //given
+        String token = "test";
+        given(userService.getNicknameByUserId(any(Long.class))).willReturn("test");
+
+        //when
+        ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders.get("/v1/user/getNickname")
+                        .contentType("application/json")
+                        .header("Authorization", token));
+
+        //then
+        resultActions.andExpect(status().isOk());
+    }
 
     @Test
     @DisplayName("유저 닉네임 설정 - 성공")
-    void setUserNiceName() throws Exception {
+    void setUserNickName() throws Exception {
         //given
         String token = "test";
         //given(jsonWebToken.checkJwtToken(any(String.class))).willReturn("valid");

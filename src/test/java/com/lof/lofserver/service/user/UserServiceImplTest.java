@@ -11,8 +11,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -25,6 +23,25 @@ class UserServiceImplTest {
 
     @Mock
     private UserRepository userRepository;
+
+    @Test
+    @DisplayName("유저 닉네임 설정하기 - 성공")
+    void setUserNickName() {
+        //given
+        String beforeNickname = "test";
+        String afterNickname = "test";
+        UserEntity userEntity = UserEntity.builder()
+                .nickname(afterNickname)
+                .build();
+        given(userRepository.findById(any(Long.class))).willReturn(java.util.Optional.of(UserEntity.builder().nickname(beforeNickname).build()));
+        given(userRepository.save(any(UserEntity.class))).willReturn(userEntity);
+
+        //when
+        String afterUserNickname = userService.setUserNickName(1L, afterNickname);
+
+        //then
+        assertThat(afterUserNickname).isEqualTo(afterNickname);
+    }
 
     @Test
     @DisplayName("유저 닉네임 가져오기 - 성공")

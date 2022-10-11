@@ -14,6 +14,13 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
+    public String setUserNickName(Long userId, String nickname) {
+        UserEntity userEntity = userRepository.findById(userId).orElseThrow();
+        userEntity.setNickname(nickname);
+        return userRepository.save(userEntity).getNickname();
+    }
+
+    @Override
     public String getNicknameByUserId(Long userId) {
         UserEntity userEntity = userRepository.findById(userId).orElseThrow();
         return userEntity.getNickname();

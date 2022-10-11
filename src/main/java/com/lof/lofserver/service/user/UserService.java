@@ -6,4 +6,6 @@ import com.lof.lofserver.service.user.response.UserResponseInfoDto;
 public interface UserService {
      UserResponseInfoDto createUserByUserSavedInfoDto(UserSavedInfoDto userSavedInfoDto);
      String getNicknameByUserId(Long userId);
+
+     String setUserNickName(Long userId, String nickname);
 }
