@@ -2,6 +2,8 @@ package com.lof.lofserver.service.match;
 
 import com.lof.lofserver.service.match.response.MatchView;
 
+import java.util.List;
+
 public interface MatchService {
-    MatchView getLiveMatchList(Long userId);
+    List<MatchView> getLiveMatchList(Long userId);
 }
