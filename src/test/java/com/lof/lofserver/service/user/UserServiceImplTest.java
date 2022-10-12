@@ -116,16 +116,9 @@ class UserServiceImplTest {
         //given
         String user1Nickname = "user1";
         String user2Nickname = "user1";
-        UserEntity userEntity1 = UserEntity.builder()
-                .nickname(user1Nickname)
-                .build();
-
-        List<UserEntity> userList = new ArrayList<>();
-        userList.add(userEntity1);
-
-        given(userRepository.findByNickname(user1Nickname)).willReturn(userList);
 
         //when
+        given(userRepository.findByNickname(user1Nickname)).willReturn(Optional.of(UserEntity.builder().nickname(user1Nickname).build()));
 
         //then
         assertThatThrownBy(() -> userService.setUserNickName(1L, user2Nickname))
@@ -133,7 +126,5 @@ class UserServiceImplTest {
                 .hasMessageContaining("이미 존재하는 닉네임입니다.");
 
     }
-
-
 
 }
