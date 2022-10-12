@@ -2,12 +2,14 @@ package com.lof.lofserver.controller.user;
 
 import com.lof.lofserver.controller.user.parser.UserControllerParser;
 import com.lof.lofserver.controller.user.request.UserInfoDto;
+import com.lof.lofserver.exception.ErrorResponseDto;
 import com.lof.lofserver.filter.JsonWebToken;
 import com.lof.lofserver.service.user.UserService;
 import com.lof.lofserver.service.user.request.UserSavedInfoDto;
 import com.lof.lofserver.service.user.response.UserResponseInfo;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/v1/user")
+@RequestMapping("/v1/users")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -23,7 +25,7 @@ public class UserController {
     private final JsonWebToken jsonWebToken;
     private final UserControllerParser userControllerParser;
 
-    @PostMapping("/create")
+    @PostMapping("")
     @ApiOperation(value = "유저를 생성한다.", response = UserResponseInfo.class)
     public ResponseEntity<?> createUser(@Valid @RequestBody UserInfoDto userInfoDto) {
         //userInfo -> UserSavedInfoDto
@@ -50,5 +52,12 @@ public class UserController {
         Long userId = (Long) request.getAttribute("id");
         //set user nickname
         return ResponseEntity.ok(userService.setUserNickName(userId, nickname));
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(IllegalStateException.class)
+    public ErrorResponseDto illegalStateExceptionExHandle(IllegalStateException e) {
+        // log.error("[exceptionHandle] " + e.getMessage());
+        return new ErrorResponseDto("BAD", e.getMessage());
     }
 }

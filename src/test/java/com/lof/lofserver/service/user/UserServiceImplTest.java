@@ -11,7 +11,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
@@ -33,7 +38,7 @@ class UserServiceImplTest {
         UserEntity userEntity = UserEntity.builder()
                 .nickname(afterNickname)
                 .build();
-        given(userRepository.findById(any(Long.class))).willReturn(java.util.Optional.of(UserEntity.builder().nickname(beforeNickname).build()));
+        given(userRepository.findById(any(Long.class))).willReturn(Optional.of(UserEntity.builder().nickname(beforeNickname).build()));
         given(userRepository.save(any(UserEntity.class))).willReturn(userEntity);
 
         //when
@@ -104,5 +109,31 @@ class UserServiceImplTest {
         assertThat(userResponseInfo).isNotNull();
         assertThat(userResponseInfo.isNewUser()).isFalse();
     }
+
+    @Test
+    @DisplayName("유저 닉네임 설정하기 - 실패(중복)")
+    void duplicateNickname(){
+        //given
+        String user1Nickname = "user1";
+        String user2Nickname = "user1";
+        UserEntity userEntity1 = UserEntity.builder()
+                .nickname(user1Nickname)
+                .build();
+
+        List<UserEntity> userList = new ArrayList<>();
+        userList.add(userEntity1);
+
+        given(userRepository.findByNickname(user1Nickname)).willReturn(userList);
+
+        //when
+
+        //then
+        assertThatThrownBy(() -> userService.setUserNickName(1L, user2Nickname))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessageContaining("이미 존재하는 닉네임입니다.");
+
+    }
+
+
 
 }

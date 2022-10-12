@@ -7,6 +7,8 @@ import com.lof.lofserver.service.user.response.UserResponseInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -15,6 +17,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String setUserNickName(Long userId, String nickname) {
+        validateDuplicateNickname(nickname);
         UserEntity userEntity = userRepository.findById(userId).orElseThrow();
         userEntity.setNickname(nickname);
         return userRepository.save(userEntity).getNickname();
@@ -24,6 +27,13 @@ public class UserServiceImpl implements UserService {
     public String getNicknameByUserId(Long userId) {
         UserEntity userEntity = userRepository.findById(userId).orElseThrow();
         return userEntity.getNickname();
+    }
+
+    private void validateDuplicateNickname(String nickname){
+        List<UserEntity> findNicknames = userRepository.findByNickname(nickname);
+        if(!findNicknames.isEmpty()){
+            throw new IllegalStateException("이미 존재하는 닉네임입니다.");
+        }
     }
 
     /** 유저 생성
