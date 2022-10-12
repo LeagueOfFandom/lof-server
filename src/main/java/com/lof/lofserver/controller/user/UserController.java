@@ -57,7 +57,6 @@ public class UserController {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(IllegalStateException.class)
     public ErrorResponseDto illegalStateExceptionExHandle(IllegalStateException e) {
-        // log.error("[exceptionHandle] " + e.getMessage());
-        return new ErrorResponseDto("BAD", e.getMessage());
+        return ErrorResponseDto.builder().code("BAD").message(e.getMessage()).build();
     }
 }

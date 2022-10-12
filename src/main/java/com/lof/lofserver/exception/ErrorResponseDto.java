@@ -1,11 +1,14 @@
 package com.lof.lofserver.exception;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
-@AllArgsConstructor
-@Getter
-public class ErrorResponseDto {
-    private String code;
-    private String message;
+public record ErrorResponseDto(
+        String code,
+        String message
+){
+    @Builder
+    public ErrorResponseDto{
+    }
 }
