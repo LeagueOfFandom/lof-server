@@ -43,17 +43,18 @@ class MatchControllerTest {
     MatchControllerParser matchControllerParser;
 
     @Test
-    @DisplayName("날짜 별 매치 정보 가져오기")
+    @DisplayName("달별 매치 정보 가져오기")
     void getMatchByDate() throws Exception {
         //given
         String token = "test";
 
         //when
         ResultActions resultActions = mockMvc.perform(
-                MockMvcRequestBuilders.get("/v1/match/getMatchListByDate")
+                MockMvcRequestBuilders.get("/v1/match/getMatchListByMonth")
                         .contentType("application/json")
                         .header("Authorization", token)
-                        .param("date", "2021-01-01"));
+                        .param("date", "2022-01-01")
+                        .param("onlyMyTeam", "false"));
 
         //then
         resultActions.andExpect(status().isOk());
@@ -71,7 +72,8 @@ class MatchControllerTest {
         ResultActions resultActions = mockMvc.perform(
                 MockMvcRequestBuilders.get("/v1/match/mainPage")
                         .contentType("application/json")
-                        .header("Authorization", token));
+                        .header("Authorization", token)
+                        .param("onlyMyTeam", "false"));
 
         //then
         resultActions.andExpect(status().isOk());

@@ -29,7 +29,7 @@ class UserServiceImplTest {
     void setUserNickName() {
         //given
         String beforeNickname = "test";
-        String afterNickname = "test";
+        String afterNickname = "test2";
         UserEntity userEntity = UserEntity.builder()
                 .nickname(afterNickname)
                 .build();

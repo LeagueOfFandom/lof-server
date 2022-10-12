@@ -1,6 +1,7 @@
 package com.lof.lofserver.service.community;
 
 import com.lof.lofserver.service.community.response.BannerView;
+import com.lof.lofserver.service.community.response.TextArrowView;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,5 +17,10 @@ public class CommunityServiceImpl implements CommunityService {
         bannerList.add("https://d654rq93y7j8z.cloudfront.net/soma-bucket/lof_banner/3.jpg");
 
         return new BannerView(bannerList);
+    }
+
+    @Override
+    public TextArrowView getTextArrowView(String text) {
+        return new TextArrowView(text);
     }
 }

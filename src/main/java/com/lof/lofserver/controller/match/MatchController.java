@@ -27,7 +27,9 @@ public class MatchController {
 
     @GetMapping("/mainPage")
     @ApiOperation(value = "메인페이지에 필요한 정보를 가져온다.", response = CommonItemDto[].class)
-    public ResponseEntity<?> getMainPage(HttpServletRequest request, @RequestHeader("Authorization") String ignoredToken) {
+    public ResponseEntity<?> getMainPage(HttpServletRequest request,
+                                         @RequestHeader("Authorization") String ignoredToken,
+                                         @RequestParam(value = "onlyMyTeam") Boolean onlyMyTeam) {
         Long userId = (Long) request.getAttribute("id");
         LocalDate localDate = ZonedDateTime.now(ZoneId.of("UTC")).toLocalDate();
         List<Object> commonItemList = new ArrayList<>();
@@ -36,17 +38,21 @@ public class MatchController {
         //get liveMatch
         commonItemList.addAll(matchService.getLiveMatchList(userId));
         //get matchList
-        commonItemList.addAll(matchService.getMatchListByDate(userId, localDate));
+        commonItemList.add(communityService.getTextArrowView("My 경기 일정"));
+        commonItemList.addAll(matchService.getMatchListByDate(userId, localDate, onlyMyTeam));
         return ResponseEntity.ok(matchControllerParser.parseObjectListToCommonItemDtoList(commonItemList));
     }
 
-    @GetMapping("/getMatchListByDate")
-    @ApiOperation(value = "날짜에 해당하는 경기를 가져온다.", response = CommonItemDto[].class)
-    public ResponseEntity<?> getMatchListByDate(HttpServletRequest request, @RequestHeader("Authorization") String ignoredToken, @RequestParam("date") String date) {
+    @GetMapping("/getMatchListByMonth")
+    @ApiOperation(value = "달에 해당하는 경기를 가져온다.", response = CommonItemDto[].class)
+    public ResponseEntity<?> getMatchListByDate(HttpServletRequest request,
+                                                @RequestHeader("Authorization") String ignoredToken,
+                                                @RequestParam("date") String date,
+                                                @RequestParam(value = "onlyMyTeam") Boolean onlyMyTeam) {
         Long userId = (Long) request.getAttribute("id");
         LocalDate localDate = LocalDate.parse(date);
         //get matchList
-        List<Object> commonItemList = new ArrayList<>(matchService.getMatchListByDate(userId, localDate));
+        List<Object> commonItemList = new ArrayList<>(matchService.getMatchListByMonth(userId, localDate,onlyMyTeam));
         return ResponseEntity.ok(matchControllerParser.parseObjectListToCommonItemDtoList(commonItemList));
     }
 

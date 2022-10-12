@@ -51,6 +51,23 @@ class MatchServiceImplTest {
     }
 
     @Test
+    @DisplayName("이번달 매치 가져오기")
+    void getThisMonthMatch() {
+        //given
+        Long userId = 1L;
+        given(userRepository.findById(any(Long.class))).willReturn(getUserEntityTest());
+        given(matchRepository.findAllByBeginAtBetween(any(LocalDateTime.class),any(LocalDateTime.class))).willReturn(List.of());
+
+        //when
+        Object result = matchService.getMatchListByMonth(userId, LocalDate.now(), false);
+
+        //then
+        assertNotNull(result);
+        assertThat(result).isInstanceOf(ArrayList.class);
+
+    }
+
+    @Test
     @DisplayName("매치 정보 가져오기")
     void getMatchInfo(){
         //given
@@ -59,7 +76,7 @@ class MatchServiceImplTest {
         given(matchRepository.findAllByBeginAtBetween(any(LocalDateTime.class),any(LocalDateTime.class))).willReturn(List.of());
 
         //when
-        List<MatchView> matchListByDate = matchService.getMatchListByDate(userId, LocalDate.now());
+        List<MatchView> matchListByDate = matchService.getMatchListByDate(userId, LocalDate.now(), true);
 
         //then
         assertNotNull(matchListByDate);
