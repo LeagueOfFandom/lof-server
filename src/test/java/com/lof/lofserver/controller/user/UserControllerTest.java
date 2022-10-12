@@ -5,7 +5,7 @@ import com.lof.lofserver.domain.user.UserRepository;
 import com.lof.lofserver.filter.JsonWebToken;
 import com.lof.lofserver.service.user.UserService;
 import com.lof.lofserver.service.user.request.UserSavedInfoDto;
-import com.lof.lofserver.service.user.response.UserResponseInfoDto;
+import com.lof.lofserver.service.user.response.UserResponseInfo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +46,7 @@ class UserControllerTest {
 
         //when
         ResultActions resultActions = mockMvc.perform(
-                MockMvcRequestBuilders.get("/v1/user/getNickname")
+                MockMvcRequestBuilders.get("/v1/user/nickname")
                         .contentType("application/json")
                         .header("Authorization", token));
 
@@ -59,13 +59,10 @@ class UserControllerTest {
     void setUserNickName() throws Exception {
         //given
         String token = "test";
-        //given(jsonWebToken.checkJwtToken(any(String.class))).willReturn("valid");
-        //given(userControllerParser.parseUserSavedInfoDto(any(String.class))).willReturn(new UserSavedInfoDto("test", "test"));
-        //given(userService.setUserNiceName(any(UserSavedInfoDto.class))).willReturn(new UserResponseInfoDto("test", "test"));
 
         //when
         ResultActions resultActions = mockMvc.perform(
-                MockMvcRequestBuilders.post("/v1/user/setNickname")
+                MockMvcRequestBuilders.post("/v1/user/nickname")
                         .contentType("application/json")
                         .header("Authorization", token)
                         .content("testNickname"));
@@ -112,8 +109,8 @@ class UserControllerTest {
         resultActions.andExpect(status().isBadRequest());
     }
 
-    private UserResponseInfoDto createUserResponseInfoDtoTest() {
-        return UserResponseInfoDto.builder()
+    private UserResponseInfo createUserResponseInfoDtoTest() {
+        return UserResponseInfo.builder()
                 .id(1L)
                 .isNewUser(true)
                 .build();

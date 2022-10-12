@@ -5,7 +5,7 @@ import com.lof.lofserver.controller.user.request.UserInfoDto;
 import com.lof.lofserver.filter.JsonWebToken;
 import com.lof.lofserver.service.user.UserService;
 import com.lof.lofserver.service.user.request.UserSavedInfoDto;
-import com.lof.lofserver.service.user.response.UserResponseInfoDto;
+import com.lof.lofserver.service.user.response.UserResponseInfo;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,26 +24,26 @@ public class UserController {
     private final UserControllerParser userControllerParser;
 
     @PostMapping("/create")
-    @ApiOperation(value = "유저를 생성한다.", response = UserResponseInfoDto.class)
+    @ApiOperation(value = "유저를 생성한다.", response = UserResponseInfo.class)
     public ResponseEntity<?> createUser(@Valid @RequestBody UserInfoDto userInfoDto) {
         //userInfo -> UserSavedInfoDto
         UserSavedInfoDto userSavedInfoDto = userControllerParser.parseUserInfoDtoToUserSavedInfoDto(userInfoDto);
         //user create
-        UserResponseInfoDto userResponseInfoDto = userService.createUserByUserSavedInfoDto(userSavedInfoDto);
+        UserResponseInfo userResponseInfo = userService.createUserByUserSavedInfoDto(userSavedInfoDto);
         //jwt token 생성
-        String token = jsonWebToken.createJsonWebTokenById(userResponseInfoDto.id());
-
-        return ResponseEntity.ok(token);
+        String token = jsonWebToken.createJsonWebTokenById(userResponseInfo.id());
+        //parse to response
+        return ResponseEntity.ok(userControllerParser.parseUserResponseInfoToUserResponseInfoDto(token, userResponseInfo.isNewUser()));
     }
 
-    @GetMapping("/getNickname")
+    @GetMapping("/nickname")
     @ApiOperation(value = "유저의 닉네임을 가져온다.", response = String.class)
     public ResponseEntity<?> getNickname(HttpServletRequest request, @RequestHeader("Authorization") String ignoredToken) {
         Long userId = (Long) request.getAttribute("id");
         return ResponseEntity.ok(userService.getNicknameByUserId(userId));
     }
 
-    @PostMapping("/setNickname")
+    @PostMapping("/nickname")
     @ApiOperation(value = "닉네임을 설정한다.", response = String.class)
     public ResponseEntity<?> setUserNickName(HttpServletRequest request, @RequestHeader("Authorization") String ignoredToken, @RequestBody String nickname) {
         //get userId

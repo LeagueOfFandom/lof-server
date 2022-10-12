@@ -3,7 +3,7 @@ package com.lof.lofserver.service.user;
 import com.lof.lofserver.domain.user.UserEntity;
 import com.lof.lofserver.domain.user.UserRepository;
 import com.lof.lofserver.service.user.request.UserSavedInfoDto;
-import com.lof.lofserver.service.user.response.UserResponseInfoDto;
+import com.lof.lofserver.service.user.response.UserResponseInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
      * @return UserResponseInfoDto
      */
     @Override
-    public UserResponseInfoDto createUserByUserSavedInfoDto(UserSavedInfoDto userSavedInfoDto) {
+    public UserResponseInfo createUserByUserSavedInfoDto(UserSavedInfoDto userSavedInfoDto) {
         //find user
         UserEntity userEntity = userRepository.findByEmail(userSavedInfoDto.email());
 
@@ -55,8 +55,8 @@ public class UserServiceImpl implements UserService {
      * @param isNewUser - boolean value
      * @return UserResponseInfoDto
      */
-    private UserResponseInfoDto parseUserResponseInfoDto(UserEntity userEntity, Boolean isNewUser) {
-        return UserResponseInfoDto.builder()
+    private UserResponseInfo parseUserResponseInfoDto(UserEntity userEntity, Boolean isNewUser) {
+        return UserResponseInfo.builder()
                 .id(userEntity.getUserId())
                 .isNewUser(isNewUser)
                 .build();

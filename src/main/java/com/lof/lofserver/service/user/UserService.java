@@ -1,10 +1,10 @@
 package com.lof.lofserver.service.user;
 
 import com.lof.lofserver.service.user.request.UserSavedInfoDto;
-import com.lof.lofserver.service.user.response.UserResponseInfoDto;
+import com.lof.lofserver.service.user.response.UserResponseInfo;
 
 public interface UserService {
-     UserResponseInfoDto createUserByUserSavedInfoDto(UserSavedInfoDto userSavedInfoDto);
+     UserResponseInfo createUserByUserSavedInfoDto(UserSavedInfoDto userSavedInfoDto);
      String getNicknameByUserId(Long userId);
 
      String setUserNickName(Long userId, String nickname);

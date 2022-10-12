@@ -3,7 +3,7 @@ package com.lof.lofserver.service.user;
 import com.lof.lofserver.domain.user.UserEntity;
 import com.lof.lofserver.domain.user.UserRepository;
 import com.lof.lofserver.service.user.request.UserSavedInfoDto;
-import com.lof.lofserver.service.user.response.UserResponseInfoDto;
+import com.lof.lofserver.service.user.response.UserResponseInfo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -77,11 +77,11 @@ class UserServiceImplTest {
                 .build());
 
         //when
-        UserResponseInfoDto userResponseInfoDto = userService.createUserByUserSavedInfoDto(userSavedInfoDto);
+        UserResponseInfo userResponseInfo = userService.createUserByUserSavedInfoDto(userSavedInfoDto);
 
         //then
-        assertThat(userResponseInfoDto).isNotNull();
-        assertThat(userResponseInfoDto.isNewUser()).isTrue();
+        assertThat(userResponseInfo).isNotNull();
+        assertThat(userResponseInfo.isNewUser()).isTrue();
     }
 
     @Test
@@ -98,11 +98,11 @@ class UserServiceImplTest {
         given(userRepository.findByEmail(userSavedInfoDto.email())).willReturn(UserEntity.builder().build());
 
         //when
-        UserResponseInfoDto userResponseInfoDto = userService.createUserByUserSavedInfoDto(userSavedInfoDto);
+        UserResponseInfo userResponseInfo = userService.createUserByUserSavedInfoDto(userSavedInfoDto);
 
         //then
-        assertThat(userResponseInfoDto).isNotNull();
-        assertThat(userResponseInfoDto.isNewUser()).isFalse();
+        assertThat(userResponseInfo).isNotNull();
+        assertThat(userResponseInfo.isNewUser()).isFalse();
     }
 
 }
