@@ -1,5 +1,6 @@
 package com.lof.lofserver.controller.match;
 
+import com.lof.lofserver.controller.match.parser.MatchControllerParser;
 import com.lof.lofserver.domain.user.UserRepository;
 import com.lof.lofserver.filter.JsonWebToken;
 import com.lof.lofserver.service.community.CommunityService;
@@ -37,6 +38,26 @@ class MatchControllerTest {
 
     @MockBean
     MatchService matchService;
+
+    @MockBean
+    MatchControllerParser matchControllerParser;
+
+    @Test
+    @DisplayName("날짜 별 매치 정보 가져오기")
+    void getMatchByDate() throws Exception {
+        //given
+        String token = "test";
+
+        //when
+        ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders.get("/v1/match/getMatchListByDate")
+                        .contentType("application/json")
+                        .header("Authorization", token)
+                        .param("date", "2021-01-01"));
+
+        //then
+        resultActions.andExpect(status().isOk());
+    }
 
     @Test
     @DisplayName("메인 페이지 가져오기")

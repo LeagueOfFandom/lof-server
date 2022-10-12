@@ -4,6 +4,7 @@ import com.lof.lofserver.domain.match.MatchRepository;
 import com.lof.lofserver.domain.user.UserEntity;
 import com.lof.lofserver.domain.user.UserRepository;
 import com.lof.lofserver.service.match.response.MatchView;
+import com.vladmihalcea.hibernate.type.array.internal.LocalDateArrayTypeDescriptor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,6 +12,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -46,6 +49,23 @@ class MatchServiceImplTest {
         assertThat(result).isInstanceOf(ArrayList.class);
 
     }
+
+    @Test
+    @DisplayName("매치 정보 가져오기")
+    void getMatchInfo(){
+        //given
+        Long userId = 1L;
+        given(userRepository.findById(any(Long.class))).willReturn(getUserEntityTest());
+        given(matchRepository.findAllByBeginAtBetween(any(LocalDateTime.class),any(LocalDateTime.class))).willReturn(List.of());
+
+        //when
+        List<MatchView> matchListByDate = matchService.getMatchListByDate(userId, LocalDate.now());
+
+        //then
+        assertNotNull(matchListByDate);
+        assertThat(matchListByDate).isInstanceOf(ArrayList.class);
+    }
+
 
     private Optional<UserEntity> getUserEntityTest(){
         //user alarm setting

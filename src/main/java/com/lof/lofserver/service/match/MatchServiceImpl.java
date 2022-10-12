@@ -10,6 +10,7 @@ import com.lof.lofserver.service.match.response.MatchView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +63,27 @@ public class MatchServiceImpl implements MatchService {
 
         UserEntity userEntity = userRepository.findById(userId).orElseThrow();
         List<MatchEntity> matchEntityList = matchRepository.findAllByStatus("running");
+
+        for(MatchEntity matchEntity : matchEntityList)
+            matchViewList.add(matchEntityToMatchView(matchEntity, userEntity.getUserSelectedMatchList().containsKey(matchEntity.getId())));
+
+        return matchViewList;
+    }
+
+    @Override
+    public List<MatchView> getMatchListByDate(Long userId, LocalDate date) {
+        List<MatchView> matchViewList = new ArrayList<>();
+
+        UserEntity userEntity = userRepository.findById(userId).orElseThrow();
+        //korea time
+        List<MatchEntity> matchEntityList = matchRepository.findAllByBeginAtBetween(date.atStartOfDay().plusHours(9), date.atTime(23, 59, 59).plusHours(9));
+        //오늘자 경기가 없을 경우
+        int count = 0;
+        while(matchEntityList.size() == 0){
+            date = date.plusDays(1);
+            matchEntityList = matchRepository.findAllByBeginAtBetween(date.atStartOfDay().plusHours(9), date.atTime(23, 59, 59).plusHours(9));
+            if(count++ > 10) break;
+        }
 
         for(MatchEntity matchEntity : matchEntityList)
             matchViewList.add(matchEntityToMatchView(matchEntity, userEntity.getUserSelectedMatchList().containsKey(matchEntity.getId())));
