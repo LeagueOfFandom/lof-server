@@ -31,8 +31,9 @@ public class UserEntity {
     @Column(name = "email")
     private String email;
     @NotNull
-    @Column(name = "nickname")
+    @Column(name = "nickname", unique = true)
     private String nickname;
+
     @NotNull
     @Column(name = "profile_img")
     private String profileImg;

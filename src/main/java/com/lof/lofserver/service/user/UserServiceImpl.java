@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,10 +31,10 @@ public class UserServiceImpl implements UserService {
     }
 
     private void validateDuplicateNickname(String nickname){
-        List<UserEntity> findNicknames = userRepository.findByNickname(nickname);
-        if(!findNicknames.isEmpty()){
+        Optional<UserEntity> optionalUser = userRepository.findByNickname(nickname);
+        optionalUser.ifPresent(user -> {
             throw new IllegalStateException("이미 존재하는 닉네임입니다.");
-        }
+        });
     }
 
     /** 유저 생성
