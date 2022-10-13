@@ -4,7 +4,7 @@ import com.lof.lofserver.controller.user.parser.UserControllerParser;
 import com.lof.lofserver.controller.user.request.UserInfoDto;
 import com.lof.lofserver.filter.JsonWebToken;
 import com.lof.lofserver.service.user.UserService;
-import com.lof.lofserver.service.user.request.UserSavedInfoDto;
+import com.lof.lofserver.service.user.request.UserSavedInfo;
 import com.lof.lofserver.service.user.response.UserResponseInfo;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -27,9 +27,9 @@ public class UserController {
     @ApiOperation(value = "유저를 생성한다.", response = UserResponseInfo.class)
     public ResponseEntity<?> createUser(@Valid @RequestBody UserInfoDto userInfoDto) {
         //userInfo -> UserSavedInfoDto
-        UserSavedInfoDto userSavedInfoDto = userControllerParser.parseUserInfoDtoToUserSavedInfoDto(userInfoDto);
+        UserSavedInfo userSavedInfo = userControllerParser.parseUserInfoDtoToUserSavedInfoDto(userInfoDto);
         //user create
-        UserResponseInfo userResponseInfo = userService.createUserByUserSavedInfoDto(userSavedInfoDto);
+        UserResponseInfo userResponseInfo = userService.createUserByUserSavedInfoDto(userSavedInfo);
         //jwt token 생성
         String token = jsonWebToken.createJsonWebTokenById(userResponseInfo.id());
         //parse to response

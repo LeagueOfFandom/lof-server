@@ -5,10 +5,12 @@ import com.lof.lofserver.controller.league.response.sub.LeagueInfoDto;
 import com.lof.lofserver.controller.league.response.sub.TeamInfoDto;
 import com.lof.lofserver.service.league.response.BaseLeagueAndTeamList;
 import com.lof.lofserver.service.league.response.sub.LeagueInfo;
-import org.springframework.stereotype.Component;
+import com.lof.lofserver.service.league.response.sub.TeamInfo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 public class LeagueControllerParserImpl implements LeagueControllerParser {
@@ -25,10 +27,9 @@ public class LeagueControllerParserImpl implements LeagueControllerParser {
                 .build();
     }
 
-    private LeagueInfoDto parseLeagueInfoDtoToLeagueInfo(LeagueInfo leagueInfo) {
-        //teamInfoList 복사
-        List<TeamInfoDto> teamInfoDtoList = leagueInfo.teamInfo().stream().map(teamInfo ->
-                TeamInfoDto.builder()
+    @Override
+    public List<TeamInfoDto> parseTeamInfoToTeamInfoDto(List<TeamInfo> teamInfoList) {
+        return teamInfoList.stream().map(teamInfo -> TeamInfoDto.builder()
                         .league(teamInfo.league())
                         .teamId(teamInfo.teamId())
                         .teamCheck(teamInfo.teamCheck())
@@ -36,10 +37,15 @@ public class LeagueControllerParserImpl implements LeagueControllerParser {
                         .teamName(teamInfo.teamName())
                         .build())
                 .toList();
+    }
+
+    private LeagueInfoDto parseLeagueInfoDtoToLeagueInfo(LeagueInfo leagueInfo) {
+        //teamInfoList 복사
+        List<TeamInfoDto> teamInfoList = parseTeamInfoToTeamInfoDto(leagueInfo.teamInfo());
 
         return LeagueInfoDto.builder()
                 .note(leagueInfo.note())
-                .teamInfoDto(teamInfoDtoList)
+                .teamInfoDtoList(teamInfoList)
                 .build();
     }
 }

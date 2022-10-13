@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -44,8 +45,8 @@ public class LeagueServiceImpl implements LeagueService{
      */
     private LeagueInfo createLeagueInfoByLeagueEntityAndTeamEntityListAndUserTeamList(LeagueEntity leagueEntity, List<TeamEntity> teamEntityList, List<Long> userSelectedTeamIdList){
         //리그의 팀 정보 리스트 생성
-        List<TeamInfo> teamInfoList = teamEntityList.stream()
-                .map(teamEntity -> TeamInfo.builder()
+        List<com.lof.lofserver.service.league.response.sub.TeamInfo> teamInfoList = teamEntityList.stream()
+                .map(teamEntity -> com.lof.lofserver.service.league.response.sub.TeamInfo.builder()
                         .league(leagueEntity.getName())
                         .teamId(teamEntity.getId())
                         .teamName(teamEntity.getAcronym())
@@ -90,6 +91,29 @@ public class LeagueServiceImpl implements LeagueService{
         return BaseLeagueAndTeamList.builder()
                 .leagueNameList(leagueNameList)
                 .leagueInfoList(leagueInfoList)
+                .build();
+    }
+
+    @Override
+    public List<TeamInfo> getTeamListByUserId(Long userId) {
+        UserEntity userEntity = userRepository.findById(userId).orElseThrow();
+        List<Long> teamIdList = userEntity.getTeamList();
+
+        List<TeamInfo> teamInfoList = new ArrayList<>();
+        List<TeamEntity> teamEntityList = teamRepository.findAllById(teamIdList);
+        for(TeamEntity teamEntity : teamEntityList)
+            teamInfoList.add(createSelectedTeamInfoDtoByTeamEntity(teamEntity));
+
+        return teamInfoList;
+    }
+
+    private TeamInfo createSelectedTeamInfoDtoByTeamEntity(TeamEntity teamEntity){
+        return TeamInfo.builder()
+                .teamId(teamEntity.getId())
+                .teamName(teamEntity.getAcronym())
+                .teamImg(teamEntity.getImageUrl())
+                .league(Objects.requireNonNull(leagueRepository.findById(teamEntity.getLeagueId()).orElse(null)).getName())
+                .teamCheck(true)
                 .build();
     }
 }
