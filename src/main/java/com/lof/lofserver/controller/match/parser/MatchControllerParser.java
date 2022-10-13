@@ -1,9 +1,10 @@
 package com.lof.lofserver.controller.match.parser;
 
-import com.lof.lofserver.controller.match.response.CommonItemDto;
+import com.lof.lofserver.controller.match.response.CommonItemListResponse;
+import com.lof.lofserver.controller.match.response.MainPageResponse;
 
 import java.util.List;
 
 public interface MatchControllerParser {
-    List<CommonItemDto> parseObjectListToCommonItemDtoList(List<Object> objectList);
+    MainPageResponse parseObjectListToMainPageResponse(List<Object> objectList);
 }

@@ -1,7 +1,7 @@
 package com.lof.lofserver.controller.match;
 
 import com.lof.lofserver.controller.match.parser.MatchControllerParser;
-import com.lof.lofserver.controller.match.response.CommonItemDto;
+import com.lof.lofserver.controller.match.response.CommonItemListResponse;
 import com.lof.lofserver.service.community.CommunityService;
 import com.lof.lofserver.service.match.MatchService;
 import io.swagger.annotations.ApiOperation;
@@ -26,7 +26,7 @@ public class MatchController {
     private final MatchControllerParser matchControllerParser;
 
     @GetMapping("/mainPage")
-    @ApiOperation(value = "메인페이지에 필요한 정보를 가져온다.", response = CommonItemDto[].class)
+    @ApiOperation(value = "메인페이지에 필요한 정보를 가져온다.", response = CommonItemListResponse[].class)
     public ResponseEntity<?> getMainPage(HttpServletRequest request,
                                          @RequestHeader("Authorization") String ignoredToken,
                                          @RequestParam(value = "onlyMyTeam") Boolean onlyMyTeam) {
@@ -40,11 +40,11 @@ public class MatchController {
         //get matchList
         commonItemList.add(communityService.getTextArrowView("My 경기 일정"));
         commonItemList.addAll(matchService.getMatchListByDate(userId, localDate, onlyMyTeam));
-        return ResponseEntity.ok(matchControllerParser.parseObjectListToCommonItemDtoList(commonItemList));
+        return ResponseEntity.ok(matchControllerParser.parseObjectListToMainPageResponse(commonItemList));
     }
 
     @GetMapping("/getMatchListByMonth")
-    @ApiOperation(value = "달에 해당하는 경기를 가져온다.", response = CommonItemDto[].class)
+    @ApiOperation(value = "달에 해당하는 경기를 가져온다.", response = CommonItemListResponse[].class)
     public ResponseEntity<?> getMatchListByDate(HttpServletRequest request,
                                                 @RequestHeader("Authorization") String ignoredToken,
                                                 @RequestParam("date") String date,
@@ -53,7 +53,7 @@ public class MatchController {
         LocalDate localDate = LocalDate.parse(date);
         //get matchList
         List<Object> commonItemList = new ArrayList<>(matchService.getMatchListByMonth(userId, localDate,onlyMyTeam));
-        return ResponseEntity.ok(matchControllerParser.parseObjectListToCommonItemDtoList(commonItemList));
+        return ResponseEntity.ok(matchControllerParser.parseObjectListToMainPageResponse(commonItemList));
     }
 
 }

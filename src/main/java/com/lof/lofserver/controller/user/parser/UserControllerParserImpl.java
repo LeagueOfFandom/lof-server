@@ -1,7 +1,7 @@
 package com.lof.lofserver.controller.user.parser;
 
-import com.lof.lofserver.controller.user.request.UserInfoDto;
-import com.lof.lofserver.controller.user.response.UserResponseInfoDto;
+import com.lof.lofserver.controller.user.request.UserInfoRequest;
+import com.lof.lofserver.controller.user.response.UserInfoResponse;
 import com.lof.lofserver.service.user.request.UserSavedInfo;
 import org.springframework.stereotype.Service;
 
@@ -9,17 +9,17 @@ import org.springframework.stereotype.Service;
 public class UserControllerParserImpl implements UserControllerParser {
 
     @Override
-    public UserSavedInfo parseUserInfoDtoToUserSavedInfoDto(UserInfoDto userInfoDto) {
+    public UserSavedInfo parseUserInfoDtoToUserSavedInfoDto(UserInfoRequest userInfoRequest) {
         return UserSavedInfo.builder()
-                .fcmToken(userInfoDto.fcmToken())
-                .profileImg(userInfoDto.picture())
-                .email(userInfoDto.email())
-                .nickname(userInfoDto.name())
+                .fcmToken(userInfoRequest.fcmToken())
+                .profileImg(userInfoRequest.picture())
+                .email(userInfoRequest.email())
+                .nickname(userInfoRequest.name())
                 .build();
     }
 
     @Override
-    public UserResponseInfoDto parseUserResponseInfoToUserResponseInfoDto(String jwtToken, Boolean isNewUser) {
-        return new UserResponseInfoDto(jwtToken, isNewUser);
+    public UserInfoResponse parseUserResponseInfoToUserResponseInfoDto(String jwtToken, Boolean isNewUser) {
+        return new UserInfoResponse(jwtToken, isNewUser);
     }
 }

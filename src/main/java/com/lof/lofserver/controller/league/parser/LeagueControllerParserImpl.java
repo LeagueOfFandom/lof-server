@@ -1,8 +1,8 @@
 package com.lof.lofserver.controller.league.parser;
 
-import com.lof.lofserver.controller.league.response.BaseLeagueAndTeamListDto;
-import com.lof.lofserver.controller.league.response.sub.LeagueInfoDto;
-import com.lof.lofserver.controller.league.response.sub.TeamInfoDto;
+import com.lof.lofserver.controller.league.response.BaseLeagueAndTeamListResponse;
+import com.lof.lofserver.controller.league.response.sub.LeagueInfoListResponse;
+import com.lof.lofserver.controller.league.response.sub.TeamInfoListResponse;
 import com.lof.lofserver.service.league.response.BaseLeagueAndTeamList;
 import com.lof.lofserver.service.league.response.sub.LeagueInfo;
 import com.lof.lofserver.service.league.response.sub.TeamInfo;
@@ -10,26 +10,24 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
-
 @Service
 public class LeagueControllerParserImpl implements LeagueControllerParser {
     @Override
-    public BaseLeagueAndTeamListDto parseLeagueInfoToBaseLeagueAndTeamList(BaseLeagueAndTeamList baseLeagueAndTeamList) {
+    public BaseLeagueAndTeamListResponse parseLeagueInfoToBaseLeagueAndTeamList(BaseLeagueAndTeamList baseLeagueAndTeamList) {
         //leagueInfoList -> leagueInfoDtoList
-        List<LeagueInfoDto> leagueInfoDtoList = baseLeagueAndTeamList.leagueInfoList().stream().
+        List<LeagueInfoListResponse> leagueInfoListListResponse = baseLeagueAndTeamList.leagueInfoList().stream().
                 map(this::parseLeagueInfoDtoToLeagueInfo)
                 .toList();
 
-        return BaseLeagueAndTeamListDto.builder()
-                .leagueInfoDtoList(leagueInfoDtoList)
+        return BaseLeagueAndTeamListResponse.builder()
+                .leagueInfoListListResponse(leagueInfoListListResponse)
                 .leagueNameList(baseLeagueAndTeamList.leagueNameList())
                 .build();
     }
 
     @Override
-    public List<TeamInfoDto> parseTeamInfoToTeamInfoDto(List<TeamInfo> teamInfoList) {
-        return teamInfoList.stream().map(teamInfo -> TeamInfoDto.builder()
+    public List<TeamInfoListResponse> parseTeamInfoToTeamInfoDto(List<TeamInfo> teamInfoList) {
+        return teamInfoList.stream().map(teamInfo -> TeamInfoListResponse.builder()
                         .league(teamInfo.league())
                         .teamId(teamInfo.teamId())
                         .teamCheck(teamInfo.teamCheck())
@@ -39,13 +37,13 @@ public class LeagueControllerParserImpl implements LeagueControllerParser {
                 .toList();
     }
 
-    private LeagueInfoDto parseLeagueInfoDtoToLeagueInfo(LeagueInfo leagueInfo) {
+    private LeagueInfoListResponse parseLeagueInfoDtoToLeagueInfo(LeagueInfo leagueInfo) {
         //teamInfoList 복사
-        List<TeamInfoDto> teamInfoList = parseTeamInfoToTeamInfoDto(leagueInfo.teamInfo());
+        List<TeamInfoListResponse> teamInfoListResponse = parseTeamInfoToTeamInfoDto(leagueInfo.teamInfo());
 
-        return LeagueInfoDto.builder()
+        return LeagueInfoListResponse.builder()
                 .note(leagueInfo.note())
-                .teamInfoDtoList(teamInfoList)
+                .teamInfoListResponse(teamInfoListResponse)
                 .build();
     }
 }
