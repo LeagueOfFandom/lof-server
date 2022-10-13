@@ -4,8 +4,8 @@ import lombok.Builder;
 
 import java.util.List;
 
-public record LeagueInfoDto(String note, List<TeamInfoDto> teamInfoDtoList) {
+public record LeagueInfoList(String note, List<TeamInfoList> teamInfoListList) {
     @Builder
-    public LeagueInfoDto {
+    public LeagueInfoList {
     }
 }

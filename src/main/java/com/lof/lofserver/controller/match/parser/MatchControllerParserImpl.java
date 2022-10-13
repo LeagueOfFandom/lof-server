@@ -1,24 +1,36 @@
 package com.lof.lofserver.controller.match.parser;
 
-import com.lof.lofserver.controller.match.response.CommonItemDto;
+import com.lof.lofserver.controller.match.response.CommonItemListResponse;
+import com.lof.lofserver.controller.match.response.MainPageResponse;
 import com.lof.lofserver.service.community.response.BannerView;
 import com.lof.lofserver.service.community.response.TextArrowView;
 import com.lof.lofserver.service.match.response.MatchView;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class MatchControllerParserImpl implements MatchControllerParser {
 
     @Override
-    public List<CommonItemDto> parseObjectListToCommonItemDtoList(List<Object> objectList) {
-        return objectList.stream()
-                .map(object -> CommonItemDto.builder()
+    public MainPageResponse parseObjectListToMainPageResponse(List<Object> objectList) {
+        List<String> bannerList = new ArrayList<>();
+        List<CommonItemListResponse> commonItemListResponseList = new ArrayList<>();
+
+        for(Object object : objectList) {
+            if(object instanceof BannerView) {
+                bannerList = ((BannerView) object).bannerList();
+            } else {
+                commonItemListResponseList.add(CommonItemListResponse.builder()
                         .viewType(getViewType(object))
-                        .viewObject(object)
-                        .build())
-                .toList();
+                        .viewObject(object).build());
+            }
+        }
+
+        return MainPageResponse.builder()
+                .bannerList(bannerList)
+                .commonItemListResponse(commonItemListResponseList).build();
     }
 
     private String getViewType(Object object) {

@@ -1,7 +1,7 @@
 package com.lof.lofserver.controller.user;
 
 import com.lof.lofserver.controller.user.parser.UserControllerParser;
-import com.lof.lofserver.controller.user.request.UserInfoDto;
+import com.lof.lofserver.controller.user.request.UserInfoRequest;
 import com.lof.lofserver.filter.JsonWebToken;
 import com.lof.lofserver.service.user.UserService;
 import com.lof.lofserver.service.user.request.UserSavedInfo;
@@ -25,9 +25,9 @@ public class UserController {
 
     @PostMapping("/create")
     @ApiOperation(value = "유저를 생성한다.", response = UserResponseInfo.class)
-    public ResponseEntity<?> createUser(@Valid @RequestBody UserInfoDto userInfoDto) {
+    public ResponseEntity<?> createUser(@Valid @RequestBody UserInfoRequest userInfoRequest) {
         //userInfo -> UserSavedInfoDto
-        UserSavedInfo userSavedInfo = userControllerParser.parseUserInfoDtoToUserSavedInfoDto(userInfoDto);
+        UserSavedInfo userSavedInfo = userControllerParser.parseUserInfoDtoToUserSavedInfoDto(userInfoRequest);
         //user create
         UserResponseInfo userResponseInfo = userService.createUserByUserSavedInfoDto(userSavedInfo);
         //jwt token 생성

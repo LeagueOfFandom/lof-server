@@ -1,6 +1,7 @@
 package com.lof.lofserver.controller.match.parser;
 
-import com.lof.lofserver.controller.match.response.CommonItemDto;
+import com.lof.lofserver.controller.match.response.CommonItemListResponse;
+import com.lof.lofserver.controller.match.response.MainPageResponse;
 import com.lof.lofserver.service.community.response.TextArrowView;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class MatchControllerParserImplTest {
@@ -27,11 +27,11 @@ class MatchControllerParserImplTest {
         List<Object> objectList = createObjectListTest();
 
         //when
-        List<CommonItemDto> commonItemDtoList = matchControllerParser.parseObjectListToCommonItemDtoList(objectList);
+        MainPageResponse mainPageResponse = matchControllerParser.parseObjectListToMainPageResponse(objectList);
 
         //then
-        assertThat(commonItemDtoList.get(0).viewType()).isEqualTo("TEXT_ARROW_VIEW");
-        assertThat(commonItemDtoList.get(0).viewObject()).isInstanceOf(TextArrowView.class);
+        assertThat(mainPageResponse.commonItemListResponse().get(0).viewType()).isEqualTo("TEXT_ARROW_VIEW");
+        assertThat(mainPageResponse.commonItemListResponse().get(0).viewObject()).isInstanceOf(TextArrowView.class);
     }
 
     private List<Object> createObjectListTest() {
