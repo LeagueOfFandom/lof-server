@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@WebFilter(urlPatterns = "/api/v1/*")
 @Component
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
