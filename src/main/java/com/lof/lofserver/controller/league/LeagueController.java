@@ -2,7 +2,7 @@ package com.lof.lofserver.controller.league;
 
 import com.lof.lofserver.controller.league.parser.LeagueControllerParser;
 import com.lof.lofserver.controller.league.response.BaseLeagueAndTeamListResponse;
-import com.lof.lofserver.controller.league.response.sub.TeamInfoList;
+import com.lof.lofserver.controller.league.response.sub.TeamInfoListResponse;
 import com.lof.lofserver.service.league.LeagueService;
 import com.lof.lofserver.service.league.response.BaseLeagueAndTeamList;
 import com.lof.lofserver.service.league.response.sub.TeamInfo;
@@ -37,7 +37,7 @@ public class LeagueController {
     }
 
     @GetMapping("/selectedTeamByUser")
-    @ApiOperation(value = "유저의 팀 리스트를 가져온다.", response = TeamInfoList[].class)
+    @ApiOperation(value = "유저의 팀 리스트를 가져온다.", response = TeamInfoListResponse[].class)
     public ResponseEntity<?> getTeamListByUserId(HttpServletRequest request, @RequestHeader("Authorization") String ignoredToken) {
         //get userId
         Long userId = Long.parseLong(request.getAttribute("id").toString());
