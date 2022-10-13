@@ -1,6 +1,5 @@
 package com.lof.lofserver.service.league;
 
-import com.lof.lofserver.controller.league.response.sub.TeamInfoDto;
 import com.lof.lofserver.domain.league.LeagueEntity;
 import com.lof.lofserver.domain.league.LeagueRepository;
 import com.lof.lofserver.domain.team.TeamEntity;
@@ -46,8 +45,8 @@ public class LeagueServiceImpl implements LeagueService{
      */
     private LeagueInfo createLeagueInfoByLeagueEntityAndTeamEntityListAndUserTeamList(LeagueEntity leagueEntity, List<TeamEntity> teamEntityList, List<Long> userSelectedTeamIdList){
         //리그의 팀 정보 리스트 생성
-        List<TeamInfo> teamInfoList = teamEntityList.stream()
-                .map(teamEntity -> TeamInfo.builder()
+        List<com.lof.lofserver.service.league.response.sub.TeamInfo> teamInfoList = teamEntityList.stream()
+                .map(teamEntity -> com.lof.lofserver.service.league.response.sub.TeamInfo.builder()
                         .league(leagueEntity.getName())
                         .teamId(teamEntity.getId())
                         .teamName(teamEntity.getAcronym())
@@ -96,20 +95,20 @@ public class LeagueServiceImpl implements LeagueService{
     }
 
     @Override
-    public List<TeamInfoDto> getTeamListByUserId(Long userId) {
+    public List<TeamInfo> getTeamListByUserId(Long userId) {
         UserEntity userEntity = userRepository.findById(userId).orElseThrow();
         List<Long> teamIdList = userEntity.getTeamList();
 
-        List<TeamInfoDto> teamInfoDtoList = new ArrayList<>();
+        List<TeamInfo> teamInfoList = new ArrayList<>();
         List<TeamEntity> teamEntityList = teamRepository.findAllById(teamIdList);
         for(TeamEntity teamEntity : teamEntityList)
-            teamInfoDtoList.add(createSelectedTeamInfoDtoByTeamEntity(teamEntity));
+            teamInfoList.add(createSelectedTeamInfoDtoByTeamEntity(teamEntity));
 
-        return teamInfoDtoList;
+        return teamInfoList;
     }
 
-    private TeamInfoDto createSelectedTeamInfoDtoByTeamEntity(TeamEntity teamEntity){
-        return TeamInfoDto.builder()
+    private TeamInfo createSelectedTeamInfoDtoByTeamEntity(TeamEntity teamEntity){
+        return TeamInfo.builder()
                 .teamId(teamEntity.getId())
                 .teamName(teamEntity.getAcronym())
                 .teamImg(teamEntity.getImageUrl())
