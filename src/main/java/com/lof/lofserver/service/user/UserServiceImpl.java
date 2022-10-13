@@ -2,6 +2,8 @@ package com.lof.lofserver.service.user;
 
 import com.lof.lofserver.domain.user.UserEntity;
 import com.lof.lofserver.domain.user.UserRepository;
+import com.lof.lofserver.exception.UserException;
+import com.lof.lofserver.exception.UserExceptionType;
 import com.lof.lofserver.service.user.request.UserSavedInfoDto;
 import com.lof.lofserver.service.user.response.UserResponseInfo;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +35,7 @@ public class UserServiceImpl implements UserService {
     private void validateDuplicateNickname(String nickname){
         Optional<UserEntity> optionalUser = userRepository.findByNickname(nickname);
         optionalUser.ifPresent(user -> {
-            throw new IllegalStateException("이미 존재하는 닉네임입니다.");
+            throw new UserException(UserExceptionType.NICKNAME_ALREADY_EXIST);
         });
     }
 
