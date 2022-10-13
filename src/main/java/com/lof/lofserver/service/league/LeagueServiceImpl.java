@@ -1,5 +1,6 @@
 package com.lof.lofserver.service.league;
 
+import com.lof.lofserver.controller.league.response.sub.TeamInfoDto;
 import com.lof.lofserver.domain.league.LeagueEntity;
 import com.lof.lofserver.domain.league.LeagueRepository;
 import com.lof.lofserver.domain.team.TeamEntity;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -90,6 +92,29 @@ public class LeagueServiceImpl implements LeagueService{
         return BaseLeagueAndTeamList.builder()
                 .leagueNameList(leagueNameList)
                 .leagueInfoList(leagueInfoList)
+                .build();
+    }
+
+    @Override
+    public List<TeamInfoDto> getTeamListByUserId(Long userId) {
+        UserEntity userEntity = userRepository.findById(userId).orElseThrow();
+        List<Long> teamIdList = userEntity.getTeamList();
+
+        List<TeamInfoDto> teamInfoDtoList = new ArrayList<>();
+        List<TeamEntity> teamEntityList = teamRepository.findAllById(teamIdList);
+        for(TeamEntity teamEntity : teamEntityList)
+            teamInfoDtoList.add(createSelectedTeamInfoDtoByTeamEntity(teamEntity));
+
+        return teamInfoDtoList;
+    }
+
+    private TeamInfoDto createSelectedTeamInfoDtoByTeamEntity(TeamEntity teamEntity){
+        return TeamInfoDto.builder()
+                .teamId(teamEntity.getId())
+                .teamName(teamEntity.getAcronym())
+                .teamImg(teamEntity.getImageUrl())
+                .league(Objects.requireNonNull(leagueRepository.findById(teamEntity.getLeagueId()).orElse(null)).getName())
+                .teamCheck(true)
                 .build();
     }
 }

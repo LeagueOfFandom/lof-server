@@ -2,7 +2,7 @@ package com.lof.lofserver.service.user;
 
 import com.lof.lofserver.domain.user.UserEntity;
 import com.lof.lofserver.domain.user.UserRepository;
-import com.lof.lofserver.service.user.request.UserSavedInfoDto;
+import com.lof.lofserver.service.user.request.UserSavedInfo;
 import com.lof.lofserver.service.user.response.UserResponseInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,20 +27,20 @@ public class UserServiceImpl implements UserService {
     }
 
     /** 유저 생성
-     * @param userSavedInfoDto - 유저 정보
+     * @param userSavedInfo - 유저 정보
      * @return UserResponseInfoDto
      */
     @Override
-    public UserResponseInfo createUserByUserSavedInfoDto(UserSavedInfoDto userSavedInfoDto) {
+    public UserResponseInfo createUserByUserSavedInfoDto(UserSavedInfo userSavedInfo) {
         //find user
-        UserEntity userEntity = userRepository.findByEmail(userSavedInfoDto.email());
+        UserEntity userEntity = userRepository.findByEmail(userSavedInfo.email());
 
         //if user is existed, return userInfoDto
         if(userEntity != null)
             return parseUserResponseInfoDto(userEntity, false);
 
         //create user
-        userEntity = createUserEntity(userSavedInfoDto);
+        userEntity = createUserEntity(userSavedInfo);
 
         //save user
         UserEntity savedUserEntity = userRepository.save(userEntity);
@@ -64,15 +64,15 @@ public class UserServiceImpl implements UserService {
 
     /**
      * create UserEntity by UserSavedInfoDto
-     * @param userSavedInfoDto - user entity 에 저장할 정보
+     * @param userSavedInfo - user entity 에 저장할 정보
      * @return UserEntity
      */
-    private UserEntity createUserEntity(UserSavedInfoDto userSavedInfoDto) {
+    private UserEntity createUserEntity(UserSavedInfo userSavedInfo) {
         return UserEntity.builder()
-                .fcmToken(userSavedInfoDto.fcmToken())
-                .email(userSavedInfoDto.email())
-                .nickname(userSavedInfoDto.nickname())
-                .profileImg(userSavedInfoDto.profileImg())
+                .fcmToken(userSavedInfo.fcmToken())
+                .email(userSavedInfo.email())
+                .nickname(userSavedInfo.nickname())
+                .profileImg(userSavedInfo.profileImg())
                 .build();
     }
 }
