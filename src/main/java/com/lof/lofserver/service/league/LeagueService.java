@@ -8,4 +8,6 @@ import java.util.List;
 public interface LeagueService {
     BaseLeagueAndTeamList getAllLeagueAndTeamListByUserId(Long userId);
     List<TeamInfo> getTeamListByUserId(Long userId);
+
+    List<Long> setTeamListByUserId(Long userId, List<Long> teamIdList);
 }

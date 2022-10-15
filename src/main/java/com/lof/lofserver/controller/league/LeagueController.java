@@ -9,12 +9,10 @@ import com.lof.lofserver.service.league.response.sub.TeamInfo;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -46,5 +44,15 @@ public class LeagueController {
         //parse leagueInfoList to leagueInfoDtoList
         return ResponseEntity.ok(leagueControllerParser.parseTeamInfoToTeamInfoDto(teamInfoList));
    }
+
+    @PostMapping("/selectedTeamByUser")
+    @ApiOperation(value = "유저의 팀 리스트를 설정한다.", response = ArrayList.class)
+    public ResponseEntity<?> setTeamListByUserId(HttpServletRequest request, @RequestHeader("Authorization") String ignoredToken, @RequestBody List<Long> teamIdList) {
+        //get userId
+        Long userId = Long.parseLong(request.getAttribute("id").toString());
+
+        //set teamList
+        return ResponseEntity.ok(leagueService.setTeamListByUserId(userId, teamIdList));
+    }
 
 }
