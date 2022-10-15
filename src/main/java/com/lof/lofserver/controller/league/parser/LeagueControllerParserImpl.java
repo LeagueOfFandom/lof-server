@@ -20,7 +20,7 @@ public class LeagueControllerParserImpl implements LeagueControllerParser {
                 .toList();
 
         return BaseLeagueAndTeamListResponse.builder()
-                .leagueInfoListListResponse(leagueInfoListListResponse)
+                .leagueInfoListResponse(leagueInfoListListResponse)
                 .leagueNameList(baseLeagueAndTeamList.leagueNameList())
                 .build();
     }
