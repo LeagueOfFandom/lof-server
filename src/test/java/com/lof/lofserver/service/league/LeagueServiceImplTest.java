@@ -72,7 +72,6 @@ class LeagueServiceImplTest {
         List<Long> teamListByUserId = leagueService.setTeamListByUserId(1L, afterTeamList);
 
         //then
-        assertThat(teamListByUserId).isInstanceOf(List.class);
         assertThat(teamListByUserId).isEqualTo(afterTeamList);
     }
 }
