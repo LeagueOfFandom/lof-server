@@ -1,6 +1,7 @@
 package com.lof.lofserver.controller.match.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.lof.lofserver.controller.match.response.sub.CommonItemListResponse;
 import lombok.Builder;
 
 import java.util.List;

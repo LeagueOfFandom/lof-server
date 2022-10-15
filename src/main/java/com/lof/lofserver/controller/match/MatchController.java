@@ -1,7 +1,8 @@
 package com.lof.lofserver.controller.match;
 
 import com.lof.lofserver.controller.match.parser.MatchControllerParser;
-import com.lof.lofserver.controller.match.response.CommonItemListResponse;
+import com.lof.lofserver.controller.match.response.MatchDetailResponse;
+import com.lof.lofserver.controller.match.response.sub.CommonItemListResponse;
 import com.lof.lofserver.service.community.CommunityService;
 import com.lof.lofserver.service.match.MatchService;
 import io.swagger.annotations.ApiOperation;
@@ -54,6 +55,15 @@ public class MatchController {
         //get matchList
         List<Object> commonItemList = new ArrayList<>(matchService.getMatchListByMonth(userId, localDate,onlyMyTeam));
         return ResponseEntity.ok(matchControllerParser.parseObjectListToMainPageResponse(commonItemList));
+    }
+
+    @GetMapping("/getMatchDetail")
+    @ApiOperation(value = "경기 상세 정보를 가져온다.", response = MatchDetailResponse.class)
+    public ResponseEntity<?> getMatchDetail(HttpServletRequest request,
+                                            @RequestHeader("Authorization") String ignoredToken,
+                                            @RequestParam("matchId") Long matchId) {
+
+        return ResponseEntity.ok("ok");
     }
 
 }

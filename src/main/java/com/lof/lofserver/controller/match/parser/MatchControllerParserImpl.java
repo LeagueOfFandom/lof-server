@@ -1,6 +1,6 @@
 package com.lof.lofserver.controller.match.parser;
 
-import com.lof.lofserver.controller.match.response.CommonItemListResponse;
+import com.lof.lofserver.controller.match.response.sub.CommonItemListResponse;
 import com.lof.lofserver.controller.match.response.MainPageResponse;
 import com.lof.lofserver.service.community.response.BannerView;
 import com.lof.lofserver.service.community.response.TextArrowView;

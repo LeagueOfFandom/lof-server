@@ -79,6 +79,23 @@ class MatchControllerTest {
         resultActions.andExpect(status().isOk());
     }
 
+    @Test
+    @DisplayName("매치 상세 정보 가져오기")
+    void getMatchDetail() throws Exception {
+        //given
+        String token = "test";
+
+        //when
+        ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders.get("/v1/match/getMatchDetail")
+                        .contentType("application/json")
+                        .header("Authorization", token)
+                        .param("matchId", "1"));
+
+        //then
+        resultActions.andExpect(status().isOk());
+    }
+
     private BannerView getBannerViewTest() {
         return new BannerView(List.of("test"));
     }

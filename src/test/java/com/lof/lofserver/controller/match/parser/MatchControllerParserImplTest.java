@@ -1,6 +1,5 @@
 package com.lof.lofserver.controller.match.parser;
 
-import com.lof.lofserver.controller.match.response.CommonItemListResponse;
 import com.lof.lofserver.controller.match.response.MainPageResponse;
 import com.lof.lofserver.service.community.response.TextArrowView;
 import org.junit.jupiter.api.DisplayName;
