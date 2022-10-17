@@ -14,6 +14,19 @@ import java.util.List;
 public class MatchControllerParserImpl implements MatchControllerParser {
 
     @Override
+    public List<CommonItemListResponse> parseObjectListToCommonItemListResponse(List<Object> objectList) {
+        List<CommonItemListResponse> commonItemListResponseList = new ArrayList<>();
+
+        for(Object object : objectList) {
+            commonItemListResponseList.add(CommonItemListResponse.builder()
+                    .viewType(getViewType(object))
+                    .viewObject(object).build());
+        }
+
+        return commonItemListResponseList;
+    }
+
+    @Override
     public MainPageResponse parseObjectListToMainPageResponse(List<Object> objectList) {
         List<String> bannerList = new ArrayList<>();
         List<CommonItemListResponse> commonItemListResponseList = new ArrayList<>();
