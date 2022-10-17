@@ -1,6 +1,7 @@
 package com.lof.lofserver.controller.match;
 
 import com.lof.lofserver.controller.match.parser.MatchControllerParser;
+import com.lof.lofserver.controller.match.response.MainPageResponse;
 import com.lof.lofserver.controller.match.response.MatchDetailResponse;
 import com.lof.lofserver.controller.match.response.sub.CommonItemListResponse;
 import com.lof.lofserver.service.community.CommunityService;
@@ -27,7 +28,7 @@ public class MatchController {
     private final MatchControllerParser matchControllerParser;
 
     @GetMapping("/mainPage")
-    @ApiOperation(value = "메인페이지에 필요한 정보를 가져온다.", response = CommonItemListResponse[].class)
+    @ApiOperation(value = "메인페이지에 필요한 정보를 가져온다.", response = MainPageResponse.class)
     public ResponseEntity<?> getMainPage(HttpServletRequest request,
                                          @RequestHeader("Authorization") String ignoredToken,
                                          @RequestParam(value = "onlyMyTeam") Boolean onlyMyTeam) {
