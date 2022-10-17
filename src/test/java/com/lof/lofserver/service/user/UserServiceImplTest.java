@@ -2,6 +2,9 @@ package com.lof.lofserver.service.user;
 
 import com.lof.lofserver.domain.user.UserEntity;
 import com.lof.lofserver.domain.user.UserRepository;
+import com.lof.lofserver.exception.BaseException;
+import com.lof.lofserver.exception.UserException;
+import com.lof.lofserver.exception.UserExceptionType;
 import com.lof.lofserver.service.user.request.UserSavedInfoDto;
 import com.lof.lofserver.service.user.response.UserResponseInfo;
 import org.junit.jupiter.api.DisplayName;
@@ -11,12 +14,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
@@ -112,7 +115,7 @@ class UserServiceImplTest {
 
     @Test
     @DisplayName("유저 닉네임 설정하기 - 실패(중복)")
-    void duplicateNickname(){
+    void validateDuplicateUserNickname() {
         //given
         String user1Nickname = "user1";
         String user2Nickname = "user1";
@@ -121,10 +124,9 @@ class UserServiceImplTest {
         given(userRepository.findByNickname(user1Nickname)).willReturn(Optional.of(UserEntity.builder().nickname(user1Nickname).build()));
 
         //then
-        assertThatThrownBy(() -> userService.setUserNickName(1L, user2Nickname))
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessageContaining("이미 존재하는 닉네임입니다.");
-
+        BaseException throwable = assertThrows(BaseException.class, () -> userService.setUserNickName(1L, user2Nickname));
+        assertThat(throwable.getExceptionType()).isEqualTo(UserExceptionType.NICKNAME_ALREADY_EXIST);
     }
+
 
 }
