@@ -4,6 +4,7 @@ import com.lof.lofserver.domain.match.MatchEntity;
 import com.lof.lofserver.domain.match.MatchRepository;
 import com.lof.lofserver.domain.match.sub.Opponent;
 import com.lof.lofserver.domain.match.sub.Result;
+import com.lof.lofserver.domain.team.TeamRepository;
 import com.lof.lofserver.domain.user.UserEntity;
 import com.lof.lofserver.domain.user.UserRepository;
 import com.lof.lofserver.service.match.response.MatchDetail;
@@ -22,6 +23,20 @@ public class MatchServiceImpl implements MatchService {
 
     private final MatchRepository matchRepository;
     private final UserRepository userRepository;
+    private final TeamRepository teamRepository;
+
+    /**
+     * 유저 팀 리스트를 팀 number 로 가져온다.
+     * @param userEntity - 유저 정보
+     * @return List<Long>
+     */
+    private List<Long> getTeamIdList(UserEntity userEntity) {
+        List<Long> teamIdList = new ArrayList<>();
+        for(Long teamId : userEntity.getTeamList())
+            teamIdList.add(teamRepository.findById(teamId).orElseThrow().getTeamNum());
+
+        return teamIdList;
+    }
 
     /**
      * matchEntity to matchView
@@ -65,10 +80,12 @@ public class MatchServiceImpl implements MatchService {
         if(matchEntity.getOpponents().size() < 2)
             return false;
 
+        List<Long> teamIdList = getTeamIdList(userEntity);
+
         if(userEntity.getUserSelectedMatchList().containsKey(matchEntity.getId()))
             return userEntity.getUserSelectedMatchList().get(matchEntity.getId());
-        else return userEntity.getTeamList().contains(matchEntity.getOpponents().get(0).getOpponent().getId())
-                || userEntity.getTeamList().contains(matchEntity.getOpponents().get(1).getOpponent().getId());
+        else return teamIdList.contains(matchEntity.getOpponents().get(0).getOpponent().getId())
+                || teamIdList.contains(matchEntity.getOpponents().get(1).getOpponent().getId());
     }
 
     /**
@@ -78,10 +95,13 @@ public class MatchServiceImpl implements MatchService {
      * @return List<MatchView>
      */
     private List<MatchEntity> getMatchEntityListByUserTeam(List<MatchEntity> matchEntityList, UserEntity userEntity){
+        List<Long> teamIdList = getTeamIdList(userEntity);
         List<MatchEntity> userTeamMatchEntityList = new ArrayList<>();
         for(MatchEntity matchEntity : matchEntityList){
-            if(userEntity.getTeamList().contains(matchEntity.getOpponents().get(0).getOpponent().getId())
-                    || userEntity.getTeamList().contains(matchEntity.getOpponents().get(1).getOpponent().getId()))
+            if(matchEntity.getOpponents().size() < 2)
+                continue;
+            if(teamIdList.contains(matchEntity.getOpponents().get(0).getOpponent().getId())
+                    || teamIdList.contains(matchEntity.getOpponents().get(1).getOpponent().getId()))
                 userTeamMatchEntityList.add(matchEntity);
         }
         return userTeamMatchEntityList;

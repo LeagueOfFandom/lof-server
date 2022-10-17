@@ -18,6 +18,7 @@ public class MatchControllerParserImpl implements MatchControllerParser {
         List<CommonItemListResponse> commonItemListResponseList = new ArrayList<>();
 
         for(Object object : objectList) {
+            if(object == null) continue;
             commonItemListResponseList.add(CommonItemListResponse.builder()
                     .viewType(getViewType(object))
                     .viewObject(object).build());
@@ -32,12 +33,14 @@ public class MatchControllerParserImpl implements MatchControllerParser {
         List<CommonItemListResponse> commonItemListResponseList = new ArrayList<>();
 
         for(Object object : objectList) {
-            if(object instanceof BannerView) {
-                bannerList = ((BannerView) object).bannerList();
-            } else {
-                commonItemListResponseList.add(CommonItemListResponse.builder()
-                        .viewType(getViewType(object))
-                        .viewObject(object).build());
+            if(object != null) {
+                if (object instanceof BannerView) {
+                    bannerList = ((BannerView) object).bannerList();
+                } else {
+                    commonItemListResponseList.add(CommonItemListResponse.builder()
+                            .viewType(getViewType(object))
+                            .viewObject(object).build());
+                }
             }
         }
 
