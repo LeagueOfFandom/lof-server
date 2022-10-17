@@ -44,7 +44,7 @@ public class MatchController {
         return ResponseEntity.ok(matchControllerParser.parseObjectListToMainPageResponse(commonItemList));
     }
 
-    @GetMapping("/getMatchListByMonth")
+    @GetMapping("/matchListByMonth")
     @ApiOperation(value = "달에 해당하는 경기를 가져온다.", response = CommonItemListResponse[].class)
     public ResponseEntity<?> getMatchListByDate(HttpServletRequest request,
                                                 @RequestHeader("Authorization") String ignoredToken,
@@ -57,13 +57,13 @@ public class MatchController {
         return ResponseEntity.ok(matchControllerParser.parseObjectListToMainPageResponse(commonItemList));
     }
 
-    @GetMapping("/getMatchDetail")
-    @ApiOperation(value = "경기 상세 정보를 가져온다.", response = MatchDetailResponse.class)
-    public ResponseEntity<?> getMatchDetail(HttpServletRequest request,
-                                            @RequestHeader("Authorization") String ignoredToken,
-                                            @RequestParam("matchId") Long matchId) {
-
-        return ResponseEntity.ok("ok");
-    }
+//    @GetMapping("/matchDetail")
+//    @ApiOperation(value = "경기 상세 정보를 가져온다.", response = MatchDetailResponse.class)
+//    public ResponseEntity<?> getMatchDetail(HttpServletRequest request,
+//                                            @RequestHeader("Authorization") String ignoredToken,
+//                                            @RequestParam("matchId") Long matchId) {
+//
+//        return ResponseEntity.ok("ok");
+//    }
 
 }
