@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -35,6 +36,15 @@ public class LeagueServiceImpl implements LeagueService{
         //기본 리그 이름 리스트로 기본 리그 아이디 리스트 가져오기
         return leagueRepository.findAllIdByName(baseLeagueNameList);
     }
+    private TeamInfo createSelectedTeamInfoDtoByTeamEntity(TeamEntity teamEntity){
+        return TeamInfo.builder()
+                .teamId(teamEntity.getId())
+                .teamName(teamEntity.getAcronym())
+                .teamImg(teamEntity.getImageUrl())
+                .league(Objects.requireNonNull(leagueRepository.findById(teamEntity.getLeagueId()).orElse(null)).getName())
+                .teamCheck(true)
+                .build();
+    }
 
     /** 리그 정보 생성
      * @param leagueEntity - 리그 엔티티
@@ -44,8 +54,8 @@ public class LeagueServiceImpl implements LeagueService{
      */
     private LeagueInfo createLeagueInfoByLeagueEntityAndTeamEntityListAndUserTeamList(LeagueEntity leagueEntity, List<TeamEntity> teamEntityList, List<Long> userSelectedTeamIdList){
         //리그의 팀 정보 리스트 생성
-        List<TeamInfo> teamInfoList = teamEntityList.stream()
-                .map(teamEntity -> TeamInfo.builder()
+        List<com.lof.lofserver.service.league.response.sub.TeamInfo> teamInfoList = teamEntityList.stream()
+                .map(teamEntity -> com.lof.lofserver.service.league.response.sub.TeamInfo.builder()
                         .league(leagueEntity.getName())
                         .teamId(teamEntity.getId())
                         .teamName(teamEntity.getAcronym())
@@ -91,5 +101,35 @@ public class LeagueServiceImpl implements LeagueService{
                 .leagueNameList(leagueNameList)
                 .leagueInfoList(leagueInfoList)
                 .build();
+    }
+
+    @Override
+    public List<TeamInfo> getTeamListByUserId(Long userId) {
+        UserEntity userEntity = userRepository.findById(userId).orElseThrow();
+        List<Long> teamIdList = userEntity.getTeamList();
+
+        List<TeamInfo> teamInfoList = new ArrayList<>();
+        List<TeamEntity> teamEntityList = teamRepository.findAllById(teamIdList);
+        for(TeamEntity teamEntity : teamEntityList)
+            teamInfoList.add(createSelectedTeamInfoDtoByTeamEntity(teamEntity));
+
+        return teamInfoList;
+    }
+
+    @Override
+    public List<Long> setTeamListByUserId(Long userId, List<Long> teamIdList) {
+        UserEntity userEntity = userRepository.findById(userId).orElseThrow();
+
+        for(Long teamId : teamIdList){
+            //팀 아이디가 유효하지 않은 경우
+            if(!teamRepository.existsById(teamId))
+                throw new IllegalArgumentException("팀 아이디가 유효하지 않습니다.");
+        }
+
+        //유저의 팀 리스트 업데이트
+        userEntity.setTeamList(teamIdList);
+
+        UserEntity save = userRepository.save(userEntity);
+        return save.getTeamList();
     }
 }

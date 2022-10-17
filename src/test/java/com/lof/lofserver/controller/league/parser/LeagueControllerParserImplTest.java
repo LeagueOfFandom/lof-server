@@ -1,6 +1,6 @@
 package com.lof.lofserver.controller.league.parser;
 
-import com.lof.lofserver.controller.league.response.BaseLeagueAndTeamListDto;
+import com.lof.lofserver.controller.league.response.BaseLeagueAndTeamListResponse;
 import com.lof.lofserver.service.league.response.BaseLeagueAndTeamList;
 import com.lof.lofserver.service.league.response.sub.LeagueInfo;
 import com.lof.lofserver.service.league.response.sub.TeamInfo;
@@ -31,7 +31,7 @@ class LeagueControllerParserImplTest {
         Object leagueInfo = leagueControllerParser.parseLeagueInfoToBaseLeagueAndTeamList(baseLeagueAndTeamList);
 
         //then
-        assertThat(leagueInfo).isInstanceOf(BaseLeagueAndTeamListDto.class);
+        assertThat(leagueInfo).isInstanceOf(BaseLeagueAndTeamListResponse.class);
     }
 
     BaseLeagueAndTeamList createBaseLeagueAndTeamListTest(){

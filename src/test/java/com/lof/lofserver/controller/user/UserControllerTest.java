@@ -4,7 +4,7 @@ import com.lof.lofserver.controller.user.parser.UserControllerParser;
 import com.lof.lofserver.domain.user.UserRepository;
 import com.lof.lofserver.filter.JsonWebToken;
 import com.lof.lofserver.service.user.UserService;
-import com.lof.lofserver.service.user.request.UserSavedInfoDto;
+import com.lof.lofserver.service.user.request.UserSavedInfo;
 import com.lof.lofserver.service.user.response.UserResponseInfo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -116,8 +116,8 @@ class UserControllerTest {
                 .build();
     }
 
-    private UserSavedInfoDto createUserSavedInfoDtoTest() {
-        return UserSavedInfoDto.builder()
+    private UserSavedInfo createUserSavedInfoDtoTest() {
+        return UserSavedInfo.builder()
                 .nickname("Test")
                 .email("Test")
                 .profileImg("Test")

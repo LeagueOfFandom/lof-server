@@ -12,9 +12,9 @@ public class CommunityServiceImpl implements CommunityService {
     @Override
     public BannerView getBannerList() {
         List<String> bannerList = new ArrayList<>();
-        bannerList.add("https://d654rq93y7j8z.cloudfront.net/soma-bucket/lof_banner/1.jpg");
-        bannerList.add("https://d654rq93y7j8z.cloudfront.net/soma-bucket/lof_banner/2.jpg");
-        bannerList.add("https://d654rq93y7j8z.cloudfront.net/soma-bucket/lof_banner/3.jpg");
+        bannerList.add("https://d654rq93y7j8z.cloudfront.net/lof_banner/1.jpg");
+        bannerList.add("https://d654rq93y7j8z.cloudfront.net/lof_banner/2.jpg");
+        bannerList.add("https://d654rq93y7j8z.cloudfront.net/lof_banner/3.jpg");
 
         return new BannerView(bannerList);
     }
