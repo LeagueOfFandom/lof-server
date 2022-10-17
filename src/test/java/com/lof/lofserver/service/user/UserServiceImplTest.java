@@ -2,7 +2,6 @@ package com.lof.lofserver.service.user;
 
 import com.lof.lofserver.domain.user.UserEntity;
 import com.lof.lofserver.domain.user.UserRepository;
-import com.lof.lofserver.exception.BaseException;
 import com.lof.lofserver.exception.UserException;
 import com.lof.lofserver.exception.UserExceptionType;
 import com.lof.lofserver.service.user.request.UserSavedInfoDto;
@@ -17,8 +16,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -124,7 +121,7 @@ class UserServiceImplTest {
         given(userRepository.findByNickname(user1Nickname)).willReturn(Optional.of(UserEntity.builder().nickname(user1Nickname).build()));
 
         //then
-        BaseException throwable = assertThrows(BaseException.class, () -> userService.setUserNickName(1L, user2Nickname));
+        UserException throwable = assertThrows(UserException.class, () -> userService.setUserNickName(1L, user2Nickname));
         assertThat(throwable.getExceptionType()).isEqualTo(UserExceptionType.NICKNAME_ALREADY_EXIST);
     }
 
