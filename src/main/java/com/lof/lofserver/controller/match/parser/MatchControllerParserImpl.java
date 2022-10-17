@@ -1,6 +1,6 @@
 package com.lof.lofserver.controller.match.parser;
 
-import com.lof.lofserver.controller.match.response.CommonItemListResponse;
+import com.lof.lofserver.controller.match.response.sub.CommonItemListResponse;
 import com.lof.lofserver.controller.match.response.MainPageResponse;
 import com.lof.lofserver.service.community.response.BannerView;
 import com.lof.lofserver.service.community.response.TextArrowView;
@@ -12,6 +12,19 @@ import java.util.List;
 
 @Service
 public class MatchControllerParserImpl implements MatchControllerParser {
+
+    @Override
+    public List<CommonItemListResponse> parseObjectListToCommonItemListResponse(List<Object> objectList) {
+        List<CommonItemListResponse> commonItemListResponseList = new ArrayList<>();
+
+        for(Object object : objectList) {
+            commonItemListResponseList.add(CommonItemListResponse.builder()
+                    .viewType(getViewType(object))
+                    .viewObject(object).build());
+        }
+
+        return commonItemListResponseList;
+    }
 
     @Override
     public MainPageResponse parseObjectListToMainPageResponse(List<Object> objectList) {

@@ -6,6 +6,7 @@ import com.lof.lofserver.domain.match.sub.Opponent;
 import com.lof.lofserver.domain.match.sub.Result;
 import com.lof.lofserver.domain.user.UserEntity;
 import com.lof.lofserver.domain.user.UserRepository;
+import com.lof.lofserver.service.match.response.MatchDetail;
 import com.lof.lofserver.service.match.response.MatchView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -160,5 +161,12 @@ public class MatchServiceImpl implements MatchService {
             matchViewList.add(matchEntityToMatchView(matchEntity, isAlarm(userEntity, matchEntity)));
 
         return matchViewList;
+    }
+
+    @Override
+    public MatchDetail getMatchDetail(Long userId, Long matchId) {
+
+
+        return null;
     }
 }

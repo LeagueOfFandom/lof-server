@@ -1,6 +1,7 @@
 package com.lof.lofserver.controller.match;
 
 import com.lof.lofserver.controller.match.parser.MatchControllerParser;
+import com.lof.lofserver.controller.match.response.MainPageResponse;
 import com.lof.lofserver.domain.user.UserRepository;
 import com.lof.lofserver.filter.JsonWebToken;
 import com.lof.lofserver.service.community.CommunityService;
@@ -17,6 +18,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -50,7 +52,7 @@ class MatchControllerTest {
 
         //when
         ResultActions resultActions = mockMvc.perform(
-                MockMvcRequestBuilders.get("/v1/match/getMatchListByMonth")
+                MockMvcRequestBuilders.get("/v1/match/matchListByMonth")
                         .contentType("application/json")
                         .header("Authorization", token)
                         .param("date", "2022-01-01")
@@ -78,6 +80,23 @@ class MatchControllerTest {
         //then
         resultActions.andExpect(status().isOk());
     }
+
+//    @Test
+//    @DisplayName("매치 상세 정보 가져오기")
+//    void getMatchDetail() throws Exception {
+//        //given
+//        String token = "test";
+//
+//        //when
+//        ResultActions resultActions = mockMvc.perform(
+//                MockMvcRequestBuilders.get("/v1/match/getMatchDetail")
+//                        .contentType("application/json")
+//                        .header("Authorization", token)
+//                        .param("matchId", "1"));
+//
+//        //then
+//        resultActions.andExpect(status().isOk());
+//    }
 
     private BannerView getBannerViewTest() {
         return new BannerView(List.of("test"));

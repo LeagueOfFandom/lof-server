@@ -1,4 +1,4 @@
-package com.lof.lofserver.controller.match.response;
+package com.lof.lofserver.controller.match.response.sub;
 
 import lombok.Builder;
 

@@ -1,7 +1,9 @@
 package com.lof.lofserver.controller.match;
 
 import com.lof.lofserver.controller.match.parser.MatchControllerParser;
-import com.lof.lofserver.controller.match.response.CommonItemListResponse;
+import com.lof.lofserver.controller.match.response.MainPageResponse;
+import com.lof.lofserver.controller.match.response.MatchDetailResponse;
+import com.lof.lofserver.controller.match.response.sub.CommonItemListResponse;
 import com.lof.lofserver.service.community.CommunityService;
 import com.lof.lofserver.service.match.MatchService;
 import io.swagger.annotations.ApiOperation;
@@ -26,7 +28,7 @@ public class MatchController {
     private final MatchControllerParser matchControllerParser;
 
     @GetMapping("/mainPage")
-    @ApiOperation(value = "메인페이지에 필요한 정보를 가져온다.", response = CommonItemListResponse[].class)
+    @ApiOperation(value = "메인페이지에 필요한 정보를 가져온다.", response = MainPageResponse.class)
     public ResponseEntity<?> getMainPage(HttpServletRequest request,
                                          @RequestHeader("Authorization") String ignoredToken,
                                          @RequestParam(value = "onlyMyTeam") Boolean onlyMyTeam) {
@@ -43,7 +45,7 @@ public class MatchController {
         return ResponseEntity.ok(matchControllerParser.parseObjectListToMainPageResponse(commonItemList));
     }
 
-    @GetMapping("/getMatchListByMonth")
+    @GetMapping("/matchListByMonth")
     @ApiOperation(value = "달에 해당하는 경기를 가져온다.", response = CommonItemListResponse[].class)
     public ResponseEntity<?> getMatchListByDate(HttpServletRequest request,
                                                 @RequestHeader("Authorization") String ignoredToken,
@@ -53,7 +55,16 @@ public class MatchController {
         LocalDate localDate = LocalDate.parse(date);
         //get matchList
         List<Object> commonItemList = new ArrayList<>(matchService.getMatchListByMonth(userId, localDate,onlyMyTeam));
-        return ResponseEntity.ok(matchControllerParser.parseObjectListToMainPageResponse(commonItemList));
+        return ResponseEntity.ok(matchControllerParser.parseObjectListToCommonItemListResponse(commonItemList));
     }
+
+//    @GetMapping("/matchDetail")
+//    @ApiOperation(value = "경기 상세 정보를 가져온다.", response = MatchDetailResponse.class)
+//    public ResponseEntity<?> getMatchDetail(HttpServletRequest request,
+//                                            @RequestHeader("Authorization") String ignoredToken,
+//                                            @RequestParam("matchId") Long matchId) {
+//
+//        return ResponseEntity.ok("ok");
+//    }
 
 }
