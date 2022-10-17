@@ -1,9 +1,12 @@
 package com.lof.lofserver.exception;
 
-public class UserException extends BaseException {
-    private BaseExceptionType exceptionType;
+import lombok.Getter;
 
-    public UserException(BaseExceptionType exceptionType) {
+@Getter
+public class UserException extends BaseException {
+    private UserExceptionType exceptionType;
+
+    public UserException(UserExceptionType exceptionType) {
         this.exceptionType = exceptionType;
     }
 

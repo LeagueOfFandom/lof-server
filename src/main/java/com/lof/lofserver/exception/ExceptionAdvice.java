@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 public class ExceptionAdvice {
 
-    @ExceptionHandler(BaseException.class)
-    public ResponseEntity handleBaseEx(BaseException exception){
-        log.error("BaseException errorMessage: "+ exception.getExceptionType().getErrorMessage());
-        log.error("BaseException errorCode: "+ exception.getExceptionType().getErrorCode());
+    @ExceptionHandler(UserException.class)
+    public ResponseEntity handleBaseEx(UserException exception){
+        log.error("UserException errorMessage: "+ exception.getExceptionType().getErrorMessage());
+        log.error("UserException errorCode: "+ exception.getExceptionType().getErrorCode());
 
         return ResponseEntity.status(exception.getExceptionType().getHttpStatus())
                 .body(ErrorResponse.builder()
