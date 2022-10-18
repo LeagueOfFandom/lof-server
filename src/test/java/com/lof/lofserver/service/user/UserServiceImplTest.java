@@ -2,8 +2,6 @@ package com.lof.lofserver.service.user;
 
 import com.lof.lofserver.domain.user.UserEntity;
 import com.lof.lofserver.domain.user.UserRepository;
-import com.lof.lofserver.exception.UserException;
-import com.lof.lofserver.exception.UserExceptionType;
 import com.lof.lofserver.service.user.request.UserSavedInfo;
 import com.lof.lofserver.service.user.response.UserResponseInfo;
 import com.lof.lofserver.service.user.validate.UserValidateImpl;

@@ -34,12 +34,13 @@ class UserValidateImplTest {
         //given
         String user1Nickname = "user1";
         String user2Nickname = "user1";
-
-        //when
         given(userRepository.findByNickname(user1Nickname)).willReturn(Optional.of(UserEntity.builder().nickname(user1Nickname).build()));
 
+        //when
+        UserException throwable = assertThrows(UserException.class, () -> userValidate.validateNickname(user2Nickname));
+
         //then
-        assertThat(assertThrows(UserException.class, () -> userValidate.validateNickname(user2Nickname)).getExceptionType()).isEqualTo(UserExceptionType.NICKNAME_ALREADY_EXIST);
+        assertThat(throwable.getExceptionType()).isEqualTo(UserExceptionType.NICKNAME_ALREADY_EXIST);
     }
 
     @Test
@@ -49,9 +50,10 @@ class UserValidateImplTest {
         String nickname = "123fksdfjskfjskfjj";
 
         //when
+        UserException throwable = assertThrows(UserException.class, () -> userValidate.validateNickname(nickname));
 
         //then
-        assertThat(assertThrows(UserException.class ,() -> userValidate.validateNickname(nickname)).getExceptionType()).isEqualTo(UserExceptionType.NICKNAME_LENGTH_ERROR);
+        assertThat(throwable.getExceptionType()).isEqualTo(UserExceptionType.NICKNAME_LENGTH_ERROR);
     }
 
     @Test
@@ -61,9 +63,10 @@ class UserValidateImplTest {
         String nickname = "1a";
 
         //when
+        UserException throwable = assertThrows(UserException.class, () -> userValidate.validateNickname(nickname));
 
         //then
-        assertThat(assertThrows(UserException.class ,() -> userValidate.validateNickname(nickname)).getExceptionType()).isEqualTo(UserExceptionType.NICKNAME_LENGTH_ERROR);
+        assertThat(throwable.getExceptionType()).isEqualTo(UserExceptionType.NICKNAME_LENGTH_ERROR);
     }
 
     @Test
@@ -71,11 +74,15 @@ class UserValidateImplTest {
     void validateNicknameType(){
         //given
         String nickname = "1a한글";
+        String nickname2 = "/Frkds";
 
         //when
+        UserException throwable = assertThrows(UserException.class, () -> userValidate.validateNickname(nickname));
+        UserException throwable2 = assertThrows(UserException.class, () -> userValidate.validateNickname(nickname2));
 
         //then
-        assertThat(assertThrows(UserException.class ,() -> userValidate.validateNickname(nickname)).getExceptionType()).isEqualTo(UserExceptionType.NICKNAME_TYPE_ERROR);
+        assertThat(throwable.getExceptionType()).isEqualTo(UserExceptionType.NICKNAME_TYPE_ERROR);
+        assertThat(throwable2.getExceptionType()).isEqualTo(UserExceptionType.NICKNAME_TYPE_ERROR);
     }
 
 }
