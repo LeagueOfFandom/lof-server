@@ -46,7 +46,7 @@ class UserControllerTest {
 
         //when
         ResultActions resultActions = mockMvc.perform(
-                MockMvcRequestBuilders.get("/v1/user/nickname")
+                MockMvcRequestBuilders.get("/v1/users/nickname")
                         .contentType("application/json")
                         .header("Authorization", token));
 
@@ -62,7 +62,7 @@ class UserControllerTest {
 
         //when
         ResultActions resultActions = mockMvc.perform(
-                MockMvcRequestBuilders.post("/v1/user/nickname")
+                MockMvcRequestBuilders.post("/v1/users/nickname")
                         .contentType("application/json")
                         .header("Authorization", token)
                         .content("testNickname"));
@@ -83,7 +83,7 @@ class UserControllerTest {
 
         //when
         ResultActions resultActions = mockMvc.perform(
-                    MockMvcRequestBuilders.post("/v1/user/create")
+                    MockMvcRequestBuilders.post("/v1/users")
                             .contentType("application/json")
                             .content(userInfoDto));
 
@@ -101,7 +101,7 @@ class UserControllerTest {
 
         //when
         ResultActions resultActions = mockMvc.perform(
-                MockMvcRequestBuilders.post("/v1/user/create")
+                MockMvcRequestBuilders.post("/v1/users")
                         .contentType("application/json")
                         .content(userInfoDto));
 

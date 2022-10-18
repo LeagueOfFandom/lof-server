@@ -2,10 +2,15 @@ package com.lof.lofserver.service.user;
 
 import com.lof.lofserver.domain.user.UserEntity;
 import com.lof.lofserver.domain.user.UserRepository;
+import com.lof.lofserver.exception.UserException;
+import com.lof.lofserver.exception.UserExceptionType;
 import com.lof.lofserver.service.user.request.UserSavedInfo;
 import com.lof.lofserver.service.user.response.UserResponseInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -15,6 +20,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String setUserNickName(Long userId, String nickname) {
+        validateDuplicateNickname(nickname);
         UserEntity userEntity = userRepository.findById(userId).orElseThrow();
         userEntity.setNickname(nickname);
         return userRepository.save(userEntity).getNickname();
@@ -24,6 +30,13 @@ public class UserServiceImpl implements UserService {
     public String getNicknameByUserId(Long userId) {
         UserEntity userEntity = userRepository.findById(userId).orElseThrow();
         return userEntity.getNickname();
+    }
+
+    private void validateDuplicateNickname(String nickname){
+        Optional<UserEntity> optionalUser = userRepository.findByNickname(nickname);
+        optionalUser.ifPresent(user -> {
+            throw new UserException(UserExceptionType.NICKNAME_ALREADY_EXIST);
+        });
     }
 
     /** 유저 생성

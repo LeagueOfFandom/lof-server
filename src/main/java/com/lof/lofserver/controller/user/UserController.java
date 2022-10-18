@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/v1/user")
+@RequestMapping("/v1/users")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -23,7 +23,7 @@ public class UserController {
     private final JsonWebToken jsonWebToken;
     private final UserControllerParser userControllerParser;
 
-    @PostMapping("/create")
+    @PostMapping("")
     @ApiOperation(value = "유저를 생성한다.", response = UserResponseInfo.class)
     public ResponseEntity<?> createUser(@Valid @RequestBody UserInfoRequest userInfoRequest) {
         //userInfo -> UserSavedInfoDto
@@ -51,4 +51,5 @@ public class UserController {
         //set user nickname
         return ResponseEntity.ok(userService.setUserNickName(userId, nickname));
     }
+
 }
