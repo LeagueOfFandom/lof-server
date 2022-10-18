@@ -26,5 +26,4 @@ public class UserValidateImpl implements UserValidate {
             throw new UserException(UserExceptionType.NICKNAME_ALREADY_EXIST);
         });
     }
-
 }
