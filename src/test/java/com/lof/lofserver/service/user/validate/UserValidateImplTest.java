@@ -66,4 +66,16 @@ class UserValidateImplTest {
         assertThat(assertThrows(UserException.class ,() -> userValidate.validateNickname(nickname)).getExceptionType()).isEqualTo(UserExceptionType.NICKNAME_LENGTH_ERROR);
     }
 
+    @Test
+    @DisplayName("유저 닉네임 변경하기 - 실패(영어/숫자 이외 문자 포함)")
+    void validateNicknameType(){
+        //given
+        String nickname = "1a한글";
+
+        //when
+
+        //then
+        assertThat(assertThrows(UserException.class ,() -> userValidate.validateNickname(nickname)).getExceptionType()).isEqualTo(UserExceptionType.NICKNAME_TYPE_ERROR);
+    }
+
 }
