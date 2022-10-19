@@ -48,6 +48,14 @@ public class UserEntity {
     @Column(name = "selected", columnDefinition = "json")
     private Map<Long, Boolean> userSelectedMatchList = new HashMap<>();
 
+    @NotNull
+    @Column(name = "alarm")
+    private Boolean alarm = true;
+
+    public void setAlarm(Boolean alarm) {
+        this.alarm = alarm;
+    }
+
     public void setFcmToken(String fcmToken) {
         this.fcmToken = fcmToken;
     }

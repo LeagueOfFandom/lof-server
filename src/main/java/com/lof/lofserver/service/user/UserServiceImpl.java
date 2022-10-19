@@ -19,6 +19,20 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
+    public Boolean getAlarmByUserId(Long userId) {
+        UserEntity userEntity = userRepository.findById(userId).orElseThrow();
+        return userEntity.getAlarm();
+    }
+
+    @Override
+    public Boolean setAlarmByUserId(Long userId, Boolean alarm) {
+        UserEntity userEntity = userRepository.findById(userId).orElseThrow();
+        userEntity.setAlarm(alarm);
+        userRepository.save(userEntity);
+        return userEntity.getAlarm();
+    }
+
+    @Override
     public String setUserNickName(Long userId, String nickname) {
         validateDuplicateNickname(nickname);
         UserEntity userEntity = userRepository.findById(userId).orElseThrow();

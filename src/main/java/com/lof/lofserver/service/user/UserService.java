@@ -8,4 +8,7 @@ public interface UserService {
      String getNicknameByUserId(Long userId);
 
      String setUserNickName(Long userId, String nickname);
+
+     Boolean getAlarmByUserId(Long userId);
+     Boolean setAlarmByUserId(Long userId, Boolean alarm);
 }
