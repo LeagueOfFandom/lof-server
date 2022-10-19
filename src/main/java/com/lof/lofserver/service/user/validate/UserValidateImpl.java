@@ -37,7 +37,7 @@ public class UserValidateImpl implements UserValidate {
 
     private void validateNicknameType(String nickname){
         for (int i = 0; i < nickname.length(); i++) {
-            if ((nickname.charAt(i)>= 0x61 && nickname.charAt(i) <= 0x7A) || (nickname.charAt(i) >=0x41 && nickname.charAt(i) <= 0x5A) || (nickname.charAt(i) >= 0x30 && nickname.charAt(i)<= 0x39)) { // 영문(소문자), 영문(대문자), 숫자
+            if ((nickname.charAt(i)>= 'a' && nickname.charAt(i) <= 'z') || (nickname.charAt(i) >= 'A' && nickname.charAt(i) <= 'Z') || (nickname.charAt(i) >= '0' && nickname.charAt(i)<= '9')) { // 영문(소문자), 영문(대문자), 숫자
             } else {
                 throw new UserException(UserExceptionType.NICKNAME_TYPE_ERROR);
             }
