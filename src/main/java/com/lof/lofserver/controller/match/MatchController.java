@@ -2,7 +2,6 @@ package com.lof.lofserver.controller.match;
 
 import com.lof.lofserver.controller.match.parser.MatchControllerParser;
 import com.lof.lofserver.controller.match.response.MainPageResponse;
-import com.lof.lofserver.controller.match.response.MatchDetailResponse;
 import com.lof.lofserver.controller.match.response.sub.CommonItemListResponse;
 import com.lof.lofserver.service.community.CommunityService;
 import com.lof.lofserver.service.match.MatchService;
@@ -55,7 +54,7 @@ public class MatchController {
         LocalDate localDate = LocalDate.parse(date);
         //get matchList
         List<Object> commonItemList = new ArrayList<>(matchService.getMatchListByMonth(userId, localDate,onlyMyTeam));
-        return ResponseEntity.ok(matchControllerParser.parseObjectListToCommonItemListResponse(commonItemList));
+        return ResponseEntity.ok(matchControllerParser.parseObjectListToMatchByMonthListResponse(commonItemList));
     }
 
 //    @GetMapping("/matchDetail")
