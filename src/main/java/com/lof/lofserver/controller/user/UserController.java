@@ -52,4 +52,18 @@ public class UserController {
         return ResponseEntity.ok(userService.setUserNickName(userId, nickname));
     }
 
+    @GetMapping("/alarm")
+    @ApiOperation(value = "전체알람 설정을 가져온다.", response = String.class)
+    public ResponseEntity<?> getAlarm(HttpServletRequest request, @RequestHeader("Authorization") String ignoredToken) {
+        Long userId = (Long) request.getAttribute("id");
+        return ResponseEntity.ok(userService.getAlarmByUserId(userId));
+    }
+
+    @PostMapping("/alarm")
+    @ApiOperation(value = "전체알람 설정을 변경한다.", response = String.class)
+    public ResponseEntity<?> setAlarm(HttpServletRequest request, @RequestHeader("Authorization") String ignoredToken, @RequestBody Boolean alarm) {
+        Long userId = (Long) request.getAttribute("id");
+        return ResponseEntity.ok(userService.setAlarmByUserId(userId, alarm));
+    }
+
 }
