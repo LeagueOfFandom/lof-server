@@ -1,5 +1,6 @@
 package com.lof.lofserver.controller.match.parser;
 
+import com.lof.lofserver.controller.match.response.MatchByMonthResponse;
 import com.lof.lofserver.controller.match.response.sub.CommonItemListResponse;
 import com.lof.lofserver.controller.match.response.MainPageResponse;
 import com.lof.lofserver.service.community.response.BannerView;
@@ -7,6 +8,7 @@ import com.lof.lofserver.service.community.response.TextArrowView;
 import com.lof.lofserver.service.match.response.MatchView;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +16,7 @@ import java.util.List;
 public class MatchControllerParserImpl implements MatchControllerParser {
 
     @Override
-    public List<CommonItemListResponse> parseObjectListToCommonItemListResponse(List<Object> objectList) {
+    public List<MatchByMonthResponse> parseObjectListToMatchByMonthListResponse(List<Object> objectList) {
         List<CommonItemListResponse> commonItemListResponseList = new ArrayList<>();
 
         for(Object object : objectList) {
@@ -24,7 +26,35 @@ public class MatchControllerParserImpl implements MatchControllerParser {
                     .viewObject(object).build());
         }
 
-        return commonItemListResponseList;
+        //날짜 별로 묶기 진행.
+        LocalDate currentDate = LocalDate.now();
+        List<MatchByMonthResponse> matchByMonthResponseList = new ArrayList<>();
+        for(int i = 1; i <= currentDate.lengthOfMonth(); i++){
+            if(i < currentDate.getDayOfMonth())
+                matchByMonthResponseList.add(MatchByMonthResponse.builder()
+                        .viewType("MATCH_RESULT_DATE_LINE")
+                        .date(currentDate.getYear() + "년 " + currentDate.getMonthValue() + "월 " + i + "일")
+                        .matchList(new ArrayList<>()).build());
+            else if(i == currentDate.getDayOfMonth())
+                matchByMonthResponseList.add(MatchByMonthResponse.builder()
+                        .viewType("MATCH_TODAY_DATE_LINE")
+                        .date(currentDate.getYear() + "년 " + currentDate.getMonthValue() + "월 " + i + "일")
+                        .matchList(new ArrayList<>()).build());
+            else
+                matchByMonthResponseList.add(MatchByMonthResponse.builder()
+                        .viewType("MATCH_SCHEDULE_DATE_LINE")
+                        .date(currentDate.getYear() + "년 " + currentDate.getMonthValue() + "월 " + i + "일")
+                        .matchList(new ArrayList<>()).build());
+        }
+
+        for(CommonItemListResponse commonItemListResponse : commonItemListResponseList) {
+            if(commonItemListResponse.viewObject() instanceof MatchView matchView) {
+                LocalDate matchDate = LocalDate.parse(matchView.date());
+                matchByMonthResponseList.get(matchDate.getDayOfMonth() - 1).matchList().add(commonItemListResponse);
+            }
+        }
+
+        return matchByMonthResponseList;
     }
 
     @Override

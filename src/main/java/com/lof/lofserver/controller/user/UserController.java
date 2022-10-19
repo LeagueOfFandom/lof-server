@@ -65,5 +65,4 @@ public class UserController {
         Long userId = (Long) request.getAttribute("id");
         return ResponseEntity.ok(userService.setAlarmByUserId(userId, alarm));
     }
-
 }
