@@ -23,10 +23,9 @@ public class UserValidateImpl implements UserValidate {
     }
 
     private void validateDuplicateNickname(String nickname){
-        Optional<UserEntity> optionalUser = userRepository.findByNickname(nickname);
-        optionalUser.ifPresent(user -> {
+        UserEntity userEntity = userRepository.findByNickname(nickname);
+        if(userEntity != null)
             throw new UserException(UserExceptionType.NICKNAME_ALREADY_EXIST);
-        });
     }
 
     private void validateNicknameLength(String nickname){
