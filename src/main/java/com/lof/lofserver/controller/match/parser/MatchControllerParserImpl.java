@@ -1,8 +1,7 @@
 package com.lof.lofserver.controller.match.parser;
 
-import com.lof.lofserver.controller.match.response.MatchByMonthResponse;
-import com.lof.lofserver.controller.match.response.sub.CommonItemListResponse;
 import com.lof.lofserver.controller.match.response.MainPageResponse;
+import com.lof.lofserver.controller.match.response.sub.CommonItemListResponse;
 import com.lof.lofserver.service.community.response.BannerView;
 import com.lof.lofserver.service.community.response.TextArrowView;
 import com.lof.lofserver.service.match.response.MatchView;
@@ -16,45 +15,24 @@ import java.util.List;
 public class MatchControllerParserImpl implements MatchControllerParser {
 
     @Override
-    public List<MatchByMonthResponse> parseObjectListToMatchByMonthListResponse(List<Object> objectList) {
+    public List<CommonItemListResponse> parseObjectListToMatchByMonthListResponse(List<Object> objectList) {
         List<CommonItemListResponse> commonItemListResponseList = new ArrayList<>();
+
+        LocalDate currentDate = LocalDate.parse(((MatchView)objectList.get(0)).date());
+        commonItemListResponseList.add(getDateView(currentDate));
 
         for(Object object : objectList) {
             if(object == null) continue;
+            if(!((MatchView)object).date().equals(currentDate.toString())){
+                commonItemListResponseList.add(getDateView(LocalDate.parse(((MatchView)object).date())));
+                currentDate = LocalDate.parse(((MatchView)object).date());
+            }
             commonItemListResponseList.add(CommonItemListResponse.builder()
                     .viewType(getViewType(object))
                     .viewObject(object).build());
         }
 
-        //날짜 별로 묶기 진행.
-        LocalDate currentDate = LocalDate.now();
-        List<MatchByMonthResponse> matchByMonthResponseList = new ArrayList<>();
-        for(int i = 1; i <= currentDate.lengthOfMonth(); i++){
-            if(i < currentDate.getDayOfMonth())
-                matchByMonthResponseList.add(MatchByMonthResponse.builder()
-                        .viewType("MATCH_RESULT_DATE_LINE")
-                        .date(currentDate.getYear() + "년 " + currentDate.getMonthValue() + "월 " + i + "일")
-                        .matchList(new ArrayList<>()).build());
-            else if(i == currentDate.getDayOfMonth())
-                matchByMonthResponseList.add(MatchByMonthResponse.builder()
-                        .viewType("MATCH_TODAY_DATE_LINE")
-                        .date(currentDate.getYear() + "년 " + currentDate.getMonthValue() + "월 " + i + "일")
-                        .matchList(new ArrayList<>()).build());
-            else
-                matchByMonthResponseList.add(MatchByMonthResponse.builder()
-                        .viewType("MATCH_SCHEDULE_DATE_LINE")
-                        .date(currentDate.getYear() + "년 " + currentDate.getMonthValue() + "월 " + i + "일")
-                        .matchList(new ArrayList<>()).build());
-        }
-
-        for(CommonItemListResponse commonItemListResponse : commonItemListResponseList) {
-            if(commonItemListResponse.viewObject() instanceof MatchView matchView) {
-                LocalDate matchDate = LocalDate.parse(matchView.date());
-                matchByMonthResponseList.get(matchDate.getDayOfMonth() - 1).matchList().add(commonItemListResponse);
-            }
-        }
-
-        return matchByMonthResponseList;
+        return commonItemListResponseList;
     }
 
     @Override
@@ -95,5 +73,20 @@ public class MatchControllerParserImpl implements MatchControllerParser {
         else if(object instanceof TextArrowView) return "TEXT_ARROW_VIEW";
         //error
         else return "ERROR_VIEW";
+    }
+
+    private CommonItemListResponse getDateView(LocalDate date){
+        if(date.isBefore(LocalDate.now()))
+            return CommonItemListResponse.builder()
+                    .viewType("MATCH_RESULT_DATE_LINE")
+                    .viewObject(date.getYear()+"년 "+date.getMonthValue()+"월 "+date.getDayOfMonth()+"일").build();
+        else if(date.isAfter(LocalDate.now()))
+            return CommonItemListResponse.builder()
+                    .viewType("MATCH_SCHEDULE_DATE_LINE")
+                    .viewObject(date.getYear()+"년 "+date.getMonthValue()+"월 "+date.getDayOfMonth()+"일").build();
+        else
+            return CommonItemListResponse.builder()
+                    .viewType("MATCH_TODAY_DATE_LINE")
+                    .viewObject(date.getYear()+"년 "+date.getMonthValue()+"월 "+date.getDayOfMonth()).build();
     }
 }
