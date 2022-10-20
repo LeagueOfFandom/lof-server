@@ -23,8 +23,8 @@ public class UserValidateImpl implements UserValidate {
     }
 
     private void validateDuplicateNickname(String nickname){
-        UserEntity userEntity = userRepository.findByNickname(nickname);
-        if(userEntity != null)
+        Boolean existUser = userRepository.existsByNickname(nickname);
+        if(existUser)
             throw new UserException(UserExceptionType.NICKNAME_ALREADY_EXIST);
     }
 

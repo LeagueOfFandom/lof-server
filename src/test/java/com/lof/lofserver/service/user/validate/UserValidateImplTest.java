@@ -34,7 +34,7 @@ class UserValidateImplTest {
         //given
         String user1Nickname = "user1";
         String user2Nickname = "user1";
-        given(userRepository.findByNickname(user1Nickname)).willReturn(UserEntity.builder().nickname(user1Nickname).build());
+        given(userRepository.existsByNickname(user1Nickname)).willReturn(true);
 
         //when
         UserException throwable = assertThrows(UserException.class, () -> userValidate.validateNickname(user2Nickname));
