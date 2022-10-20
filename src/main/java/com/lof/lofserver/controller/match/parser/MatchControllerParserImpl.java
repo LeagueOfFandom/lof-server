@@ -79,14 +79,17 @@ public class MatchControllerParserImpl implements MatchControllerParser {
         if(date.isBefore(LocalDate.now()))
             return CommonItemListResponse.builder()
                     .viewType("MATCH_RESULT_DATE_LINE")
-                    .viewObject(date.getYear()+"년 "+date.getMonthValue()+"월 "+date.getDayOfMonth()+"일").build();
+                    .viewObject(new TextArrowView(date.getYear() + "년 " + date.getMonthValue() + "월 " + date.getDayOfMonth() + "일"))
+                    .build();
         else if(date.isAfter(LocalDate.now()))
             return CommonItemListResponse.builder()
                     .viewType("MATCH_SCHEDULE_DATE_LINE")
-                    .viewObject(date.getYear()+"년 "+date.getMonthValue()+"월 "+date.getDayOfMonth()+"일").build();
+                    .viewObject(new TextArrowView(date.getYear() + "년 " + date.getMonthValue() + "월 " + date.getDayOfMonth() + "일"))
+                    .build();
         else
             return CommonItemListResponse.builder()
                     .viewType("MATCH_TODAY_DATE_LINE")
-                    .viewObject(date.getYear()+"년 "+date.getMonthValue()+"월 "+date.getDayOfMonth()).build();
+                    .viewObject(new TextArrowView(date.getYear() + "년 " + date.getMonthValue() + "월 " + date.getDayOfMonth() + "일"))
+                    .build();
     }
 }
