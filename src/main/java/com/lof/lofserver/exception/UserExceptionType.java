@@ -11,9 +11,9 @@ public enum UserExceptionType implements BaseExceptionType {
     NICKNAME_TYPE_ERROR(400, HttpStatus.OK, "닉네임은 영어, 숫자만 입력 가능합니다."),
     NICKNAME_IS_NOT_ALLOWED(400, HttpStatus.OK, "닉네임에 특수문자는 사용할 수 없습니다.");
 
-    private int errorCode;
-    private HttpStatus httpStatus;
-    private String errorMessage;
+    private final int errorCode;
+    private final HttpStatus httpStatus;
+    private final String errorMessage;
 
     UserExceptionType(int errorCode, HttpStatus httpStatus, String errorMessage) {
         this.errorCode = errorCode;
