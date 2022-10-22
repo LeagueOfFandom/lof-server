@@ -29,7 +29,7 @@ class MatchControllerParserImplTest {
         MainPageResponse mainPageResponse = matchControllerParser.parseObjectListToMainPageResponse(objectList);
 
         //then
-        assertThat(mainPageResponse.commonItemListResponse().get(0).viewType()).isEqualTo("TEXT_ARROW_VIEW");
+        assertThat(mainPageResponse.commonItemListResponse().get(0).viewType()).isEqualTo("HOME_MATCH_TITLE_VIEW");
         assertThat(mainPageResponse.commonItemListResponse().get(0).viewObject()).isInstanceOf(TextArrowView.class);
     }
 
