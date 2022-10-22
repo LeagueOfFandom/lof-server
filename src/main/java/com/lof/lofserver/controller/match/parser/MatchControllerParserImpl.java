@@ -70,7 +70,7 @@ public class MatchControllerParserImpl implements MatchControllerParser {
             else return "MATCH_RESULT_VIEW";
         }
         //text arrow
-        else if(object instanceof TextArrowView) return "TEXT_ARROW_VIEW";
+        else if(object instanceof TextArrowView) return "HOME_MATCH_TITLE_VIEW";
         //error
         else return "ERROR_VIEW";
     }
