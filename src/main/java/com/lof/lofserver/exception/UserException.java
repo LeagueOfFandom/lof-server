@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public class UserException extends BaseException {
-    private UserExceptionType exceptionType;
+    private final UserExceptionType exceptionType;
 
     public UserException(UserExceptionType exceptionType) {
         this.exceptionType = exceptionType;
