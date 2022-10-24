@@ -48,6 +48,7 @@ public class UserController {
     public ResponseEntity<?> setUserNickName(HttpServletRequest request, @RequestHeader("Authorization") String ignoredToken, @RequestBody String nickname) {
         //get userId
         Long userId = (Long) request.getAttribute("id");
+        nickname = nickname.replace("\"", "");
         //set user nickname
         return ResponseEntity.ok(userService.setUserNickName(userId, nickname));
     }
