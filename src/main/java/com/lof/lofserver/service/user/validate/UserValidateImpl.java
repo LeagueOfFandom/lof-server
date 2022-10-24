@@ -33,7 +33,7 @@ public class UserValidateImpl implements UserValidate {
     }
 
     private void validateNicknameType(String nickname){
-        if(!Pattern.matches("^[a-zA-Z]*$", nickname)){
+        if(!(Pattern.matches("^[a-zA-Z0-9]*$", nickname))){
             throw new UserException(UserExceptionType.NICKNAME_TYPE_ERROR);
         }
     }
