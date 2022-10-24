@@ -22,4 +22,5 @@ public class UserControllerParserImpl implements UserControllerParser {
     public UserInfoResponse parseUserResponseInfoToUserResponseInfoDto(String jwtToken, Boolean isNewUser) {
         return new UserInfoResponse(jwtToken, isNewUser);
     }
+
 }
