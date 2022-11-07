@@ -17,6 +17,9 @@ public class MatchControllerParserImpl implements MatchControllerParser {
     @Override
     public List<CommonItemListResponse> parseObjectListToMatchByMonthListResponse(List<Object> objectList) {
         List<CommonItemListResponse> commonItemListResponseList = new ArrayList<>();
+        if(objectList.size() == 0){
+            return commonItemListResponseList;
+        }
 
         LocalDate currentDate = LocalDate.parse(((MatchView)objectList.get(0)).date());
         commonItemListResponseList.add(getDateView(currentDate));

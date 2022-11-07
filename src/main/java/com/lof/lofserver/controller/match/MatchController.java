@@ -54,6 +54,7 @@ public class MatchController {
         LocalDate localDate = LocalDate.parse(date);
         //get matchList
         List<Object> commonItemList = new ArrayList<>(matchService.getMatchListByMonth(userId, localDate,onlyMyTeam));
+        System.out.println(commonItemList);
         return ResponseEntity.ok(matchControllerParser.parseObjectListToMatchByMonthListResponse(commonItemList));
     }
 
