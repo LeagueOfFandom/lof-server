@@ -137,6 +137,9 @@ public class MatchServiceImpl implements MatchService {
 
         UserEntity userEntity = userRepository.findById(userId).orElseThrow();
 
+        //경기 종료로 인한 static date
+        date = LocalDate.of(2022, 11, 1);
+
         //반환할 matchEntityList
         List<MatchEntity> matchEntityList = new ArrayList<>();
 
