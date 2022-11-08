@@ -66,4 +66,15 @@ public class UserController {
         Long userId = (Long) request.getAttribute("id");
         return ResponseEntity.ok(userService.setAlarmByUserId(userId, alarm));
     }
+
+    @PostMapping("/temp")
+    @ApiOperation(value = "임시 유저를 생성한다.", response = UserResponseInfo.class)
+    public ResponseEntity<?> createTempUser(@RequestBody String fcmToken) {
+        //user create
+        UserResponseInfo userResponseInfo = userService.createTempUser(fcmToken);
+        //jwt token 생성
+        String token = jsonWebToken.createJsonWebTokenById(userResponseInfo.id());
+        //parse to response
+        return ResponseEntity.ok(userControllerParser.parseUserResponseInfoToUserResponseInfoDto(token, userResponseInfo.isNewUser()));
+    }
 }
