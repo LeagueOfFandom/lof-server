@@ -35,7 +35,8 @@ public class JwtFilter extends OncePerRequestFilter {
             "/webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-regular.woff2",
             "/webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-700.woff2",
             "/webjars/springfox-swagger-ui/favicon-16x16.png",
-            "/v1/users" //user create
+            "/v1/users", //user create
+            "/v1/users/temp" //user create,
              ));
 
     @Override
