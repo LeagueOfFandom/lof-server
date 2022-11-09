@@ -51,7 +51,7 @@ public class MatchEntity {
     private Long numberOfGames;
 
     @Type(type = "json")
-    @Column(name = "oppontents", columnDefinition = "json")
+    @Column(name = "opponents", columnDefinition = "json")
     private List<Opponents> opponents;
 
     @Column(name = "tournament_id")

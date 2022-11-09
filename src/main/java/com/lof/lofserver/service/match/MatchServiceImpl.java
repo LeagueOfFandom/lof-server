@@ -7,9 +7,10 @@ import com.lof.lofserver.domain.match.sub.Result;
 import com.lof.lofserver.domain.team.TeamRepository;
 import com.lof.lofserver.domain.user.UserEntity;
 import com.lof.lofserver.domain.user.UserRepository;
-import com.lof.lofserver.service.match.response.MatchDetail;
+import com.lof.lofserver.service.match.detail.MatchDetailService;
 import com.lof.lofserver.service.match.response.MatchView;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -20,7 +21,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class MatchServiceImpl implements MatchService {
-
+    private final MatchDetailService matchDetailService;
     private final MatchRepository matchRepository;
     private final UserRepository userRepository;
     private final TeamRepository teamRepository;
@@ -187,9 +188,7 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public MatchDetail getMatchDetail(Long userId, Long matchId) {
-
-
-        return null;
+    public ResponseEntity<?> getMatchDetail(Long matchId) {
+        return matchDetailService.getTeamVsTeam(matchId);
     }
 }

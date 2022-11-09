@@ -17,7 +17,7 @@ public class MatchControllerParserImpl implements MatchControllerParser {
     @Override
     public List<CommonItemListResponse> parseObjectListToMatchByMonthListResponse(List<Object> objectList) {
         List<CommonItemListResponse> commonItemListResponseList = new ArrayList<>();
-        if(objectList.size() == 0){
+        if(objectList.size() == 0 || objectList == null || objectList.get(0) == null) {
             return commonItemListResponseList;
         }
 
