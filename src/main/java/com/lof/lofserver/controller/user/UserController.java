@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -82,7 +81,7 @@ public class UserController {
     }
 
     @GetMapping("/alarm/list")
-    @ApiOperation(value = "알람 리스트를 가져온다.", response = ArrayList.class)
+    @ApiOperation(value = "알람 리스트를 가져온다.", response = AlarmList[].class)
     public ResponseEntity<?> getAlarmList(HttpServletRequest request, @RequestHeader("Authorization") String ignoredToken) {
         Long userId = (Long) request.getAttribute("id");
         List<AlarmList> alarmList = userService.getAlarmListByUserId(userId);
