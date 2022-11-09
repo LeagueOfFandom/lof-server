@@ -1,5 +1,6 @@
 package com.lof.lofserver.domain.user;
 
+import com.lof.lofserver.domain.user.sub.AlarmList;
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
 import lombok.Builder;
 import lombok.Getter;
@@ -51,6 +52,14 @@ public class UserEntity {
     @NotNull
     @Column(name = "alarm")
     private Boolean alarm = true;
+
+    @Type(type = "json")
+    @Column(name = "alarm_list", columnDefinition = "json")
+    private List<AlarmList> alarmList = new ArrayList<>();
+
+    public void addAlarmList(AlarmList alarmList) {
+        this.alarmList.add(alarmList);
+    }
 
     public void setAlarm(Boolean alarm) {
         this.alarm = alarm;
