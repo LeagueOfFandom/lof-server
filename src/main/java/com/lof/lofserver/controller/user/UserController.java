@@ -2,6 +2,7 @@ package com.lof.lofserver.controller.user;
 
 import com.lof.lofserver.controller.user.parser.UserControllerParser;
 import com.lof.lofserver.controller.user.request.UserInfoRequest;
+import com.lof.lofserver.domain.user.sub.AlarmList;
 import com.lof.lofserver.filter.JsonWebToken;
 import com.lof.lofserver.service.user.UserService;
 import com.lof.lofserver.service.user.request.UserSavedInfo;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/v1/users")
@@ -76,5 +79,13 @@ public class UserController {
         String token = jsonWebToken.createJsonWebTokenById(userResponseInfo.id());
         //parse to response
         return ResponseEntity.ok(userControllerParser.parseUserResponseInfoToUserResponseInfoDto(token, userResponseInfo.isNewUser()));
+    }
+
+    @GetMapping("/alarm/list")
+    @ApiOperation(value = "알람 리스트를 가져온다.", response = ArrayList.class)
+    public ResponseEntity<?> getAlarmList(HttpServletRequest request, @RequestHeader("Authorization") String ignoredToken) {
+        Long userId = (Long) request.getAttribute("id");
+        List<AlarmList> alarmList = userService.getAlarmListByUserId(userId);
+        return ResponseEntity.ok(alarmList);
     }
 }

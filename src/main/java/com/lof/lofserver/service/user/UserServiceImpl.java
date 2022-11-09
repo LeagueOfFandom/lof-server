@@ -2,11 +2,14 @@ package com.lof.lofserver.service.user;
 
 import com.lof.lofserver.domain.user.UserEntity;
 import com.lof.lofserver.domain.user.UserRepository;
+import com.lof.lofserver.domain.user.sub.AlarmList;
 import com.lof.lofserver.service.user.request.UserSavedInfo;
 import com.lof.lofserver.service.user.response.UserResponseInfo;
 import com.lof.lofserver.service.user.validate.UserValidateImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -42,6 +45,12 @@ public class UserServiceImpl implements UserService {
         userEntity.setAlarm(alarm);
         userRepository.save(userEntity);
         return userEntity.getAlarm();
+    }
+
+    @Override
+    public List<AlarmList> getAlarmListByUserId(Long userId) {
+        UserEntity userEntity = userRepository.findById(userId).orElseThrow();
+        return userEntity.getAlarmList();
     }
 
     @Override
