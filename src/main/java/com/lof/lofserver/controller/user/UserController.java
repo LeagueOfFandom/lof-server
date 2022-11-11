@@ -2,6 +2,7 @@ package com.lof.lofserver.controller.user;
 
 import com.lof.lofserver.controller.user.parser.UserControllerParser;
 import com.lof.lofserver.controller.user.request.UserInfoRequest;
+import com.lof.lofserver.controller.user.response.UserNickname;
 import com.lof.lofserver.domain.user.sub.AlarmList;
 import com.lof.lofserver.filter.JsonWebToken;
 import com.lof.lofserver.service.user.UserService;
@@ -39,10 +40,10 @@ public class UserController {
     }
 
     @GetMapping("/nickname")
-    @ApiOperation(value = "유저의 닉네임을 가져온다.", response = String.class)
+    @ApiOperation(value = "유저의 닉네임을 가져온다.", response = UserNickname.class)
     public ResponseEntity<?> getNickname(HttpServletRequest request, @RequestHeader("Authorization") String ignoredToken) {
         Long userId = (Long) request.getAttribute("id");
-        return ResponseEntity.ok(userService.getNicknameByUserId(userId));
+        return ResponseEntity.ok(new UserNickname(userService.getNicknameByUserId(userId)));
     }
 
     @PostMapping("/nickname")
