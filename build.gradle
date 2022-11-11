@@ -18,6 +18,9 @@ repositories {
     mavenCentral()
 }
 
+jar{
+    enabled = false
+}
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     compileOnly 'org.projectlombok:lombok'
@@ -37,10 +40,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
     //jsonDb 사용.
-    implementation 'com.vladmihalcea:hibernate-types-52:2.19.2'
+    implementation 'com.vladmihalcea:hibernate-types-52:2.20.0'
 
     //aws secret manager
-    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap:3.1.4'
+    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap:3.1.5'
     implementation 'org.springframework.cloud:spring-cloud-starter-aws-secrets-manager-config:2.2.6.RELEASE'
 
     //maria db
