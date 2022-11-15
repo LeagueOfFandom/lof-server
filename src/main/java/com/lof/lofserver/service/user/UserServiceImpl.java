@@ -80,8 +80,14 @@ public class UserServiceImpl implements UserService {
         if(userEntity != null)
             return parseUserResponseInfoDto(userEntity, false);
 
+        UserSavedInfo savedInfo = UserSavedInfo.builder()
+                .email(userSavedInfo.email())
+                .fcmToken(userSavedInfo.fcmToken() == null ? "" : userSavedInfo.fcmToken())
+                .nickname(userSavedInfo.nickname() == null ? "" : userSavedInfo.nickname())
+                .profileImg(userSavedInfo.profileImg() == null ? "" : userSavedInfo.profileImg()).build();
+
         //create user
-        userEntity = createUserEntity(userSavedInfo);
+        userEntity = createUserEntity(savedInfo);
 
         //save user
         UserEntity savedUserEntity = userRepository.save(userEntity);
