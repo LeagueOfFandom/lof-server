@@ -2,6 +2,7 @@ package com.lof.lofserver.controller.user;
 
 import com.lof.lofserver.controller.user.parser.UserControllerParser;
 import com.lof.lofserver.controller.user.request.UserInfoRequest;
+import com.lof.lofserver.controller.user.response.FcmTokenResponse;
 import com.lof.lofserver.controller.user.response.UserNickname;
 import com.lof.lofserver.domain.user.sub.AlarmList;
 import com.lof.lofserver.filter.JsonWebToken;
@@ -71,10 +72,11 @@ public class UserController {
     }
 
     @PostMapping("/fcm")
-    @ApiOperation(value = "fcm 토큰을 저장한다.", response = String.class)
+    @ApiOperation(value = "fcm 토큰을 저장한다.", response = FcmTokenResponse.class)
     public ResponseEntity<?> setFcmToken(HttpServletRequest request, @RequestHeader("Authorization") String ignoredToken, @RequestBody String fcmToken) {
         Long userId = (Long) request.getAttribute("id");
-        return ResponseEntity.ok(userService.setFcmTokenByUserId(userId, fcmToken));
+        FcmTokenResponse fcmTokenResponse = new FcmTokenResponse(userService.setFcmTokenByUserId(userId, fcmToken));
+        return ResponseEntity.ok(fcmTokenResponse);
     }
 
     @PostMapping("/temp")
