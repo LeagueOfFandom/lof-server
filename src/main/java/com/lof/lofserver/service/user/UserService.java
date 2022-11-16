@@ -17,4 +17,6 @@ public interface UserService {
      Boolean getAlarmByUserId(Long userId);
      Boolean setAlarmByUserId(Long userId, Boolean alarm);
      List<AlarmList> getAlarmListByUserId(Long userId);
+
+    String setFcmTokenByUserId(Long userId, String fcmToken);
 }

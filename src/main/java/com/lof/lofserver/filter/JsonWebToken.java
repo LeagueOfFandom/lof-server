@@ -28,7 +28,7 @@ public class JsonWebToken {
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE) // header type (jwt)
                 .setIssuer("lof-server") // (iss setting)
                 .setIssuedAt(now) // (iat setting)
-                .setExpiration(new Date(now.getTime() + Duration.ofDays(7).toMillis())) // (exp setting)
+                .setExpiration(new Date(now.getTime() + Duration.ofDays(30).toMillis())) // (exp setting)
                 .claim("id", id) // (secret claim setting)
                 .signWith(SignatureAlgorithm.HS256, secretKey) // (signature setting)
                 .compact();
