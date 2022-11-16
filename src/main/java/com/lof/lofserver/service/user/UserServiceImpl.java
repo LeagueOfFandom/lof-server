@@ -34,6 +34,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public String setFcmTokenByUserId(Long userId, String fcmToken){
+        UserEntity userEntity = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다."));
+        userEntity.setFcmToken(fcmToken);
+        userRepository.save(userEntity);
+        return fcmToken;
+    }
+
+    @Override
     public Boolean getAlarmByUserId(Long userId) {
         UserEntity userEntity = userRepository.findById(userId).orElseThrow();
         return userEntity.getAlarm();

@@ -70,6 +70,13 @@ public class UserController {
         return ResponseEntity.ok(userService.setAlarmByUserId(userId, alarm));
     }
 
+    @PostMapping("/fcm")
+    @ApiOperation(value = "fcm 토큰을 저장한다.", response = String.class)
+    public ResponseEntity<?> setFcmToken(HttpServletRequest request, @RequestHeader("Authorization") String ignoredToken, @RequestBody String fcmToken) {
+        Long userId = (Long) request.getAttribute("id");
+        return ResponseEntity.ok(userService.setFcmTokenByUserId(userId, fcmToken));
+    }
+
     @PostMapping("/temp")
     @ApiOperation(value = "임시 유저를 생성한다.", response = UserResponseInfo.class)
     public ResponseEntity<?> createTempUser(@RequestBody String fcmToken) {

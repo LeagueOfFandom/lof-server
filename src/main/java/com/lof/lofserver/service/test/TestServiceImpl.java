@@ -39,11 +39,12 @@ public class TestServiceImpl implements TestService {
         headers.set("Authorization", "key=" + secretKey);
 
         JSONObject notification = new JSONObject();
-        notification.put("title", message);
+        notification.put("title", "testMessage");
+        notification.put("body", message);
 
         JSONObject userJson = new JSONObject();
         userJson.put("to", userEntity.getFcmToken());
-        userJson.put("notification", notification);
+        userJson.put("data", notification);
         HttpEntity<String> request = new HttpEntity<>(userJson.toString(), headers);
         ResponseEntity<FcmDto> response = new RestTemplate().exchange(url, HttpMethod.POST, request, FcmDto.class);
         response.getBody().setFcmToken(userEntity.getFcmToken());
