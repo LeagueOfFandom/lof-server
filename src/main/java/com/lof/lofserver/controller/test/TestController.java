@@ -9,11 +9,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/v1/test")
 @RequiredArgsConstructor
 public class TestController {
 
     private final TestService testService;
+
+    @GetMapping("/")
+    public Boolean healthCheck() {
+        return true;
+    }
 
     @GetMapping("/userList")
     public List<UserEntity> getUserList() {

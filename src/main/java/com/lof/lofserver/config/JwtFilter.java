@@ -37,8 +37,9 @@ public class JwtFilter extends OncePerRequestFilter {
             "/webjars/springfox-swagger-ui/favicon-16x16.png",
             "/v1/users", //user create
             "/v1/users/temp", //user create,
-            "/v1/test/userList",
-            "/v1/test/sendFcm"
+            "/userList",
+            "/sendFcm",
+            "/"
              ));
 
     @Override
