@@ -32,10 +32,10 @@ spring:
     url: jdbc:mariadb://localhost:3306/lofDev?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
     username: root
     password: 1234
-    hikari:
-      max-lifetime:
 JWT:
   signature: ${localKey.JWT.signature}
+FCM:
+  key: ${localKey.FCM.key}
 
 ---
 
@@ -52,6 +52,8 @@ spring:
     password: ${lof.mariadb.password}
 JWT:
   signature: ${lof.JWT.signature}
+FCM:
+  key: ${lof.fcm.key}
 
 ---
 
@@ -68,3 +70,5 @@ spring:
     password: ${lof.mariadb.password}
 JWT:
   signature: ${lof.JWT.signature}
+FCM:
+  key: ${lof.fcm.key}
