@@ -2,7 +2,7 @@ name: aws CI/CD
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "dev" ]
 
 env:
   S3_BUCKET_NAME: lof-dev-deploy

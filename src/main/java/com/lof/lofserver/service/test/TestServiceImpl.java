@@ -3,6 +3,7 @@ package com.lof.lofserver.service.test;
 import com.lof.lofserver.domain.user.UserEntity;
 import com.lof.lofserver.domain.user.UserRepository;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -15,13 +16,13 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class TestServiceImpl implements TestService {
 
     private final UserRepository userRepository;
 
     @Value("${FCM.key}")
-    private final String secretKey;
+    private String secretKey;
 
     @Override
     public List<UserEntity> getUserNickname() {
