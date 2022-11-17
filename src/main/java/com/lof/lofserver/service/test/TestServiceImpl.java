@@ -46,8 +46,14 @@ public class TestServiceImpl implements TestService {
         userJson.put("to", userEntity.getFcmToken());
         userJson.put("data", notification);
         HttpEntity<String> request = new HttpEntity<>(userJson.toString(), headers);
-        ResponseEntity<FcmDto> response = new RestTemplate().exchange(url, HttpMethod.POST, request, FcmDto.class);
-        response.getBody().setFcmToken(userEntity.getFcmToken());
-        return response.getBody();
+        System.out.println(request);
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, request, String.class);
+            return new FcmDto((long) response.getStatusCodeValue(), response.getBody());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new FcmDto(500L, e.getMessage() + "header : " + headers.toString() + "request : " + request.toString());
+        }
     }
 }

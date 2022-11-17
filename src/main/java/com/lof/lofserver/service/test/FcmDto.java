@@ -8,4 +8,9 @@ import lombok.Setter;
 public class FcmDto {
     private Long success;
     private String fcmToken;
+
+    public FcmDto(Long success, String fcmToken) {
+        this.success = success;
+        this.fcmToken = fcmToken;
+    }
 }
