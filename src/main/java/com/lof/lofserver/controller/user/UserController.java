@@ -48,13 +48,14 @@ public class UserController {
     }
 
     @PostMapping("/nickname")
-    @ApiOperation(value = "닉네임을 설정한다.", response = String.class)
+    @ApiOperation(value = "닉네임을 설정한다.", response = UserNickname.class)
     public ResponseEntity<?> setUserNickName(HttpServletRequest request, @RequestHeader("Authorization") String ignoredToken, @RequestBody String nickname) {
         //get userId
         Long userId = (Long) request.getAttribute("id");
         nickname = nickname.replace("\"", "");
         //set user nickname
-        return ResponseEntity.ok(userService.setUserNickName(userId, nickname));
+
+        return ResponseEntity.ok(new UserNickname( userService.setUserNickName(userId, nickname)));
     }
 
     @GetMapping("/alarm")
