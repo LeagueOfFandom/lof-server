@@ -103,6 +103,6 @@ public class UserController {
     @GetMapping("/new")
     @ApiOperation(value = "새로운 유저인지 확인한다.", response = NewUserResponse.class)
     public ResponseEntity<?> isNewUser(@RequestParam("email") String email) {
-        return ResponseEntity.ok(new NewUserResponse(userService.isNewUser(email)));
+        return ResponseEntity.ok(new NewUserResponse(!userService.isNewUser(email)));
     }
 }
