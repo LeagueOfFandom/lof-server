@@ -19,6 +19,11 @@ public class UserServiceImpl implements UserService {
     private final UserValidateImpl userValidateImpl;
 
     @Override
+    public Boolean isNewUser(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
+    @Override
     public UserResponseInfo createTempUser(String fcmToken){
         Long userId = userRepository.save(UserEntity.builder()
                 .fcmToken(fcmToken)

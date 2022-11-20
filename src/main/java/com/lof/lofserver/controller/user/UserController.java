@@ -3,6 +3,7 @@ package com.lof.lofserver.controller.user;
 import com.lof.lofserver.controller.user.parser.UserControllerParser;
 import com.lof.lofserver.controller.user.request.UserInfoRequest;
 import com.lof.lofserver.controller.user.response.FcmTokenResponse;
+import com.lof.lofserver.controller.user.response.NewUserResponse;
 import com.lof.lofserver.controller.user.response.UserNickname;
 import com.lof.lofserver.domain.user.sub.AlarmList;
 import com.lof.lofserver.filter.JsonWebToken;
@@ -97,5 +98,11 @@ public class UserController {
         Long userId = (Long) request.getAttribute("id");
         List<AlarmList> alarmList = userService.getAlarmListByUserId(userId);
         return ResponseEntity.ok(alarmList);
+    }
+
+    @GetMapping("/new")
+    @ApiOperation(value = "새로운 유저인지 확인한다.", response = NewUserResponse.class)
+    public ResponseEntity<?> isNewUser(@RequestParam("email") String email) {
+        return ResponseEntity.ok(new NewUserResponse(userService.isNewUser(email)));
     }
 }

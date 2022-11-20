@@ -19,4 +19,6 @@ public interface UserService {
      List<AlarmList> getAlarmListByUserId(Long userId);
 
     String setFcmTokenByUserId(Long userId, String fcmToken);
+
+     Boolean isNewUser(String email);
 }

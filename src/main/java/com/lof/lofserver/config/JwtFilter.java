@@ -39,7 +39,8 @@ public class JwtFilter extends OncePerRequestFilter {
             "/v1/users/temp", //user create,
             "/userList",
             "/sendFcm",
-            "/"
+            "/",
+            "/v1/users/new"
              ));
 
     @Override
