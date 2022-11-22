@@ -77,6 +77,7 @@ public class UserController {
     @ApiOperation(value = "fcm 토큰을 저장한다.", response = FcmTokenResponse.class)
     public ResponseEntity<?> setFcmToken(HttpServletRequest request, @RequestHeader("Authorization") String ignoredToken, @RequestBody String fcmToken) {
         Long userId = (Long) request.getAttribute("id");
+        fcmToken = fcmToken.replace("\"", "");
         FcmTokenResponse fcmTokenResponse = new FcmTokenResponse(userService.setFcmTokenByUserId(userId, fcmToken));
         return ResponseEntity.ok(fcmTokenResponse);
     }
