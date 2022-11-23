@@ -26,6 +26,26 @@ public class MatchServiceImpl implements MatchService {
     private final UserRepository userRepository;
     private final TeamRepository teamRepository;
 
+    public List<MatchView> testLiveMatchViewList(){
+        List<MatchView> matchViewList = new ArrayList<>();
+        matchViewList.add(MatchView.builder()
+                .matchId(651268L)
+                .homeName("BFO")
+                .homeImg("https://cdn.pandascore.co/images/team/image/126073/220px_saigon_buffalologo_square.png")
+                .awayName("IST")
+                .awayImg("https://cdn.pandascore.co/images/team/image/126066/220px_istanbul_wildcatslogo_square.png")
+                .date("2022-11-06")
+                .time("09:52:58")
+                .league("Playoffs")
+                .isAlarm(false)
+                .homeScore(1L)
+                .awayScore(2L)
+                .status("running")
+                .videoLink("https://www.twitch.tv/lck_korea")
+                .build());
+        return matchViewList;
+    }
+
     /**
      * 유저 팀 리스트를 팀 number 로 가져온다.
      * @param userEntity - 유저 정보

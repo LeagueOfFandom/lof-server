@@ -11,4 +11,6 @@ public interface MatchService {
     List<MatchView> getMatchListByDate(Long userId, LocalDate date, Boolean onlyMyTeam);
     List<MatchView> getMatchListByMonth(Long userId, LocalDate localDate, Boolean onlyMyTeam);
     ResponseEntity<?> getMatchDetail(Long matchId);
+
+    List<MatchView> testLiveMatchViewList();
 }

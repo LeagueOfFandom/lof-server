@@ -38,7 +38,7 @@ public class MatchController {
         //get bannerList
         commonItemList.add(communityService.getBannerList());
         //get liveMatch
-        commonItemList.addAll(matchService.getLiveMatchList(userId));
+        commonItemList.addAll(matchService.testLiveMatchViewList());
         //get matchList
         commonItemList.add(communityService.getTextArrowView("My 경기 일정"));
         commonItemList.addAll(matchService.getMatchListByDate(userId, localDate, onlyMyTeam));
