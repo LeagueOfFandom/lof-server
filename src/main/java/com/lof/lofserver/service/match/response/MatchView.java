@@ -1,6 +1,7 @@
 package com.lof.lofserver.service.match.response;
 
 import lombok.Builder;
+import lombok.Setter;
 
 public record MatchView(
         Long matchId,
@@ -19,6 +20,7 @@ public record MatchView(
 ) {
     @Builder
     public MatchView {
+        videoLink = videoLink == null ? "" : videoLink;
     }
 }
 

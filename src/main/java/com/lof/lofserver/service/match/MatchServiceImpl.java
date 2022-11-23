@@ -184,7 +184,7 @@ public class MatchServiceImpl implements MatchService {
         List<Long> teamIdList = getTeamIdList(userEntity);
         List<MatchEntity> userTeamMatchEntityList = new ArrayList<>();
         for(MatchEntity matchEntity : matchEntityList){
-            if(matchEntity.getOpponents().size() < 2)
+            if(matchEntity.getOpponents() == null || matchEntity.getOpponents().size() < 2)
                 continue;
             if(teamIdList.contains(matchEntity.getOpponents().get(0).getOpponent().getId())
                     || teamIdList.contains(matchEntity.getOpponents().get(1).getOpponent().getId()))

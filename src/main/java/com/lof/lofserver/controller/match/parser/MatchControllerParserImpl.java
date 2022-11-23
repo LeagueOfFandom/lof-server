@@ -75,6 +75,7 @@ public class MatchControllerParserImpl implements MatchControllerParser {
         if(object instanceof BannerView) return "BANNER_VIEW";
         //match
         else if (object instanceof MatchView) {
+
             //live match
             if(((MatchView) object).status().equals("running")) return "LIVE_VIEW";
             //before match
