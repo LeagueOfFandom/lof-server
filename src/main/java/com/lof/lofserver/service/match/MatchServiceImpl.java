@@ -26,7 +26,11 @@ public class MatchServiceImpl implements MatchService {
     private final UserRepository userRepository;
     private final TeamRepository teamRepository;
 
-    public List<MatchView> testLiveMatchViewList(){
+    public List<MatchView> testLiveMatchViewList(Long userId){
+        Long score = 1L;
+        UserEntity userEntity = userRepository.findById(userId).orElse(null);
+        if(userEntity.getAlarmList() != null && userEntity.getAlarmList().size() > 0)
+            score = 2L;
         List<MatchView> matchViewList = new ArrayList<>();
         matchViewList.add(MatchView.builder()
                 .matchId(651268L)
@@ -38,7 +42,7 @@ public class MatchServiceImpl implements MatchService {
                 .time("09:52:58")
                 .league("Playoffs")
                 .isAlarm(false)
-                .homeScore(1L)
+                .homeScore(score)
                 .awayScore(2L)
                 .status("running")
                 .videoLink("https://www.twitch.tv/lck_korea")
