@@ -41,7 +41,8 @@ public class MatchController {
         commonItemList.addAll(matchService.testLiveMatchViewList());
         //get matchList
         commonItemList.add(communityService.getTextArrowView("My 경기 일정"));
-        commonItemList.addAll(matchService.getMatchListByDate(userId, localDate, onlyMyTeam));
+
+        commonItemList.addAll(new ArrayList<>(matchService.getMatchListByMonth(userId, localDate,onlyMyTeam)));
         return ResponseEntity.ok(matchControllerParser.parseObjectListToMainPageResponse(commonItemList));
     }
 
@@ -55,7 +56,6 @@ public class MatchController {
         LocalDate localDate = LocalDate.parse(date);
         //get matchList
         List<Object> commonItemList = new ArrayList<>(matchService.getMatchListByMonth(userId, localDate,onlyMyTeam));
-        System.out.println(commonItemList);
         return ResponseEntity.ok(matchControllerParser.parseObjectListToMatchByMonthListResponse(commonItemList));
     }
 

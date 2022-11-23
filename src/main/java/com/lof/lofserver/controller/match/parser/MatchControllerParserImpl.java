@@ -48,6 +48,7 @@ public class MatchControllerParserImpl implements MatchControllerParser {
                 if (object instanceof BannerView) {
                     bannerList = ((BannerView) object).bannerList();
                 } else {
+                    commonItemListResponseList.add(getDateView(LocalDate.parse(((MatchView)object).date())));
                     commonItemListResponseList.add(CommonItemListResponse.builder()
                             .viewType(getViewType(object))
                             .viewObject(object).build());

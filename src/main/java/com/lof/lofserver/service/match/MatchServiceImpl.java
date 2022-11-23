@@ -46,6 +46,41 @@ public class MatchServiceImpl implements MatchService {
         return matchViewList;
     }
 
+    public List<MatchView> testMatchViewList(){
+        List<MatchView> matchViewList = new ArrayList<>();
+        matchViewList.add(MatchView.builder()
+                .matchId(651268L)
+                .homeName("DRX")
+                .homeImg("https://cdn.pandascore.co/images/team/image/126370/220px_dr_xlogo_square.png")
+                .awayName("LION")
+                .awayImg("https://cdn.pandascore.co/images/team/image/126536/220px_mad_lions_e.c.__lec_team_logo_profile.png")
+                .date("2022-11-03")
+                .time("09:52:58")
+                .league("Playoffs")
+                .isAlarm(false)
+                .homeScore(2L)
+                .awayScore(3L)
+                .status("finished")
+                .videoLink("https://www.twitch.tv/lck_korea")
+                .build());
+        matchViewList.add(MatchView.builder()
+                .matchId(651268L)
+                .homeName("DRX")
+                .homeImg("https://cdn.pandascore.co/images/team/image/126370/220px_dr_xlogo_square.png")
+                .awayName("LION")
+                .awayImg("https://cdn.pandascore.co/images/team/image/126536/220px_mad_lions_e.c.__lec_team_logo_profile.png")
+                .date("2022-11-03")
+                .time("09:52:58")
+                .league("Playoffs")
+                .isAlarm(false)
+                .homeScore(2L)
+                .awayScore(3L)
+                .status("finished")
+                .videoLink("https://www.twitch.tv/lck_korea")
+                .build());
+        return matchViewList;
+    }
+
     /**
      * 유저 팀 리스트를 팀 number 로 가져온다.
      * @param userEntity - 유저 정보
