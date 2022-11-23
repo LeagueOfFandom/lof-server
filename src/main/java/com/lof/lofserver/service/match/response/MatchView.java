@@ -14,6 +14,7 @@ public record MatchView(
         Boolean isAlarm,
         Long homeScore,
         Long awayScore,
+        String videoLink,
         String status
 ) {
     @Builder
