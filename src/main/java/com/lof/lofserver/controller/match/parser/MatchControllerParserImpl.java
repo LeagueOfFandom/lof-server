@@ -43,12 +43,19 @@ public class MatchControllerParserImpl implements MatchControllerParser {
         List<String> bannerList = new ArrayList<>();
         List<CommonItemListResponse> commonItemListResponseList = new ArrayList<>();
 
+        LocalDate currentDate = LocalDate.now().minusDays(1000);
+
         for(Object object : objectList) {
             if(object != null) {
                 if (object instanceof BannerView) {
                     bannerList = ((BannerView) object).bannerList();
                 } else {
-                    commonItemListResponseList.add(getDateView(LocalDate.parse(((MatchView)object).date())));
+                    if(object instanceof MatchView) {
+                        if(!((MatchView)object).date().equals(currentDate.toString())){
+                            commonItemListResponseList.add(getDateView(LocalDate.parse(((MatchView)object).date())));
+                            currentDate = LocalDate.parse(((MatchView)object).date());
+                        }
+                    }
                     commonItemListResponseList.add(CommonItemListResponse.builder()
                             .viewType(getViewType(object))
                             .viewObject(object).build());

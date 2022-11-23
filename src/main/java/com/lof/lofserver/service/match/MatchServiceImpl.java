@@ -101,7 +101,7 @@ public class MatchServiceImpl implements MatchService {
      * @return MatchView
      */
     private MatchView matchEntityToMatchView(MatchEntity matchEntity, Boolean isAlarm){
-        if(matchEntity.getOpponents().size() < 2)
+        if(matchEntity.getOpponents() == null || matchEntity.getOpponents().size() < 2)
             return null;
         Opponent homeTeamInfo = matchEntity.getOpponents().get(0).getOpponent();
         Opponent awayTeamInfo = matchEntity.getOpponents().get(1).getOpponent();
@@ -133,7 +133,7 @@ public class MatchServiceImpl implements MatchService {
      * @return Boolean
      */
     private Boolean isAlarm(UserEntity userEntity, MatchEntity matchEntity){
-        if(matchEntity.getOpponents().size() < 2)
+        if(matchEntity.getOpponents() == null || matchEntity.getOpponents().size() < 2)
             return false;
 
         List<Long> teamIdList = getTeamIdList(userEntity);
