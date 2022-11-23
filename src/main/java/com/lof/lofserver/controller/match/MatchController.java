@@ -42,7 +42,7 @@ public class MatchController {
         //get matchList
         commonItemList.add(communityService.getTextArrowView("My 경기 일정"));
 
-        commonItemList.addAll(new ArrayList<>(matchService.getMatchListByMonth(userId, localDate,onlyMyTeam)));
+        commonItemList.addAll(matchService.testMatchViewList());
         return ResponseEntity.ok(matchControllerParser.parseObjectListToMainPageResponse(commonItemList));
     }
 

@@ -13,4 +13,5 @@ public interface MatchService {
     ResponseEntity<?> getMatchDetail(Long matchId);
 
     List<MatchView> testLiveMatchViewList();
+    List<MatchView> testMatchViewList();
 }

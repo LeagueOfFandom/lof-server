@@ -52,8 +52,10 @@ public class MatchControllerParserImpl implements MatchControllerParser {
                 } else {
                     if(object instanceof MatchView) {
                         if(!((MatchView)object).date().equals(currentDate.toString())){
-                            commonItemListResponseList.add(getDateView(LocalDate.parse(((MatchView)object).date())));
-                            currentDate = LocalDate.parse(((MatchView)object).date());
+                            if(!((MatchView)object).status().equals("running")) {
+                                commonItemListResponseList.add(getDateView(LocalDate.parse(((MatchView) object).date())));
+                                currentDate = LocalDate.parse(((MatchView) object).date());
+                            }
                         }
                     }
                     commonItemListResponseList.add(CommonItemListResponse.builder()
