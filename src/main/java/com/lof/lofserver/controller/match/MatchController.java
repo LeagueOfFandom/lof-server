@@ -33,7 +33,7 @@ public class MatchController {
                                          @RequestHeader("Authorization") String ignoredToken,
                                          @RequestParam(value = "onlyMyTeam") Boolean onlyMyTeam) {
         Long userId = (Long) request.getAttribute("id");
-        LocalDate localDate = ZonedDateTime.now(ZoneId.of("UTC")).toLocalDate();
+        LocalDate localDate = ZonedDateTime.now(ZoneId.of("UTC")).toLocalDate().minusMonths(1);
         List<Object> commonItemList = new ArrayList<>();
         //get bannerList
         commonItemList.add(communityService.getBannerList());
