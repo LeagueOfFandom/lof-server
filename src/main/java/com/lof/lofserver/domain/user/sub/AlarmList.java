@@ -5,7 +5,7 @@ import lombok.Builder;
 import java.time.LocalDateTime;
 
 
-public record AlarmList(String title, String content, LocalDateTime createdAt,String viewType) {
+public record AlarmList(String viewType, Object viewObject) {
     @Builder
     public AlarmList {
     }
