@@ -7,5 +7,5 @@ import java.util.List;
 public interface TestService {
     List<UserEntity> getUserNickname();
 
-    FcmDto sendFcm(String message, Long id);
+    List<FcmDto> sendFcm(String title, String message, Long id);
 }

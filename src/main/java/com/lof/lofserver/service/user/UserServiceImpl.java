@@ -140,6 +140,10 @@ public class UserServiceImpl implements UserService {
                         .infoDateTime("22.09.01. 17:30")
                         .build())
                 .build());
+        UserEntity userEntity = userRepository.findById(userId).orElseThrow();
+        if(userEntity.getAlarmList() != null && userEntity.getAlarmList().size() > 0) {
+            alarmList.addAll(userEntity.getAlarmList());
+        }
         return alarmList;
     }
 

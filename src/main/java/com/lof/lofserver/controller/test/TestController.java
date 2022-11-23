@@ -25,8 +25,8 @@ public class TestController {
     }
 
     @PostMapping("/sendFcm")
-    public FcmDto sendFcm(@RequestBody String message, @RequestParam Long id) {
-        return testService.sendFcm(message, id);
+    public List<FcmDto> sendFcm(@RequestParam String message, @RequestParam Long id, @RequestParam String title) {
+        return testService.sendFcm(title, message, id);
     }
 
 }
