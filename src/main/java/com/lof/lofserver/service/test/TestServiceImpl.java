@@ -59,13 +59,17 @@ public class TestServiceImpl implements TestService {
         notification.put("title", title);
         notification.put("body", message);
 
-        JSONObject userJson = new JSONObject();
-        userJson.put("to", userEntity.getFcmToken());
-        userJson.put("notification", notification);
-
         JSONObject data = new JSONObject();
         data.put("homeScore", 1);
         data.put("awayScore", 2);
+
+        JSONObject userJson = new JSONObject();
+        userJson.put("to", userEntity.getFcmToken());
+        userJson.put("notification", notification);
+        userJson.put("data", data);
+        userJson.put("priority", "high");
+
+
         HttpEntity<String> request = new HttpEntity<>(userJson.toString(), headers);
         System.out.println(request);
         try {
