@@ -69,14 +69,15 @@ public class UserServiceImpl implements UserService {
     public List<AlarmList> getAlarmListByUserId(Long userId) {
 
         List<AlarmList> alarmList = new ArrayList<>();
-        UserEntity userEntity = userRepository.findById(userId).orElseThrow();
-        if(userEntity.getAlarmList() != null && userEntity.getAlarmList().size() > 0) {
-            alarmList.addAll(userEntity.getAlarmList());
-        }
+
         alarmList.add(AlarmList.builder()
                 .viewType("ONE_LINE_TEXT_VIEW")
                 .viewObject(new TextResponse("오늘"))
                 .build());
+        UserEntity userEntity = userRepository.findById(userId).orElseThrow();
+        if(userEntity.getAlarmList() != null && userEntity.getAlarmList().size() > 0) {
+            alarmList.addAll(userEntity.getAlarmList());
+        }
         alarmList.add(AlarmList.builder()
                 .viewType("INFO_EVENT_VIEW")
                 .viewObject(EventResponse.builder()

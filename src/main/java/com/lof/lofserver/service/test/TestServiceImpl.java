@@ -82,7 +82,7 @@ public class TestServiceImpl implements TestService {
                                     .infoContent("BFO 2 : 2 IST 로 BFO 가 4세트를 이겼습니다.")
                                     .infoIsCheck(false)
                                     .infoTimeCompare("방금 전")
-                                    .infoDateTime("22.09.01. 17:30")
+                                    .infoDateTime("22.11.25. 14:00")
                                     .build())
                     .build());
             userRepository.save(userEntity);
