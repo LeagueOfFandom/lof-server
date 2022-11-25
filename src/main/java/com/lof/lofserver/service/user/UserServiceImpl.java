@@ -67,7 +67,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<AlarmList> getAlarmListByUserId(Long userId) {
+
         List<AlarmList> alarmList = new ArrayList<>();
+        UserEntity userEntity = userRepository.findById(userId).orElseThrow();
+        if(userEntity.getAlarmList() != null && userEntity.getAlarmList().size() > 0) {
+            alarmList.addAll(userEntity.getAlarmList());
+        }
         alarmList.add(AlarmList.builder()
                 .viewType("ONE_LINE_TEXT_VIEW")
                 .viewObject(new TextResponse("오늘"))
@@ -140,10 +145,7 @@ public class UserServiceImpl implements UserService {
                         .infoDateTime("22.09.01. 17:30")
                         .build())
                 .build());
-        UserEntity userEntity = userRepository.findById(userId).orElseThrow();
-        if(userEntity.getAlarmList() != null && userEntity.getAlarmList().size() > 0) {
-            alarmList.addAll(userEntity.getAlarmList());
-        }
+
         return alarmList;
     }
 
